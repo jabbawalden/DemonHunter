@@ -18,7 +18,10 @@ public class C_Health : MonoBehaviour
         if (damage >= _currentHealth)
             _currentHealth = 0;
         else
+        {
             _currentHealth -= damage;
+            print("Damaged");
+        }
 
     }
 
