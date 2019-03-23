@@ -2,13 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerState
+{
+    idle,
+    running,
+    dashing,
+    shooting
+}
+
 public class PlayerController : MonoBehaviour
 {
+    public PlayerState playerState;
+
     [Header("Movement")]
     [SerializeField] private float _movementSpeed;    //speed 
     [SerializeField] private float _dashSpeed;
     [SerializeField] private int direction;
     [SerializeField] private bool isDashing;
+    Vector2 mousePoint;
     [Space(4)]
 
     [Header("Main Properties")]
@@ -26,12 +37,20 @@ public class PlayerController : MonoBehaviour
     [Header("Scripts")]
     private C_Health _healthComp;     //health component
     private C_Health _enemyHealthComp;
-    Vector2 mousePoint;
+    private Animator _animator;
+    [Space(4)]
+
+    [Header("Animations")]
+    private Animation runF, runB, runR, runL, runFR, runFL, runBR, runBL;
+    private Animation iF, iB, iR, iL, iFR, iFL, iBR, iBL;
+    [SerializeField] private int _playerState;
 
     private void Awake()
     {
         _healthComp = GetComponent<C_Health>();
         _rb = GetComponent<Rigidbody2D>();
+        _animator = GetComponentInChildren<Animator>();
+        _playerState = 0;
     }
 
     // Start is called before the first frame update
@@ -52,6 +71,8 @@ public class PlayerController : MonoBehaviour
 
             DirectionCheck();
             Dash(_dashSpeed);
+            Shoot();
+            SetAnimationPlay(_playerState);
         }
     }
 
@@ -98,13 +119,62 @@ public class PlayerController : MonoBehaviour
 
         while (count < time)
         {
+            _playerState = 1;
             count += speed;
             _rb.AddForce(AimDirection() * _dashSpeed);
             yield return new WaitForSeconds(0.01f);
         }
         _canDamage = false;
         isDashing = false;
+        _playerState = 0;
         print("end dash");
+    }
+
+    private void Shoot()
+    {
+        if (Input.GetKey(KeyCode.Mouse1) && !isDashing)
+        {
+            StartCoroutine(ShootBehaviour(1, 0.1f));
+        }
+    }
+
+    IEnumerator ShootBehaviour(float time, float speed)
+    {
+        float count = 0;
+
+        while (count < time)
+        {
+            _playerState = 2;
+            count += speed;
+            yield return new WaitForSeconds(0.01f);
+        }
+        _playerState = 0;
+        print("end shoot");
+    }
+
+    private void SetAnimationPlay(int state)
+    {
+        /*
+        if (state == 0)
+        {
+            if (_rb.velocity.x > 0 || _rb.velocity.y > 0)
+            {
+                print("Moving");
+            }
+            else if (_rb.velocity.x == 0 && _rb.velocity.y == 0)
+            {
+                print("Idle");
+            }
+        }
+        else if (state == 1)
+        {
+            print("dash");
+        }
+        else if (state != 1 && state == 2)
+        {
+            print("shoot");
+        }
+        */
     }
 
     private int DirectionCheck()
@@ -112,35 +182,46 @@ public class PlayerController : MonoBehaviour
         if (_rb.velocity.y > 0 && _rb.velocity.x == 0)
         {
             direction = 1; //forward
+            //_animator.Play("Run_Forward");
+            //_animator.SetInteger("State", 1);
         }
         else if (_rb.velocity.y < 0 && _rb.velocity.x == 0)
         {
             direction = 2; //back
+            //_animator.Play("Run_Back");
+            //_animator.SetInteger("State", 2);
         }
         else if (_rb.velocity.x > 0 && _rb.velocity.y == 0)
         {
             direction = 3; //right
+            //_animator.Play("Run_Right");
+            //_animator.SetInteger("State", 3);
         }
         else if (_rb.velocity.x < 0 && _rb.velocity.y == 0)
         {
             direction = 4; //left
+            //_animator.Play("Run_Left");
+            //_animator.SetInteger("State", 4);
         }
         else if (_rb.velocity.y > 0 && _rb.velocity.x > 0)
         {
             direction = 5;   //forward right
-
+            //_animator.SetInteger("State", 5);
         }
         else if (_rb.velocity.y > 0 && _rb.velocity.x < 0)
         {
             direction = 6;  //forward left
+            //_animator.SetInteger("State", 6);
         }
         else if (_rb.velocity.y < 0 && _rb.velocity.x > 0)
         {
             direction = 7;  //back right
+            //_animator.SetInteger("State", 7);
         }
         else if (_rb.velocity.y < 0 && _rb.velocity.x < 0)
         {
             direction = 8;  //back left
+            //_animator.SetInteger("State", 8);
         }
 
         //Debug.Log(_rb.velocity);
