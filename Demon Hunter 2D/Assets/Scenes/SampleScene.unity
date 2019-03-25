@@ -2497,6 +2497,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerController
       objectReference: {fileID: 0}
+    - target: {fileID: 9015813692076058423, guid: 707de60c90e85d446a84aee689e050c4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 9015813692032240224, guid: 707de60c90e85d446a84aee689e050c4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2555,27 +2560,37 @@ PrefabInstance:
     - target: {fileID: 9015813692032240225, guid: 707de60c90e85d446a84aee689e050c4,
         type: 3}
       propertyPath: _dashSpeed
-      value: 85
+      value: 550
       objectReference: {fileID: 0}
     - target: {fileID: 9015813692032240225, guid: 707de60c90e85d446a84aee689e050c4,
         type: 3}
       propertyPath: dashDamage
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 9015813692032240225, guid: 707de60c90e85d446a84aee689e050c4,
+        type: 3}
+      propertyPath: maxEnergy
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015813692032240225, guid: 707de60c90e85d446a84aee689e050c4,
+        type: 3}
+      propertyPath: _dashEnergyCost
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 9015813692032240227, guid: 707de60c90e85d446a84aee689e050c4,
         type: 3}
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 9015813692076058423, guid: 707de60c90e85d446a84aee689e050c4,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 9015813692076058417, guid: 707de60c90e85d446a84aee689e050c4,
         type: 3}
       propertyPath: m_SortingOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5943636851473312307, guid: 707de60c90e85d446a84aee689e050c4,
+        type: 3}
+      propertyPath: _shootAnimationTime
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 707de60c90e85d446a84aee689e050c4, type: 3}

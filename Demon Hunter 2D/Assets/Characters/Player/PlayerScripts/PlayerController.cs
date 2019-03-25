@@ -8,14 +8,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _movementSpeed;    //speed 
     [SerializeField] private float _dashSpeed;
     [SerializeField] private int direction;
-    [SerializeField] private bool isDashing;
+    //[SerializeField] private bool isDashing;
+    public bool canMove;
     [Space(4)]
 
     [Header("Main Properties")]
     [SerializeField] private bool _canDamage;
-    [SerializeField] private bool _maxEnergy;
-    [SerializeField] private bool _currentEnergy;
     [SerializeField] private float dashDamage;
+    [SerializeField] private float _dashEnergyCost;
+    public float maxEnergy;
+    public float currentEnergy;
     //[SerializeField] private Vector2 dashDirection; 
     [Space(4)]
 
@@ -37,9 +39,10 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        canMove = true;
         direction = 1;
-        _currentEnergy = _maxEnergy;
         _canDamage = false;
+        currentEnergy = maxEnergy;
     }
 
     // Update is called once per frame
@@ -47,7 +50,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_healthComp.isAlive())
         {
-            if (!isDashing)
+            if (canMove)
                 PlayerMovement(_movementSpeed);
 
             DirectionCheck();
@@ -86,6 +89,12 @@ public class PlayerController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            if (currentEnergy >= _dashEnergyCost)
+                currentEnergy -= _dashEnergyCost;
+            else
+                currentEnergy = 0;
+
+            //TODO - only dash when energy is equal or above dash cost
             StartCoroutine(DashBehaviour(5, 0.3f));
         }
     }
@@ -93,7 +102,8 @@ public class PlayerController : MonoBehaviour
     IEnumerator DashBehaviour(float time, float speed)
     {
         float count = 0;
-        isDashing = true;
+        //isDashing = true;
+        canMove = false;
         _canDamage = true;
 
         while (count < time)
@@ -103,8 +113,14 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
         _canDamage = false;
-        isDashing = false;
+        canMove = true;
+        //isDashing = false;
         print("end dash");
+    }
+
+    public void StopVelocity()
+    {
+        _rb.velocity = new Vector2(0, 0);
     }
 
     private int DirectionCheck()
