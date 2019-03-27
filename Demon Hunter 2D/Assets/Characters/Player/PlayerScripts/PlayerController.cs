@@ -27,8 +27,8 @@ public class PlayerController : MonoBehaviour
     [Space(4)]
 
     [Header("Main Properties")]
-    [SerializeField] private bool _canDamage;
-    [SerializeField] private float dashDamage;
+    [SerializeField] private bool _canDashDamage;
+    [SerializeField] private float _dashDamage;
     [SerializeField] private float _dashEnergyCost;
     public float maxEnergy;
     public float currentEnergy;
@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Local Components")]
     private Rigidbody2D _rb;
+    [SerializeField] private CircleCollider2D _circleCollider; 
     [Space(4)]
 
     [Header("Scripts")]
@@ -55,6 +56,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponentInChildren<Animator>();
         _playerState = 0;
+        _circleCollider.enabled = false;
     }
 
     // Start is called before the first frame update
@@ -62,7 +64,7 @@ public class PlayerController : MonoBehaviour
     {
         canMove = true;
         direction = 1;
-        _canDamage = false;
+        _canDashDamage = false;
         currentEnergy = maxEnergy;
     }
 
@@ -75,11 +77,11 @@ public class PlayerController : MonoBehaviour
                 PlayerMovement(_movementSpeed);
 
             DirectionCheck();
-            Dash(_dashSpeed);
+            Dash();
         }
     }
 
-    private Vector2 AimDirection()
+    public Vector2 AimDirection()
     {
         Vector2 aimDirection;
         mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -99,16 +101,11 @@ public class PlayerController : MonoBehaviour
         Vector2 move = new Vector2(h, v);
         move = move.normalized * x;
         _rb.velocity = move;
-        //transform.Translate(move);
     }
 
-    private void Dash(float x)
+    private void Dash()
     {
-        //dash direction = direction int
-        //use switch on int to set velocity?
-        x *= Time.deltaTime;
-        
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && currentEnergy >= _dashEnergyCost)
         {
             if (currentEnergy >= _dashEnergyCost)
                 currentEnergy -= _dashEnergyCost;
@@ -123,21 +120,24 @@ public class PlayerController : MonoBehaviour
     IEnumerator DashBehaviour(float time, float speed)
     {
         float count = 0;
-        //isDashing = true;
+        Vector2 currentAimDirection = AimDirection();
+
         canMove = false;
-        _canDamage = true;
+        _canDashDamage = true;
+        _circleCollider.enabled = true;
+        
 
         while (count < time)
         {
             _playerState = 1;
             count += speed;
-            _rb.AddForce(AimDirection() * _dashSpeed);
+            _rb.velocity = currentAimDirection * _dashSpeed * Time.deltaTime;
             yield return new WaitForSeconds(0.01f);
         }
-        _canDamage = false;
+
         canMove = true;
-        //isDashing = false;
-        print("end dash");
+        _canDashDamage = false;
+        _circleCollider.enabled = false;
     }
 
     public void StopVelocity()
@@ -146,28 +146,6 @@ public class PlayerController : MonoBehaviour
         isDashing = false;
         _playerState = 0;
         print("end dash");
-    }
-
-    private void Shoot()
-    {
-        if (Input.GetKey(KeyCode.Mouse1) && !isDashing)
-        {
-            StartCoroutine(ShootBehaviour(1, 0.1f));
-        }
-    }
-
-    IEnumerator ShootBehaviour(float time, float speed)
-    {
-        float count = 0;
-
-        while (count < time)
-        {
-            _playerState = 2;
-            count += speed;
-            yield return new WaitForSeconds(0.01f);
-        }
-        _playerState = 0;
-        print("end shoot");
     }
 
     private void SetAnimationPlay(int state)
@@ -248,10 +226,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy") && _canDamage && collision.GetComponentInParent<C_Health>() != null)
+        if (collision.gameObject.layer == 10 && _canDashDamage && collision.GetComponentInParent<C_Health>() != null)
         {
             _enemyHealthComp = collision.GetComponentInParent<C_Health>();
-            _enemyHealthComp.Damage(dashDamage);
+            _enemyHealthComp.Damage(_dashDamage);
+            print("hit enemy");
         }
     }
+
 }
