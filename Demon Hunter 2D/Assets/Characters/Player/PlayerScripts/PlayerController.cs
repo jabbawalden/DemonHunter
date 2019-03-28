@@ -46,8 +46,8 @@ public class PlayerController : MonoBehaviour
     [Space(4)]
 
     [Header("Animations")]
-    private Animation runF, runB, runR, runL, runFR, runFL, runBR, runBL;
-    private Animation iF, iB, iR, iL, iFR, iFL, iBR, iBL;
+    //private Animation runF, runB, runR, runL, runFR, runFL, runBR, runBL;
+    //private Animation iF, iB, iR, iL, iFR, iFL, iBR, iBL;
     [SerializeField] private int _playerState;
 
     private void Awake()
@@ -78,6 +78,10 @@ public class PlayerController : MonoBehaviour
 
             DirectionCheck();
             Dash();
+        }
+        else
+        {
+            StopVelocity();
         }
     }
 
@@ -114,6 +118,16 @@ public class PlayerController : MonoBehaviour
 
             //TODO - only dash when energy is equal or above dash cost
             StartCoroutine(DashBehaviour(5, 0.3f));
+        }
+    }
+
+    public void AddEnergy(int energyToAdd)
+    {
+        if (currentEnergy < maxEnergy)
+        {
+            currentEnergy += energyToAdd;
+            if (currentEnergy > maxEnergy)
+                currentEnergy = maxEnergy;
         }
     }
 

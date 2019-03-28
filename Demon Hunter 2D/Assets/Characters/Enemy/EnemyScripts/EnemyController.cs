@@ -24,6 +24,10 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float _newPatrolTime;
     public Vector3 newDestination;
     public Vector3 newDirection;
+    [Space(4)]
+
+    [Header("Prefabs")]
+    public GameObject energyPickUp;
 
     private void Awake()
     {
@@ -44,10 +48,14 @@ public class EnemyController : MonoBehaviour
             DirectionCheck();
             EnemyMovement();
             StateManager();
-            print(DirectionCheck());
+            //print(DirectionCheck());
         }
         else
+        {
+            Instantiate(energyPickUp, transform.position, Quaternion.identity);
             Destroy(gameObject);
+        }
+            
     }
 
     
@@ -72,7 +80,6 @@ public class EnemyController : MonoBehaviour
             SetPatrol();
             patrolDistance = Vector2.Distance(transform.position, newDestination);
             direction = newDirection;
-            print(patrolDistance);
 
             if (patrolDistance >= 0.25f)
                 _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
