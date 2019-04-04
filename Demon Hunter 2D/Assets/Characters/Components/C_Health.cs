@@ -6,7 +6,7 @@ public class C_Health : MonoBehaviour
 {
     [Header("Variables")]
     [SerializeField] private float _maxHealth;
-    [SerializeField] private float _currentHealth;
+    public float _currentHealth;
 
     private void Start()
     {
@@ -23,6 +23,21 @@ public class C_Health : MonoBehaviour
             print("Damaged");
         }
 
+    }
+
+    public void Heal(float heal)
+    {
+        if (_currentHealth < _maxHealth)
+            _currentHealth += heal;
+        
+        if (_currentHealth > _maxHealth)
+            _currentHealth = _maxHealth;
+    }
+
+    public float GetHealthPercent()
+    {
+        float percent = _currentHealth / _maxHealth;
+        return percent;
     }
 
     public bool isAlive()

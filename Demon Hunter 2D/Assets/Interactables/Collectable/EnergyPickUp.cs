@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class EnergyPickUp : MonoBehaviour
 {
-    private PlayerController _playerController;
+    private PlayerEnergy _playerEnergy;
+    private UIManager _uiManager;
     Rigidbody2D _rb;
     [SerializeField] private int _energyToAdd;
     [SerializeField] private float _moveSpeed;
@@ -19,6 +20,7 @@ public class EnergyPickUp : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
     }
 
     // Start is called before the first frame update
@@ -39,10 +41,10 @@ public class EnergyPickUp : MonoBehaviour
 
     private void EnergyBehaviour()
     {
-        if (_playerController != null)
+        if (_playerEnergy != null)
         {
-            float distance = Vector3.Distance(_playerController.transform.position, transform.position);
-            Vector2 direction = _playerController.transform.position - transform.position;
+            float distance = Vector3.Distance(_playerEnergy.transform.position, transform.position);
+            Vector2 direction = _playerEnergy.transform.position - transform.position;
             print(distance);
 
             if (distance <= _distanceReference)
@@ -53,7 +55,8 @@ public class EnergyPickUp : MonoBehaviour
 
             if (distance <= _distanceToMove)
             {
-                _playerController.AddEnergy(_energyToAdd);
+                _playerEnergy.AddEnergy(_energyToAdd);
+                _uiManager.UpdateEnergySlider();
                 Destroy(gameObject);
             }
            
@@ -97,7 +100,7 @@ public class EnergyPickUp : MonoBehaviour
     {
         if (collision.gameObject.layer == 8)
         {
-            _playerController = collision.GetComponentInParent<PlayerController>();
+            _playerEnergy = collision.GetComponentInParent<PlayerEnergy>();
         }
     }
 
@@ -105,7 +108,7 @@ public class EnergyPickUp : MonoBehaviour
     {
         if (collision.gameObject.layer == 8)
         {
-            _playerController = null;
+            _playerEnergy = null;
         }
     }
 

@@ -29,9 +29,8 @@ public class PlayerController : MonoBehaviour
     [Header("Main Properties")]
     [SerializeField] private bool _canDashDamage;
     [SerializeField] private float _dashDamage;
+    [SerializeField] private float _dashHealAmount;
     [SerializeField] private float _dashEnergyCost;
-    public float maxEnergy;
-    public float currentEnergy;
     [Space(4)]
 
     [Header("Local Components")]
@@ -42,7 +41,9 @@ public class PlayerController : MonoBehaviour
     [Header("Scripts")]
     private C_Health _healthComp;  
     private C_Health _enemyHealthComp;
+    private PlayerEnergy _playerEnergy;
     private Animator _animator;
+    private UIManager _uiManager;
     [Space(4)]
 
     [Header("Animations")]
@@ -53,8 +54,10 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _healthComp = GetComponent<C_Health>();
+        _playerEnergy = GetComponent<PlayerEnergy>();
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponentInChildren<Animator>();
+        _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         _playerState = 0;
         _circleCollider.enabled = false;
     }
@@ -65,7 +68,6 @@ public class PlayerController : MonoBehaviour
         canMove = true;
         direction = 1;
         _canDashDamage = false;
-        currentEnergy = maxEnergy;
     }
 
     // Update is called once per frame
@@ -109,25 +111,16 @@ public class PlayerController : MonoBehaviour
 
     private void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && currentEnergy >= _dashEnergyCost)
+        if (Input.GetKeyDown(KeyCode.Space) && _playerEnergy.currentEnergy >= _dashEnergyCost)
         {
-            if (currentEnergy >= _dashEnergyCost)
-                currentEnergy -= _dashEnergyCost;
+            if (_playerEnergy.currentEnergy >= _dashEnergyCost)
+                _playerEnergy.currentEnergy -= _dashEnergyCost;
             else
-                currentEnergy = 0;
+                _playerEnergy.currentEnergy = 0;
 
             //TODO - only dash when energy is equal or above dash cost
             StartCoroutine(DashBehaviour(5, 0.3f));
-        }
-    }
-
-    public void AddEnergy(int energyToAdd)
-    {
-        if (currentEnergy < maxEnergy)
-        {
-            currentEnergy += energyToAdd;
-            if (currentEnergy > maxEnergy)
-                currentEnergy = maxEnergy;
+            _uiManager.UpdateEnergySlider();
         }
     }
 
@@ -242,6 +235,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.layer == 10 && _canDashDamage && collision.GetComponentInParent<C_Health>() != null)
         {
+            _healthComp.Heal(_dashHealAmount);
             _enemyHealthComp = collision.GetComponentInParent<C_Health>();
             _enemyHealthComp.Damage(_dashDamage);
             print("hit enemy");
