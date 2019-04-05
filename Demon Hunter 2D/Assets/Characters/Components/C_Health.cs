@@ -7,6 +7,7 @@ public class C_Health : MonoBehaviour
     [Header("Variables")]
     [SerializeField] private float _maxHealth;
     public float _currentHealth;
+    public bool isPlayerComponent;  
 
     private void Start()
     {
@@ -32,6 +33,8 @@ public class C_Health : MonoBehaviour
         
         if (_currentHealth > _maxHealth)
             _currentHealth = _maxHealth;
+
+        print("heal player");
     }
 
     public float GetHealthPercent()

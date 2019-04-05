@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8186703901129291070}
   - component: {fileID: 8186703901129291068}
   - component: {fileID: 8186703901129291069}
+  - component: {fileID: 2820954046073255290}
   - component: {fileID: 8186703901129291067}
   - component: {fileID: 8186703901129291066}
   m_Layer: 11
@@ -48,9 +49,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyState: 0
+  playerRef: {fileID: 0}
   _inRange: 0
-  _moveSpeed: 70
-  _patrolRate: 4
+  _moveSpeed: 150
+  _patrolRateMin: 2
+  _patrolRateMax: 4
   _newPatrolTime: 0
   newDestination: {x: 0, y: 0, z: 0}
   newDirection: {x: 0, y: 0, z: 0}
@@ -70,6 +73,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 10
   _currentHealth: 0
+--- !u!114 &2820954046073255290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8186703901129291071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7764b1a1f0bcadc46a6c9e8de4b05122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damage: 5
+  _attackRange: 0.7
+  _attackRate: 0.8
+  _newTime: 0
+  _attackTime: 0.75
+  stateCheck: 0
 --- !u!58 &8186703901129291067
 CircleCollider2D:
   m_ObjectHideFlags: 0

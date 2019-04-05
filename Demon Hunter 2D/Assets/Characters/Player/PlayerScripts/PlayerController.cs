@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     [Space(4)]
 
     [Header("Scripts")]
-    private C_Health _healthComp;  
+    private C_Health _playerHealthComp;  
     private C_Health _enemyHealthComp;
     private PlayerEnergy _playerEnergy;
     private Animator _animator;
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        _healthComp = GetComponent<C_Health>();
+        _playerHealthComp = GetComponent<C_Health>();
         _playerEnergy = GetComponent<PlayerEnergy>();
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponentInChildren<Animator>();
@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_healthComp.isAlive())
+        if (_playerHealthComp.isAlive())
         {
             if (canMove)
                 PlayerMovement(_movementSpeed);
@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
                 _playerEnergy.currentEnergy = 0;
 
             //TODO - only dash when energy is equal or above dash cost
-            StartCoroutine(DashBehaviour(5, 0.3f));
+            StartCoroutine(DashBehaviour(4.5f, 0.3f));
             _uiManager.UpdateEnergySlider();
         }
     }
@@ -235,10 +235,12 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.layer == 10 && _canDashDamage && collision.GetComponentInParent<C_Health>() != null)
         {
-            _healthComp.Heal(_dashHealAmount);
             _enemyHealthComp = collision.GetComponentInParent<C_Health>();
             _enemyHealthComp.Damage(_dashDamage);
-            print("hit enemy");
+            _playerHealthComp.Heal(_dashHealAmount);
+            _uiManager.UpdateHealthSlider();
+
+            //print("hit enemy");
         }
     }
 

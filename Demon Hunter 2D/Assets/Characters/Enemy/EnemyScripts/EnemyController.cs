@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EnemyState {patrol, engaged, disengaged}
+public enum EnemyState {patrol, engaged, disengaged, attacking}
 
 public class EnemyController : MonoBehaviour
 {
@@ -10,7 +10,7 @@ public class EnemyController : MonoBehaviour
 
     [Header("Scripts")]
     private C_Health _healthComponent;
-    private Transform _playerRef;
+    [HideInInspector] public Transform playerRef;
     [Space(4)]
 
     [Header("Variables")]
@@ -20,7 +20,8 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D _rb;
     [SerializeField] private bool _inRange;
     [SerializeField] private float _moveSpeed; 
-    [SerializeField] private float _patrolRate;
+    [SerializeField] private float _patrolRateMin;
+    [SerializeField] private float _patrolRateMax;
     [SerializeField] private float _newPatrolTime;
     public Vector3 newDestination;
     public Vector3 newDirection;
@@ -48,6 +49,8 @@ public class EnemyController : MonoBehaviour
             DirectionCheck();
             EnemyMovement();
             StateManager();
+            if (playerRef != null)
+                PlayerDistance();
             //print(DirectionCheck());
         }
         else
@@ -58,17 +61,56 @@ public class EnemyController : MonoBehaviour
             
     }
 
-    
+    public float PlayerDistance()
+    {
+        float playerDist = Vector2.Distance(playerRef.position, transform.position);
+        //print(playerDist);
+        return playerDist;
+    }
+
     private void EnemyMovement()
     {
         originDistance = Vector2.Distance(transform.position, _originalPosition);
         Vector2 direction = new Vector2(0, 0);
 
+        switch(enemyState)
+        {
+            case EnemyState.engaged:
+                if (playerRef != null)
+                    direction = playerRef.position - transform.position;
+                if (PlayerDistance() > 0.5f)
+                    _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
+                break;
+
+            case EnemyState.attacking:
+                _rb.velocity = new Vector2(0, 0);
+                break;
+
+            case EnemyState.disengaged:
+                direction = _originalPosition - transform.position;
+                _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
+                break;
+
+            case EnemyState.patrol:
+                SetPatrol();
+                patrolDistance = Vector2.Distance(transform.position, newDestination);
+                direction = newDirection;
+                if (patrolDistance >= 0.25f)
+                    _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
+                else
+                    _rb.velocity = new Vector2(0, 0);
+                break;
+        }
+
+        /*
         if (enemyState == EnemyState.engaged)
         {
-            if (_playerRef != null)
-                direction = _playerRef.position - transform.position;
-            _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
+            if (playerRef != null)
+                direction = playerRef.position - transform.position;
+
+            if (PlayerDistance() > 0.5f && enemyState != EnemyState.attacking)
+                _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
+
         }
         else if (enemyState == EnemyState.disengaged)
         {
@@ -77,26 +119,29 @@ public class EnemyController : MonoBehaviour
         }
         else if (enemyState == EnemyState.patrol)
         {
-            SetPatrol();
-            patrolDistance = Vector2.Distance(transform.position, newDestination);
-            direction = newDirection;
+                SetPatrol();
+                patrolDistance = Vector2.Distance(transform.position, newDestination);
+                direction = newDirection;
 
-            if (patrolDistance >= 0.25f)
-                _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
-            else
-                _rb.velocity = new Vector2(0, 0);
+                if (patrolDistance >= 0.25f)
+                    _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
+                else
+                    _rb.velocity = new Vector2(0, 0);
         }
-
-
+        */
     }
+
+
 
     private void SetPatrol()
     {
         if (_newPatrolTime <= Time.time)
         {
+            float rate = Random.Range(_patrolRateMin, _patrolRateMax);
+
             newDestination = SetPatrolDestination();
             newDirection = newDestination - transform.position;
-            _newPatrolTime = Time.time + _patrolRate;
+            _newPatrolTime = Time.time + rate;
         }
     }
 
@@ -104,6 +149,17 @@ public class EnemyController : MonoBehaviour
     {
         float rX = Random.Range(-2f, 2f);
         float rY = Random.Range(-2f, 2f);
+
+        if (rX < 0.5)
+            rX += 1;
+        else if (rX < -0.5)
+            rX -= 1;
+
+        if (rY < 0.5)
+            rY += 1;
+        else if (rY < -0.5)
+            rY -= 1;
+
         Vector3 patrolDestination = new Vector3(_originalPosition.x + rX, _originalPosition.y + rY);
         return patrolDestination;
     }
@@ -112,7 +168,8 @@ public class EnemyController : MonoBehaviour
     {
         if (enemyState != EnemyState.engaged)
         {
-            if (originDistance >= 0.25f && enemyState != EnemyState.patrol)
+            //if we aren't on patrol or are not attacking and not engaged
+            if (originDistance >= 0.25f && enemyState != EnemyState.patrol && enemyState != EnemyState.attacking)
                 enemyState = EnemyState.disengaged;
             else if (originDistance <= 0.25f)
                 enemyState = EnemyState.patrol;
@@ -174,10 +231,10 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.layer == 8)
+        if (collision.gameObject.layer == 8)
         {
-            print("Player in range");
-            _playerRef = collision.gameObject.transform;
+            //print("Player in range");
+            playerRef = collision.gameObject.transform;
             enemyState = EnemyState.engaged;
             _inRange = true;
         }
@@ -187,7 +244,7 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.layer == 8)
         {
-            print("Player out of range");
+            //print("Player out of range");
             enemyState = EnemyState.disengaged;
             _inRange = false;
         }

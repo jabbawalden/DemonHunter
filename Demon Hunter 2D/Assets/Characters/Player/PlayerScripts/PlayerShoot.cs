@@ -40,7 +40,7 @@ public class PlayerShoot : MonoBehaviour
                 if (_healthComponent._currentHealth > _healthCost)
                 {
                     ShootAbility();
-                    _playerController.StopVelocity();
+                    //_playerController.StopVelocity();
                 }     
             }
             else
@@ -52,7 +52,7 @@ public class PlayerShoot : MonoBehaviour
 
     private void ShootAbility()
     {
-        _playerController.canMove = false;
+        /*_playerController.canMove = false;*/
 
         if (Time.time >= _newTime)
         {
@@ -65,6 +65,7 @@ public class PlayerShoot : MonoBehaviour
 
             proj.transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
             proj.GetComponent<Rigidbody2D>().velocity = direction * _projectileSpeed * Time.deltaTime;
+
             //set damage
             projBehaviour = proj.GetComponent<ProjectileBehaviour>();
             projBehaviour.damage = _projDamage;
