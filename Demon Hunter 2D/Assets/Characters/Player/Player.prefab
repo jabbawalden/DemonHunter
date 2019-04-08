@@ -40,6 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9015813692032240224}
   - component: {fileID: 9015813692032240225}
+  - component: {fileID: 2223179691734047588}
   - component: {fileID: 5943636851473312307}
   - component: {fileID: 9015813692032240226}
   - component: {fileID: 8083524653263315906}
@@ -81,17 +82,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 0
-  _movementSpeed: 300
-  _dashSpeed: 1200
+  _movementSpeed: 400
+  _dashSpeed: 1400
   direction: 0
   canMove: 0
   isDashing: 0
   _canDashDamage: 0
   _dashDamage: 5
   _dashHealAmount: 10
-  _dashEnergyCost: 30
+  _dashEnergyCost: 32
   _circleCollider: {fileID: 1447648259}
   _playerState: 0
+--- !u!114 &2223179691734047588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9015813692032240231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078b7b52f0c69854b865f720870f4482, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _recoveryAttackTime: 0.35
+  _initialAttackTime: 0.1
+  _attackWindUpTime: 0.1
+  _attackRate: 0.8
+  _newTime: 0
+  _meleeDamage: 100
+  _canMeleeDamage: 0
 --- !u!114 &5943636851473312307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,10 +126,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _projectileSpeed: 1100
   _fireRate: 0.25
-  _shootAnimationTime: 0.6
-  _projDamage: 2.5
+  _shootAnimationTime: 0.5
+  _projDamage: 3.5
   _healthCost: 1
-  _energyCost: 10
+  _energyCost: 12
   projectile: {fileID: 5817606138077904511, guid: 63a02c98749e77d43aa35d73d312a2fb,
     type: 3}
   _shootOrigin: {fileID: 1973994210}

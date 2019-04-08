@@ -58,8 +58,6 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponentInChildren<Animator>();
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
-        _playerState = 0;
-        _circleCollider.enabled = false;
     }
 
     // Start is called before the first frame update
@@ -67,13 +65,15 @@ public class PlayerController : MonoBehaviour
     {
         canMove = true;
         direction = 1;
+        _playerState = 0;
         _canDashDamage = false;
+        _circleCollider.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_playerHealthComp.isAlive())
+        if (_playerHealthComp.IsAlive())
         {
             if (canMove)
                 PlayerMovement(_movementSpeed);

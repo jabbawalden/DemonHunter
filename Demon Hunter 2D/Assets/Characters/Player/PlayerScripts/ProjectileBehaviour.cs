@@ -36,6 +36,11 @@ public class ProjectileBehaviour : MonoBehaviour
             //Destroy(gameObject);
 
         }
+
+        if (collision.gameObject.layer == 12)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnBecameInvisible()

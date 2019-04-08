@@ -44,7 +44,7 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        if (_healthComponent.isAlive())
+        if (_healthComponent.IsAlive())
         {
             DirectionCheck();
             EnemyMovement();

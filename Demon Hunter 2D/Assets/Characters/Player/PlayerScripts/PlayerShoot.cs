@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
-    
     private PlayerController _playerController;
     private C_Health _healthComponent;
     private UIManager _uiManager;
@@ -36,7 +35,7 @@ public class PlayerShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_healthComponent.isAlive())
+        if (_healthComponent.IsAlive())
         {
             if (Input.GetKey(KeyCode.Mouse0))
             {
@@ -45,10 +44,6 @@ public class PlayerShoot : MonoBehaviour
                     ShootAbility();
                     //_playerController.StopVelocity();
                 }     
-            }
-            else
-            {
-                _playerController.canMove = true;
             }
         }
     }

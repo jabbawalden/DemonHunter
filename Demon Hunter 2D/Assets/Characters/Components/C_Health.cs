@@ -43,7 +43,7 @@ public class C_Health : MonoBehaviour
         return percent;
     }
 
-    public bool isAlive()
+    public bool IsAlive()
     {
         if (_currentHealth <= 0)
             return false;
