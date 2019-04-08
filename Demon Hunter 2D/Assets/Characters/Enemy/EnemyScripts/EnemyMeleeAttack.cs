@@ -9,7 +9,8 @@ public class EnemyMeleeAttack : MonoBehaviour
     [SerializeField] private float _attackRange;
     [SerializeField] private float _attackRate;
     [SerializeField] private float _newTime;
-    [SerializeField] private float _attackTime; 
+    [SerializeField] private float _attackTime;
+    [SerializeField] private float _preAttackTime; 
     private EnemyController _enemyController;
     private C_Health _playerHealthComponent;
     private UIManager _uiManager;
@@ -37,10 +38,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     {
         if (_newTime <= Time.time)
         {
-            _playerHealthComponent = _enemyController.playerRef.GetComponentInParent<C_Health>();
             _newTime = Time.time + _attackRate;
-            _playerHealthComponent.Damage(_damage);
-            _uiManager.UpdateHealthSlider();
             StartCoroutine(MeleeAttackBehaviour());
         }
     }
@@ -49,7 +47,20 @@ public class EnemyMeleeAttack : MonoBehaviour
     {
         stateCheck = _enemyController.enemyState;
         _enemyController.enemyState = EnemyState.attacking;
+        yield return new WaitForSeconds(_preAttackTime);
+        if (_enemyController.PlayerDistance() <= _attackRange)
+        {
+            _playerHealthComponent = _enemyController.playerRef.GetComponentInParent<C_Health>();
+            _playerHealthComponent.Damage(_damage);
+            _uiManager.UpdateHealthSlider();
+            print("Hit successful");
+        }
+        else
+        {
+            print("Hit missed");
+        } 
         yield return new WaitForSeconds(_attackTime);
+
         _enemyController.enemyState = stateCheck;
     }
 

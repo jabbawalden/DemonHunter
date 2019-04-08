@@ -6,10 +6,12 @@ public class ProjectileBehaviour : MonoBehaviour
 {
     public float damage;
     private C_Health _healthComponent;
+    private PlayerEnergy _playerEnergy;
 
     private void Awake()
     {
         _healthComponent = GetComponent<C_Health>();
+        _playerEnergy = GetComponent<PlayerEnergy>();
     }
 
     // Start is called before the first frame update
@@ -30,9 +32,14 @@ public class ProjectileBehaviour : MonoBehaviour
         {
             _healthComponent = collision.GetComponentInParent<C_Health>();
             _healthComponent.Damage(damage);
-            Destroy(gameObject);
+            
+            //Destroy(gameObject);
 
         }
     }
 
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
+    }
 }

@@ -28,6 +28,14 @@ public class PlayerEnergy : MonoBehaviour
         }
     }
 
+    public void RemoveEnergy(float energyAmount)
+    {
+        if (currentEnergy >= energyAmount)
+            currentEnergy -= energyAmount;
+        else
+            currentEnergy = 0;
+    }
+
     public float GetEnergyPercent()
     {
         float percent = currentEnergy / maxEnergy;

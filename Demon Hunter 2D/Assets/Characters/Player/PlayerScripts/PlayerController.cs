@@ -113,11 +113,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && _playerEnergy.currentEnergy >= _dashEnergyCost)
         {
-            if (_playerEnergy.currentEnergy >= _dashEnergyCost)
-                _playerEnergy.currentEnergy -= _dashEnergyCost;
-            else
-                _playerEnergy.currentEnergy = 0;
-
+            _playerEnergy.RemoveEnergy(_dashEnergyCost);
             //TODO - only dash when energy is equal or above dash cost
             StartCoroutine(DashBehaviour(4.5f, 0.3f));
             _uiManager.UpdateEnergySlider();
@@ -236,8 +232,12 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.layer == 10 && _canDashDamage && collision.GetComponentInParent<C_Health>() != null)
         {
             _enemyHealthComp = collision.GetComponentInParent<C_Health>();
+            //if they are about to die
+            if (_enemyHealthComp._currentHealth <= _dashDamage)
+            {
+                _playerHealthComp.Heal(_dashHealAmount);
+            }
             _enemyHealthComp.Damage(_dashDamage);
-            _playerHealthComp.Heal(_dashHealAmount);
             _uiManager.UpdateHealthSlider();
 
             //print("hit enemy");

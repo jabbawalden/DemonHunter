@@ -88,8 +88,8 @@ MonoBehaviour:
   isDashing: 0
   _canDashDamage: 0
   _dashDamage: 5
-  _dashHealAmount: 15
-  _dashEnergyCost: 25
+  _dashHealAmount: 10
+  _dashEnergyCost: 30
   _circleCollider: {fileID: 1447648259}
   _playerState: 0
 --- !u!114 &5943636851473312307
@@ -106,9 +106,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _projectileSpeed: 1100
   _fireRate: 0.25
-  _shootAnimationTime: 0.5
+  _shootAnimationTime: 0.6
   _projDamage: 2.5
-  _healthCost: 2.5
+  _healthCost: 1
+  _energyCost: 10
   projectile: {fileID: 5817606138077904511, guid: 63a02c98749e77d43aa35d73d312a2fb,
     type: 3}
   _shootOrigin: {fileID: 1973994210}
@@ -126,6 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 50
   _currentHealth: 50
+  isPlayerComponent: 0
 --- !u!114 &8083524653263315906
 MonoBehaviour:
   m_ObjectHideFlags: 0

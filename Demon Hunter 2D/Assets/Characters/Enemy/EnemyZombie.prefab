@@ -73,6 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 10
   _currentHealth: 0
+  isPlayerComponent: 0
 --- !u!114 &2820954046073255290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,10 +87,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 5
-  _attackRange: 0.7
+  _attackRange: 0.75
   _attackRate: 0.8
   _newTime: 0
-  _attackTime: 0.75
+  _attackTime: 0.5
+  _preAttackTime: 0.5
   stateCheck: 0
 --- !u!58 &8186703901129291067
 CircleCollider2D:
@@ -106,7 +108,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 7
 --- !u!50 &8186703901129291066
 Rigidbody2D:
   serializedVersion: 4

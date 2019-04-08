@@ -8,6 +8,7 @@ public class PlayerShoot : MonoBehaviour
     private PlayerController _playerController;
     private C_Health _healthComponent;
     private UIManager _uiManager;
+    private PlayerEnergy _playerEnergy;
 
     [Header("Variables")]
     [SerializeField] private float _projectileSpeed;
@@ -15,6 +16,7 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private float _shootAnimationTime;
     [SerializeField] private float _projDamage;
     [SerializeField] private float _healthCost;
+    [SerializeField] private float _energyCost;
     private float _newTime;
     public GameObject projectile;
     [SerializeField] private Transform _shootOrigin;
@@ -27,6 +29,7 @@ public class PlayerShoot : MonoBehaviour
     {
         _playerController = GetComponent<PlayerController>();
         _healthComponent = GetComponent<C_Health>();
+        _playerEnergy = GetComponent<PlayerEnergy>();
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
     }
 
@@ -52,9 +55,10 @@ public class PlayerShoot : MonoBehaviour
 
     private void ShootAbility()
     {
-        /*_playerController.canMove = false;*/
+        _playerController.canMove = false;
+        _playerController.StopVelocity();
 
-        if (Time.time >= _newTime)
+        if (Time.time >= _newTime && _playerEnergy.currentEnergy >= _energyCost)
         {
             print("shoot");
             _newTime = Time.time + _fireRate;
@@ -72,7 +76,8 @@ public class PlayerShoot : MonoBehaviour
 
             _healthComponent.Damage(_healthCost);
             _uiManager.UpdateHealthSlider();
-
+            _playerEnergy.RemoveEnergy(_energyCost);
+            _uiManager.UpdateEnergySlider();
         }
     }
 
@@ -80,6 +85,6 @@ public class PlayerShoot : MonoBehaviour
     {
         
         yield return new WaitForSeconds(_shootAnimationTime);
-         
+        _playerController.canMove = true;
     }
 }

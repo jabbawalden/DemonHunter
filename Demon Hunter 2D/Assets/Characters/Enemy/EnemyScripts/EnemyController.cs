@@ -101,34 +101,7 @@ public class EnemyController : MonoBehaviour
                     _rb.velocity = new Vector2(0, 0);
                 break;
         }
-
-        /*
-        if (enemyState == EnemyState.engaged)
-        {
-            if (playerRef != null)
-                direction = playerRef.position - transform.position;
-
-            if (PlayerDistance() > 0.5f && enemyState != EnemyState.attacking)
-                _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
-
-        }
-        else if (enemyState == EnemyState.disengaged)
-        {
-            direction = _originalPosition - transform.position;
-            _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
-        }
-        else if (enemyState == EnemyState.patrol)
-        {
-                SetPatrol();
-                patrolDistance = Vector2.Distance(transform.position, newDestination);
-                direction = newDirection;
-
-                if (patrolDistance >= 0.25f)
-                    _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
-                else
-                    _rb.velocity = new Vector2(0, 0);
-        }
-        */
+        
     }
 
 
