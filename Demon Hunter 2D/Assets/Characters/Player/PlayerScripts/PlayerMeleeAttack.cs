@@ -36,7 +36,7 @@ public class PlayerMeleeAttack : MonoBehaviour
     {
         if (_playerHealthComp.IsAlive())
         {
-            if (Input.GetKeyDown(KeyCode.Mouse1))
+            if (Input.GetKey(KeyCode.Mouse1))
             {
                 MeleeAttack();
             }
@@ -60,22 +60,24 @@ public class PlayerMeleeAttack : MonoBehaviour
     IEnumerator MeleeBehaviour()
     {
         yield return new WaitForSeconds(_attackWindUpTime);
-        _circleCollider.enabled = true;
-        yield return new WaitForSeconds(_initialAttackTime);
-        _circleCollider.enabled = false;
+        //spawn melee attack collider
+        //use instantiate instead of collier because 
+        print("attack spawns");
         yield return new WaitForSeconds(_recoveryAttackTime);
         _playerController.canMove = true;
-        _canMeleeDamage = false;
-       
+        _canMeleeDamage = false;       
     }
 
+    /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 10 && _canMeleeDamage && collision.GetComponentInParent<C_Health>() != null)
         {
             _enemyHealthComp = collision.GetComponentInParent<C_Health>();
             _enemyHealthComp.Damage(_meleeDamage);
+            print("hit enemy");
             //add a small knock-back effect and also stun effect that interrupts attacks
         }
     }
+    */
 }

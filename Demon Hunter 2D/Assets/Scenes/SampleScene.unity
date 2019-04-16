@@ -16159,5 +16159,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2223179691734047588, guid: 707de60c90e85d446a84aee689e050c4,
+        type: 3}
+      propertyPath: _recoveryAttackTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223179691734047588, guid: 707de60c90e85d446a84aee689e050c4,
+        type: 3}
+      propertyPath: _initialAttackTime
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223179691734047588, guid: 707de60c90e85d446a84aee689e050c4,
+        type: 3}
+      propertyPath: _attackWindUpTime
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223179691734047588, guid: 707de60c90e85d446a84aee689e050c4,
+        type: 3}
+      propertyPath: _meleeDamage
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1447648259, guid: 707de60c90e85d446a84aee689e050c4, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 707de60c90e85d446a84aee689e050c4, type: 3}
