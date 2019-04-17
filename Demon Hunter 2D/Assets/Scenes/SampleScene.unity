@@ -16183,5 +16183,25 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9015813692032240225, guid: 707de60c90e85d446a84aee689e050c4,
+        type: 3}
+      propertyPath: _dashDamage
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5943636851473312307, guid: 707de60c90e85d446a84aee689e050c4,
+        type: 3}
+      propertyPath: _healthCost
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5943636851473312307, guid: 707de60c90e85d446a84aee689e050c4,
+        type: 3}
+      propertyPath: _energyCost
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5943636851473312307, guid: 707de60c90e85d446a84aee689e050c4,
+        type: 3}
+      propertyPath: _projDamage
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 707de60c90e85d446a84aee689e050c4, type: 3}
