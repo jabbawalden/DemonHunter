@@ -27,11 +27,15 @@ public class EnemyController : MonoBehaviour
     public Vector3 newDirection;
     [Space(4)]
 
-    [Header("Prefabs")]
+    [Header("Prefabs and Objects")]
     public GameObject energyPickUp;
+    public GameObject enemyAlive, enemyDead;
+    private bool deathEnabled;
 
     private void Awake()
     {
+        deathEnabled = false;
+        enemyDead.SetActive(false);
         _rb = GetComponent<Rigidbody2D>();
         _healthComponent = GetComponent<C_Health>();
     }
@@ -53,10 +57,13 @@ public class EnemyController : MonoBehaviour
                 PlayerDistance();
             //print(DirectionCheck());
         }
-        else
+        else if (!deathEnabled)
         {
+            deathEnabled = true;
             Instantiate(energyPickUp, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            enemyAlive.SetActive(false);
+            enemyDead.SetActive(true);
+            _rb.velocity = new Vector2(0, 0);
         }
             
     }
