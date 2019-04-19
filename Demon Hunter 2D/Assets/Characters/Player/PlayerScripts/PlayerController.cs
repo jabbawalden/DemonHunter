@@ -151,7 +151,6 @@ public class PlayerController : MonoBehaviour
         _rb.velocity = new Vector2(0, 0);
         isDashing = false;
         _playerState = 0;
-        print("end dash");
     }
 
     private void SetAnimationPlay(int state)
@@ -235,11 +234,14 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.layer == 10 && _canDashDamage && collision.GetComponentInParent<C_Health>() != null)
         {
             _enemyHealthComp = collision.GetComponentInParent<C_Health>();
+            /*
             //if they are about to die
             if (_enemyHealthComp._currentHealth <= _dashDamage)
             {
                 _playerHealthComp.Heal(_dashHealAmount);
             }
+            */
+            _playerHealthComp.Heal(_dashHealAmount);
             _enemyHealthComp.Damage(_dashDamage);
             _uiManager.UpdateHealthSlider();
 

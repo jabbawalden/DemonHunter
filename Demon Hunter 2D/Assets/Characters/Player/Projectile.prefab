@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  _maxHitCount: 4
 --- !u!50 &2132095465
 Rigidbody2D:
   serializedVersion: 4

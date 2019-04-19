@@ -55,7 +55,6 @@ public class PlayerShoot : MonoBehaviour
 
         if (Time.time >= _newTime && _playerEnergy.currentEnergy >= _energyCost)
         {
-            print("shoot");
             _newTime = Time.time + _fireRate;
             StartCoroutine(ShootBehaviour());
 

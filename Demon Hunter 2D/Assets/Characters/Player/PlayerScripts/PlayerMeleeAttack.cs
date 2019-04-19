@@ -14,6 +14,7 @@ public class PlayerMeleeAttack : MonoBehaviour
     [SerializeField] private float _attackWindUpTime;
     [SerializeField] private float _attackRate; 
     [SerializeField] private float _newTime;
+    [SerializeField] private float _attackTime;
     [SerializeField] private float _meleeDamage;
     [SerializeField] private float _meleeSpawnRange; 
     [SerializeField] private bool _canMeleeDamage;
@@ -72,7 +73,7 @@ public class PlayerMeleeAttack : MonoBehaviour
 
         if (obj.GetComponent<PlayerMeleeStrike>() != null)
         {
-            obj.GetComponent<PlayerMeleeStrike>().attackTime = 0.5f;
+            obj.GetComponent<PlayerMeleeStrike>().attackTime = _attackTime;
             obj.GetComponent<PlayerMeleeStrike>().damage = _meleeDamage; 
         }
 

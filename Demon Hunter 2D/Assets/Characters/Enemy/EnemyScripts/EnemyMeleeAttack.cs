@@ -13,12 +13,14 @@ public class EnemyMeleeAttack : MonoBehaviour
     [SerializeField] private float _preAttackTime; 
     private EnemyController _enemyController;
     private C_Health _playerHealthComponent;
+    private C_Health _ourHealthComp;
     private UIManager _uiManager;
 
     public EnemyState stateCheck;
 
     private void Awake()
     {
+        _ourHealthComp = GetComponent<C_Health>();
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         _enemyController = GetComponent<EnemyController>();
     }
@@ -28,7 +30,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     {
         if (_enemyController.playerRef != null)
         {
-            if (_enemyController.PlayerDistance() <= _attackRange)
+            if (_enemyController.PlayerDistance() <= _attackRange && _ourHealthComp.IsAlive())
                 AttackPlayer();
         }
       
@@ -53,7 +55,6 @@ public class EnemyMeleeAttack : MonoBehaviour
             _playerHealthComponent = _enemyController.playerRef.GetComponentInParent<C_Health>();
             _playerHealthComponent.Damage(_damage);
             _uiManager.UpdateHealthSlider();
-            print("Hit successful");
         }
         else
         {

@@ -47,7 +47,6 @@ public class EnergyPickUp : MonoBehaviour
         {
             float distance = Vector3.Distance(_playerEnergy.transform.position, transform.position);
             Vector2 direction = _playerEnergy.transform.position - transform.position;
-            print(distance);
 
             if (distance <= _distanceReference)
             {

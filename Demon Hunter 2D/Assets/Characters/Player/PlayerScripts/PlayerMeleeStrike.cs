@@ -6,6 +6,8 @@ public class PlayerMeleeStrike : MonoBehaviour
 {
     [System.NonSerialized] public float damage;
     [System.NonSerialized] public float attackTime;
+    [System.NonSerialized] public int hitCount;
+    [SerializeField] private int _maxHitCount;
 
     private void Start()
     {
@@ -18,8 +20,17 @@ public class PlayerMeleeStrike : MonoBehaviour
         {
             print(collision.name);
             collision.GetComponentInParent<C_Health>().Damage(damage);
+            HitCounter();
         }
 
+    }
+
+    private void HitCounter()
+    {
+        if (hitCount == _maxHitCount)
+            Destroy(gameObject);
+        else
+            hitCount++;
     }
 
     IEnumerator AttackTimer(float seconds)

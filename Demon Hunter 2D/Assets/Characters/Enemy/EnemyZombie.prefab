@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9208413175134491769
 Transform:
   m_ObjectHideFlags: 0
@@ -151,10 +151,12 @@ MonoBehaviour:
   enemyState: 0
   playerRef: {fileID: 0}
   _inRange: 0
-  _moveSpeed: 150
+  _moveSpeed: 190
   _patrolRateMin: 2
   _patrolRateMax: 4
   _newPatrolTime: 0
+  _deathLerpTime: 0.03
+  _destroyObjectSeconds: 3
   newDestination: {x: 0, y: 0, z: 0}
   newDirection: {x: 0, y: 0, z: 0}
   energyPickUp: {fileID: 2119201555398515205, guid: 3bdb3c0e477fc1b4db83915761c4136a,
@@ -188,12 +190,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7764b1a1f0bcadc46a6c9e8de4b05122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 5
-  _attackRange: 0.75
-  _attackRate: 0.8
+  _damage: 8
+  _attackRange: 0.8
+  _attackRate: 0.6
   _newTime: 0
-  _attackTime: 0.5
-  _preAttackTime: 0.5
+  _attackTime: 0.3
+  _preAttackTime: 0.3
   stateCheck: 0
 --- !u!58 &8186703901129291067
 CircleCollider2D:

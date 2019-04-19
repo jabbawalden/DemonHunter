@@ -23,6 +23,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float _patrolRateMin;
     [SerializeField] private float _patrolRateMax;
     [SerializeField] private float _newPatrolTime;
+    [SerializeField] private float _deathLerpTime;
+    [SerializeField] private float _destroyObjectSeconds;
     public Vector3 newDestination;
     public Vector3 newDirection;
     [Space(4)]
@@ -31,9 +33,11 @@ public class EnemyController : MonoBehaviour
     public GameObject energyPickUp;
     public GameObject enemyAlive, enemyDead;
     private bool deathEnabled;
+    Color opacityEnemyDead;
 
     private void Awake()
     {
+        opacityEnemyDead = enemyDead.GetComponent<SpriteRenderer>().color;
         deathEnabled = false;
         enemyDead.SetActive(false);
         _rb = GetComponent<Rigidbody2D>();
@@ -65,7 +69,20 @@ public class EnemyController : MonoBehaviour
             enemyDead.SetActive(true);
             _rb.velocity = new Vector2(0, 0);
         }
+
+        if (deathEnabled)
+        {
+            opacityEnemyDead.a = Mathf.Lerp(opacityEnemyDead.a, 0, _deathLerpTime);
+            print(opacityEnemyDead.a);
+            enemyDead.GetComponent<SpriteRenderer>().color = opacityEnemyDead;
+            Invoke("DestroyOurObject", _destroyObjectSeconds);
+        }
             
+    }
+
+    private void DestroyOurObject()
+    {
+        Destroy(gameObject);
     }
 
     public float PlayerDistance()

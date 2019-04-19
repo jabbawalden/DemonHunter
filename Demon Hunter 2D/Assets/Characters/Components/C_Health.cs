@@ -21,7 +21,6 @@ public class C_Health : MonoBehaviour
         else
         {
             _currentHealth -= damage;
-            print("Damaged");
         }
 
     }
