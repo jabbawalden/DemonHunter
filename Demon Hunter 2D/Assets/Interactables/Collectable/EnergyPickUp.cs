@@ -16,6 +16,7 @@ public class EnergyPickUp : MonoBehaviour
     [SerializeField] private float _distanceToMove;
     
     bool canBounce;
+    bool canBeConsumed;
 
     private void Awake()
     {
@@ -26,6 +27,7 @@ public class EnergyPickUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        canBeConsumed = false;
         canBounce = true;
         //Invoke("BounceyBehaviour", 0.4f);
         float r = Random.Range(-_bounceForce, _bounceForce);
@@ -41,7 +43,7 @@ public class EnergyPickUp : MonoBehaviour
 
     private void EnergyBehaviour()
     {
-        if (_playerEnergy != null)
+        if (_playerEnergy != null && canBeConsumed)
         {
             float distance = Vector3.Distance(_playerEnergy.transform.position, transform.position);
             Vector2 direction = _playerEnergy.transform.position - transform.position;
@@ -93,6 +95,7 @@ public class EnergyPickUp : MonoBehaviour
         _rb.gravityScale = 0;
         _rb.velocity = new Vector3(0,0,0);
         canBounce = false;
+        canBeConsumed = true;
         
     }
 

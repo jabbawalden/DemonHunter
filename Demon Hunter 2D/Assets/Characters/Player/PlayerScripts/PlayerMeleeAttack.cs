@@ -15,8 +15,11 @@ public class PlayerMeleeAttack : MonoBehaviour
     [SerializeField] private float _attackRate; 
     [SerializeField] private float _newTime;
     [SerializeField] private float _meleeDamage;
+    [SerializeField] private float _meleeSpawnRange; 
     [SerializeField] private bool _canMeleeDamage;
     private CircleCollider2D _circleCollider;
+
+    [SerializeField] private GameObject _meleeAttackObj;
 
     private void Awake()
     {
@@ -59,9 +62,20 @@ public class PlayerMeleeAttack : MonoBehaviour
 
     IEnumerator MeleeBehaviour()
     {
+        Vector2 position = new Vector2(transform.position.x, transform.position.y) + _playerController.AimDirection();
+        print(position);
+        print(_playerController.AimDirection());
         yield return new WaitForSeconds(_attackWindUpTime);
         //spawn melee attack collider
         //use instantiate instead of collier because 
+        GameObject obj = Instantiate(_meleeAttackObj, position, Quaternion.identity);
+
+        if (obj.GetComponent<PlayerMeleeStrike>() != null)
+        {
+            obj.GetComponent<PlayerMeleeStrike>().attackTime = 0.5f;
+            obj.GetComponent<PlayerMeleeStrike>().damage = 5;
+        }
+
         print("attack spawns");
         yield return new WaitForSeconds(_recoveryAttackTime);
         _playerController.canMove = true;
