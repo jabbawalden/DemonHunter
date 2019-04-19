@@ -73,7 +73,7 @@ public class PlayerMeleeAttack : MonoBehaviour
         if (obj.GetComponent<PlayerMeleeStrike>() != null)
         {
             obj.GetComponent<PlayerMeleeStrike>().attackTime = 0.5f;
-            obj.GetComponent<PlayerMeleeStrike>().damage = 5;
+            obj.GetComponent<PlayerMeleeStrike>().damage = _meleeDamage; 
         }
 
         print("attack spawns");

@@ -105,12 +105,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 078b7b52f0c69854b865f720870f4482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _recoveryAttackTime: 0.35
-  _initialAttackTime: 0.1
-  _attackWindUpTime: 0.1
+  _recoveryAttackTime: 0.1
+  _initialAttackTime: 0.08
+  _attackWindUpTime: 0.08
   _attackRate: 0.8
   _newTime: 0
-  _meleeDamage: 100
+  _meleeDamage: 5
   _meleeSpawnRange: 0
   _canMeleeDamage: 0
   _meleeAttackObj: {fileID: 8539551883183876278, guid: 9cdbf58f903615b40a506879ca22c17c,
@@ -127,12 +127,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 280494a4ebcda5a41ad4d058065961f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectileSpeed: 1100
+  _projectileSpeed: 1200
   _fireRate: 0.25
   _shootAnimationTime: 0.5
-  _projDamage: 3.5
-  _healthCost: 1
-  _energyCost: 12
+  _projDamage: 15
+  _healthCost: 10
+  _energyCost: 0
   projectile: {fileID: 5817606138077904511, guid: 63a02c98749e77d43aa35d73d312a2fb,
     type: 3}
   _shootOrigin: {fileID: 1973994210}
@@ -193,7 +193,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9015813692032240231}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
