@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
     private PlayerEnergy _playerEnergy;
     private Animator _animator;
     private UIManager _uiManager;
+    private PlayerCamera _playerCamera;
     [Space(4)]
 
     [Header("Animations")]
@@ -58,6 +59,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponentInChildren<Animator>();
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        _playerCamera = GameObject.Find("CameraHolder").GetComponent<PlayerCamera>();
     }
 
     // Start is called before the first frame update
@@ -117,6 +119,7 @@ public class PlayerController : MonoBehaviour
             //TODO - only dash when energy is equal or above dash cost
             StartCoroutine(DashBehaviour(4.5f, 0.3f));
             _uiManager.UpdateEnergySlider();
+            _playerCamera.CameraShake();
         }
     }
 
