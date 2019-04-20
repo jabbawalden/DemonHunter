@@ -8,6 +8,7 @@ public class PlayerMeleeStrike : MonoBehaviour
     [System.NonSerialized] public float attackTime;
     [System.NonSerialized] public int hitCount;
     [SerializeField] private int _maxHitCount;
+    private EnemyController _enemyController;
 
     private void Start()
     {
@@ -18,9 +19,14 @@ public class PlayerMeleeStrike : MonoBehaviour
     {
         if (collision.gameObject.layer == 10 && collision.GetComponentInParent<C_Health>() != null)
         {
-            print(collision.name);
             collision.GetComponentInParent<C_Health>().Damage(damage);
+            if (collision.GetComponentInParent<EnemyController>() != null)
+            {
+                _enemyController = collision.GetComponentInParent<EnemyController>();
+            }
             HitCounter();
+
+
         }
 
     }
@@ -28,9 +34,15 @@ public class PlayerMeleeStrike : MonoBehaviour
     private void HitCounter()
     {
         if (hitCount == _maxHitCount)
+        {
             Destroy(gameObject);
+        }
         else
+        {
             hitCount++;
+            _enemyController.knockBack = true;
+        }
+           
     }
 
     IEnumerator AttackTimer(float seconds)

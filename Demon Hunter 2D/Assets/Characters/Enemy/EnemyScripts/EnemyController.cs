@@ -27,6 +27,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float _destroyObjectSeconds;
     public Vector3 newDestination;
     public Vector3 newDirection;
+    public bool knockBack;
     [Space(4)]
 
     [Header("Prefabs and Objects")]
@@ -48,6 +49,7 @@ public class EnemyController : MonoBehaviour
     {
         _originalPosition = transform.position;
         _inRange = false;
+        knockBack = false;
     }
 
     void Update()
@@ -73,7 +75,6 @@ public class EnemyController : MonoBehaviour
         if (deathEnabled)
         {
             opacityEnemyDead.a = Mathf.Lerp(opacityEnemyDead.a, 0, _deathLerpTime);
-            print(opacityEnemyDead.a);
             enemyDead.GetComponent<SpriteRenderer>().color = opacityEnemyDead;
             Invoke("DestroyOurObject", _destroyObjectSeconds);
         }
@@ -96,38 +97,47 @@ public class EnemyController : MonoBehaviour
     {
         originDistance = Vector2.Distance(transform.position, _originalPosition);
         Vector2 direction = new Vector2(0, 0);
+        if (playerRef != null)
+            direction = playerRef.position - transform.position;
 
-        switch(enemyState)
+        if (!knockBack)
         {
-            case EnemyState.engaged:
-                if (playerRef != null)
-                    direction = playerRef.position - transform.position;
-                if (PlayerDistance() > 0.5f)
-                    _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
-                break;
+            switch (enemyState)
+            {
+                case EnemyState.engaged:
+                    if (PlayerDistance() > 0.5f)
+                        _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
+                    break;
 
-            case EnemyState.attacking:
-                _rb.velocity = new Vector2(0, 0);
-                break;
-
-            case EnemyState.disengaged:
-                direction = _originalPosition - transform.position;
-                _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
-                break;
-
-            case EnemyState.patrol:
-                SetPatrol();
-                patrolDistance = Vector2.Distance(transform.position, newDestination);
-                direction = newDirection;
-                if (patrolDistance >= 0.25f)
-                    _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
-                else
+                case EnemyState.attacking:
                     _rb.velocity = new Vector2(0, 0);
-                break;
+                    break;
+
+                case EnemyState.disengaged:
+                    direction = _originalPosition - transform.position;
+                    _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
+                    break;
+
+                case EnemyState.patrol:
+                    SetPatrol();
+                    patrolDistance = Vector2.Distance(transform.position, newDestination);
+                    direction = newDirection;
+                    if (patrolDistance >= 0.25f)
+                        _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
+                    else
+                        _rb.velocity = new Vector2(0, 0);
+                    break;
+            }
         }
+        else if (knockBack)
+        {
+            _rb.velocity = new Vector2(0, 0);
+            _rb.AddForce(-direction * 2000 * Time.deltaTime);
+            Invoke("KnockBackStateReversion", 0.5f);
+        }
+ 
         
     }
-
 
 
     private void SetPatrol()
@@ -163,7 +173,7 @@ public class EnemyController : MonoBehaviour
 
     private void StateManager()
     {
-        if (enemyState != EnemyState.engaged)
+        if (enemyState != EnemyState.engaged && !knockBack)
         {
             //if we aren't on patrol or are not attacking and not engaged
             if (originDistance >= 0.25f && enemyState != EnemyState.patrol && enemyState != EnemyState.attacking)
@@ -171,6 +181,14 @@ public class EnemyController : MonoBehaviour
             else if (originDistance <= 0.25f)
                 enemyState = EnemyState.patrol;
         }
+
+    }
+
+    private void KnockBackStateReversion()
+    {
+        knockBack = false;
+        enemyState = EnemyState.engaged;
+        print("End Knockback");
     }
 
     private int DirectionCheck()

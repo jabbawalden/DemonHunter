@@ -58,7 +58,7 @@ public class EnemyMeleeAttack : MonoBehaviour
         }
         else
         {
-            print("Hit missed");
+            //print("Hit missed");
         } 
         yield return new WaitForSeconds(_attackTime);
 

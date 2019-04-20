@@ -52,7 +52,6 @@ public class PlayerMeleeAttack : MonoBehaviour
     {
         if (_newTime <= Time.time)
         {
-            print("Player melee attack");
             _canMeleeDamage = true;
             _playerController.canMove = false;
             _playerController.StopVelocity();
@@ -64,8 +63,6 @@ public class PlayerMeleeAttack : MonoBehaviour
     IEnumerator MeleeBehaviour()
     {
         Vector2 position = new Vector2(transform.position.x, transform.position.y) + _playerController.AimDirection();
-        print(position);
-        print(_playerController.AimDirection());
         yield return new WaitForSeconds(_attackWindUpTime);
         //spawn melee attack collider
         //use instantiate instead of collier because 
@@ -77,7 +74,6 @@ public class PlayerMeleeAttack : MonoBehaviour
             obj.GetComponent<PlayerMeleeStrike>().damage = _meleeDamage; 
         }
 
-        print("attack spawns");
         yield return new WaitForSeconds(_recoveryAttackTime);
         _playerController.canMove = true;
         _canMeleeDamage = false;       
