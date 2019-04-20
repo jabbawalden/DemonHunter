@@ -151,7 +151,7 @@ MonoBehaviour:
   enemyState: 0
   playerRef: {fileID: 0}
   _inRange: 0
-  _moveSpeed: 190
+  _moveSpeed: 170
   _patrolRateMin: 2
   _patrolRateMax: 4
   _newPatrolTime: 0

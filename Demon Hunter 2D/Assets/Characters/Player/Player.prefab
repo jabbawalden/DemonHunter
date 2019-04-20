@@ -82,14 +82,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 0
-  _movementSpeed: 400
+  _movementSpeed: 300
   _dashSpeed: 1400
   direction: 0
   canMove: 0
   isDashing: 0
   _canDashDamage: 0
-  _dashDamage: 5
-  _dashHealAmount: 10
+  _dashDamage: 3.5
+  _dashHealAmount: 2
   _dashEnergyCost: 32
   _circleCollider: {fileID: 1447648259}
   _playerState: 0
@@ -110,7 +110,8 @@ MonoBehaviour:
   _attackWindUpTime: 0.08
   _attackRate: 0.8
   _newTime: 0
-  _meleeDamage: 5
+  _attackTime: 1
+  _meleeDamage: 3
   _meleeSpawnRange: 0
   _canMeleeDamage: 0
   _meleeAttackObj: {fileID: 8539551883183876278, guid: 9cdbf58f903615b40a506879ca22c17c,
