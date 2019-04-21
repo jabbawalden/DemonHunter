@@ -39,10 +39,9 @@ public class PlayerShoot : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Mouse0))
             {
-                if (_healthComponent._currentHealth > _healthCost)
+                if (Time.time >= _newTime && _playerEnergy.currentEnergy >= _energyCost)
                 {
                     ShootAbility();
-                    //_playerController.StopVelocity();
                 }     
             }
         }
@@ -53,26 +52,23 @@ public class PlayerShoot : MonoBehaviour
         _playerController.canMove = false;
         _playerController.StopVelocity();
 
-        if (Time.time >= _newTime && _playerEnergy.currentEnergy >= _energyCost)
-        {
-            _newTime = Time.time + _fireRate;
-            StartCoroutine(ShootBehaviour());
+        _newTime = Time.time + _fireRate;
+        StartCoroutine(ShootBehaviour());
 
-            GameObject proj = Instantiate(projectile, _shootOrigin.position, projectile.transform.rotation);
-            Vector2 direction = _playerController.AimDirection().normalized; //normalized not actually needed
+        GameObject proj = Instantiate(projectile, _shootOrigin.position, projectile.transform.rotation);
+        Vector2 direction = _playerController.AimDirection().normalized; //normalized not actually needed
 
-            proj.transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
-            proj.GetComponent<Rigidbody2D>().velocity = direction * _projSpeed * Time.deltaTime;
+        proj.transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
+        proj.GetComponent<Rigidbody2D>().velocity = direction * _projSpeed * Time.deltaTime;
 
-            //set damage
-            projBehaviour = proj.GetComponent<ProjectileBehaviour>();
-            projBehaviour.damage = _projDamage;
+        //set damage
+        projBehaviour = proj.GetComponent<ProjectileBehaviour>();
+        projBehaviour.damage = _projDamage;
 
-            _healthComponent.Damage(_healthCost);
-            _uiManager.UpdateHealthSlider();
-            _playerEnergy.RemoveEnergy(_energyCost);
-            _uiManager.UpdateEnergySlider();
-        }
+        _healthComponent.Damage(_healthCost);
+        _uiManager.UpdateHealthSlider();
+        _playerEnergy.RemoveEnergy(_energyCost);
+        _uiManager.UpdateEnergySlider();
     }
 
     IEnumerator ShootBehaviour()
