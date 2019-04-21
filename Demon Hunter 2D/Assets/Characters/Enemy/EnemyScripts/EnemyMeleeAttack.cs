@@ -30,7 +30,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     {
         if (_enemyController.playerRef != null)
         {
-            if (_enemyController.PlayerDistance() <= _attackRange && _ourHealthComp.IsAlive())
+            if (_enemyController.TargetDistance() <= _attackRange && _enemyController.haveDirectlyEngaged && _ourHealthComp.IsAlive())
                 AttackPlayer();
         }
       
@@ -51,7 +51,7 @@ public class EnemyMeleeAttack : MonoBehaviour
         _enemyController.enemyState = EnemyState.attacking;
         yield return new WaitForSeconds(_preAttackTime);
 
-        if (_enemyController.PlayerDistance() <= _attackRange)
+        if (_enemyController.TargetDistance() <= _attackRange)
         {
             _playerHealthComponent = _enemyController.playerRef.GetComponentInParent<C_Health>();
             _playerHealthComponent.Damage(_damage);

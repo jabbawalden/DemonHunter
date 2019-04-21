@@ -35,7 +35,7 @@ public class EnemyProjectileAttack : MonoBehaviour
     {
         if (_healthComp.IsAlive())
         {
-            if (_enemyController.playerRef != null && _enemyController.PlayerDistance() <= _shootRange)
+            if (_enemyController.playerRef != null && _enemyController.TargetDistance() <= _shootRange)
             {
                 ShootProjectile();
             }

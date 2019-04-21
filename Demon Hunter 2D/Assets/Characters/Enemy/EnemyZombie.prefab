@@ -152,19 +152,19 @@ MonoBehaviour:
   enemyMovementType: 1
   playerRef: {fileID: 0}
   originDistance: 0
-  _inRange: 0
-  aggroRange: 0
   _moveSpeed: 170
-  _distanceKeptMin: 0.3
-  _distanceKeptMax: 0.5
+  _distanceKeptMin: 0.4
+  _distanceKeptMax: 0.7
   distanceKept: 0
+  newDestination: {x: 0, y: 0, z: 0}
+  newDirection: {x: 0, y: 0, z: 0}
+  haveDirectlyEngaged: 0
+  routePosition: 0
   _patrolRateMin: 2
   _patrolRateMax: 4
   _newPatrolTime: 0
   _deathLerpTime: 0.03
   _destroyObjectSeconds: 3
-  newDestination: {x: 0, y: 0, z: 0}
-  newDirection: {x: 0, y: 0, z: 0}
   knockBack: 0
   energyPickUp: {fileID: 2119201555398515205, guid: 3bdb3c0e477fc1b4db83915761c4136a,
     type: 3}
@@ -198,8 +198,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 8
-  _attackRange: 0.8
-  _attackRate: 0.6
+  _attackRange: 0.9
+  _attackRate: 0.7
   _newTime: 0
   _attackTime: 0.3
   _preAttackTime: 0.3

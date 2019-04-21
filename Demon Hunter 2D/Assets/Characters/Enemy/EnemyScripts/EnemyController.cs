@@ -13,27 +13,33 @@ public class EnemyController : MonoBehaviour
     [Header("Scripts")]
     private C_Health _healthComponent;
     public Transform playerRef;
+    private PlayerController _playerController;
     [Space(4)]
 
-    [Header("Variables")]
+    [Header("Movement")]
+    Vector2 direction;
     private Vector3 _originalPosition;
     float patrolDistance;
     float playerDistance; 
     [SerializeField] float originDistance;
     private Rigidbody2D _rb;
-    [SerializeField] private bool _inRange;
-    [SerializeField] private float aggroRange;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _distanceKeptMin;
     [SerializeField] private float _distanceKeptMax;
     [SerializeField] private float distanceKept;
+    public Vector3 newDestination;
+    public Vector3 newDirection;
+    public bool haveDirectlyEngaged;
+    private bool canChangeRandomPosition;
+    [SerializeField] private int routePosition;
+    [Space(4)]
+
+    [Header("patrol")]
     [SerializeField] private float _patrolRateMin;
     [SerializeField] private float _patrolRateMax;
     [SerializeField] private float _newPatrolTime;
     [SerializeField] private float _deathLerpTime;
     [SerializeField] private float _destroyObjectSeconds;
-    public Vector3 newDestination;
-    public Vector3 newDirection;
     [Space(4)]
 
     [Header("Special Movement Behaviours")]
@@ -59,8 +65,9 @@ public class EnemyController : MonoBehaviour
     {
         distanceKept = Random.Range(_distanceKeptMin, _distanceKeptMax);
         _originalPosition = transform.position;
-        _inRange = false;
         knockBack = false;
+        haveDirectlyEngaged = false;
+        canChangeRandomPosition = true;
     }
 
     void Update()
@@ -71,7 +78,7 @@ public class EnemyController : MonoBehaviour
             EnemyMovement();
             StateManager();
             if (playerRef != null)
-                PlayerDistance();
+                TargetDistance();
             //print(DirectionCheck());
         }
         else if (!deathEnabled)
@@ -85,6 +92,11 @@ public class EnemyController : MonoBehaviour
 
         if (deathEnabled)
         {
+            if (haveDirectlyEngaged)
+            {
+                haveDirectlyEngaged = false;
+                playerRef.gameObject.GetComponentInParent<PlayerController>().enemyEngagedCounter--;
+            }
             opacityEnemyDead.a = Mathf.Lerp(opacityEnemyDead.a, 0, _deathLerpTime);
             enemyDead.GetComponent<SpriteRenderer>().color = opacityEnemyDead;
             Invoke("DestroyOurObject", _destroyObjectSeconds);
@@ -97,23 +109,53 @@ public class EnemyController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public float PlayerDistance()
+    public float TargetDistance()
     {
         float playerDist = 0;
 
         if (playerRef)
-            playerDist = Vector2.Distance(playerRef.position, transform.position);
+        {
+            if (haveDirectlyEngaged)
+                playerDist = Vector2.Distance(playerRef.position, transform.position);
+            else
+                playerDist = Vector2.Distance(playerRef.gameObject.GetComponentInParent<PlayerController>().engagementPositions[routePosition].position, transform.position);
+        }
 
         return playerDist;
+    }
+
+    IEnumerator RandomMoveTimer()
+    {
+        float r = Random.Range(1, 2);
+        yield return new WaitForSeconds(r);
+        if (playerRef)
+            SetRoutedPosition(playerRef);
+        canChangeRandomPosition = true;
     }
 
     private void EnemyMovement()
     {
         originDistance = Vector2.Distance(transform.position, _originalPosition);
-        Vector2 direction = new Vector2(0, 0);
 
-        if (playerRef != null)
-            direction = playerRef.position - transform.position;
+        if (playerRef)
+        {
+         
+            if (haveDirectlyEngaged)
+            {
+                direction = playerRef.position - transform.position;
+            }
+            else
+            {
+                direction = playerRef.gameObject.GetComponentInParent<PlayerController>().engagementPositions[routePosition].position - transform.position;
+                
+                if (canChangeRandomPosition)
+                {
+                    canChangeRandomPosition = false;
+                    StartCoroutine(RandomMoveTimer());
+                }
+            }
+        
+        }
 
         if (!knockBack)
         {
@@ -123,18 +165,26 @@ public class EnemyController : MonoBehaviour
 
                     if (enemyMovementType == EnemyMovementType.ranged)
                     {
-                        if (PlayerDistance() > distanceKept)
+                        if (TargetDistance() > distanceKept)
                             _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
-                        //only moves away once within a certain radius
-                        else if (PlayerDistance() < distanceKept - 1)
+                        else if (TargetDistance() < distanceKept - 1)
                             _rb.velocity = direction.normalized * -_moveSpeed * Time.deltaTime;
                         else
                             _rb.velocity = new Vector2(0, 0);
                     }
                     else
                     {
-                        if (PlayerDistance() > distanceKept)
+                        if (playerRef && !haveDirectlyEngaged && playerRef.gameObject.GetComponentInParent<PlayerController>().enemyEngagedCounter < 5)
+                        {
+                            haveDirectlyEngaged = true;
+                            playerRef.gameObject.GetComponentInParent<PlayerController>().enemyEngagedCounter++;
+                        }
+                        
+                        if (TargetDistance() > distanceKept)
                             _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
+                        else
+                            _rb.velocity = new Vector2(0,0);
+
                     }
                     break;
 
@@ -208,17 +258,21 @@ public class EnemyController : MonoBehaviour
                 {
                     print("We have PlayerRef");
                     enemyState = EnemyState.engaged;
+
                 }
                 else if (originDistance > 10)
                 {
                     print("We must disengage");
                     enemyState = EnemyState.patrol;
+
+                    if (haveDirectlyEngaged)
+                    {
+                        haveDirectlyEngaged = false;
+                        playerRef.gameObject.GetComponentInParent<PlayerController>().enemyEngagedCounter--;
+                    }
                 }
             }
         }
-
-
-
     }
 
     private void KnockBackStateReversion()
@@ -285,14 +339,17 @@ public class EnemyController : MonoBehaviour
         return direction;
     }
 
-    
+    private void SetRoutedPosition(Transform target)
+    {
+        routePosition = Random.Range(0, target.gameObject.GetComponentInParent<PlayerController>().engagementPositions.Length - 1);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 8)
         {
-            //print("Player in range");
             playerRef = collision.gameObject.transform;
-            _inRange = true;
+            SetRoutedPosition(playerRef);
         }
     }
 
@@ -300,9 +357,7 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.layer == 8)
         {
-            //print("Player out of range");
             playerRef = null;
-            _inRange = false;
         }
     }
     

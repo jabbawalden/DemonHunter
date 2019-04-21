@@ -12,7 +12,10 @@ public enum PlayerState
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Player Main Setup")]
     public PlayerState playerState;
+    public int enemyEngagedCounter;
+    public Transform[] engagementPositions;
 
     [Header("Movement")]
     [SerializeField] private float _movementSpeed;    //speed 
