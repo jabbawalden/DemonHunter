@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 0
-  enemyEngagedCounter: 5
+  enemyEngagedCounter: 0
   engagementPositions:
   - {fileID: 7837275827574155389}
   - {fileID: 3787582235600045178}
@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13917f82b3f2164ba0e114b330bb6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 500
+  _maxHealth: 50
   _currentHealth: 50
   isPlayerComponent: 1
 --- !u!114 &1538872660
