@@ -6,6 +6,9 @@ public class PlayerEnergy : MonoBehaviour
 {
     public float maxEnergy;
     public float currentEnergy;
+    [SerializeField] private float _regenRate;
+    [SerializeField] private UIManager uiManager;
+
 
     // Start is called before the first frame update
     void Start()
@@ -13,9 +16,18 @@ public class PlayerEnergy : MonoBehaviour
         currentEnergy = maxEnergy;
     }
 
-    private void Update()
-    {
+    private void FixedUpdate()
+    { 
+        EnergyRegenerate();
+    }
 
+    private void EnergyRegenerate()
+    {
+        if (currentEnergy < maxEnergy)
+        {
+            currentEnergy += _regenRate;
+            uiManager.UpdateEnergySlider();
+        }
     }
 
     public void AddEnergy(int energyToAdd)

@@ -49,6 +49,7 @@ MonoBehaviour:
   damage: 0
   _maxHitCount: 4
   targetLayer: 10
+  isPlayerProj: 1
 --- !u!50 &2132095465
 Rigidbody2D:
   serializedVersion: 4

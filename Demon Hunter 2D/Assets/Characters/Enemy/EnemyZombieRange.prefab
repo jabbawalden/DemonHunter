@@ -258,7 +258,9 @@ MonoBehaviour:
   enemyState: 0
   enemyMovementType: 0
   playerRef: {fileID: 0}
+  originDistance: 0
   _inRange: 0
+  aggroRange: 0
   _moveSpeed: 170
   _distanceKeptMin: 2
   _distanceKeptMax: 5
@@ -325,7 +327,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 8
+  m_Radius: 7
 --- !u!50 &2427362799708306853
 Rigidbody2D:
   serializedVersion: 4

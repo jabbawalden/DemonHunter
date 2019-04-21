@@ -10,6 +10,7 @@ public class ProjectileBehaviour : MonoBehaviour
     [System.NonSerialized] public int hitCount;
     [SerializeField] private int _maxHitCount;
     public int targetLayer;
+    public bool isPlayerProj;
 
     private void Awake()
     {
@@ -44,7 +45,10 @@ public class ProjectileBehaviour : MonoBehaviour
             _healthComponent = collision.GetComponentInParent<C_Health>();
             _healthComponent.Damage(damage);
             HitCounter();
-
+        }
+        else if (collision.gameObject.layer == 13 && !isPlayerProj)
+        {
+            Destroy(gameObject);
         }
 
         if (collision.gameObject.layer == 12)

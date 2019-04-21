@@ -50,19 +50,17 @@ public class EnemyMeleeAttack : MonoBehaviour
         stateCheck = _enemyController.enemyState;
         _enemyController.enemyState = EnemyState.attacking;
         yield return new WaitForSeconds(_preAttackTime);
+
         if (_enemyController.PlayerDistance() <= _attackRange)
         {
             _playerHealthComponent = _enemyController.playerRef.GetComponentInParent<C_Health>();
             _playerHealthComponent.Damage(_damage);
             _uiManager.UpdateHealthSlider();
-        }
-        else
-        {
-            //print("Hit missed");
-        } 
-        yield return new WaitForSeconds(_attackTime);
 
-        _enemyController.enemyState = stateCheck;
+        }
+
+        yield return new WaitForSeconds(_attackTime);
+        _enemyController.enemyState = EnemyState.engaged;
     }
 
 }

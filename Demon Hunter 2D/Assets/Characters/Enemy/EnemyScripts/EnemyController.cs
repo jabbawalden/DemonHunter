@@ -12,15 +12,17 @@ public class EnemyController : MonoBehaviour
 
     [Header("Scripts")]
     private C_Health _healthComponent;
-    [HideInInspector] public Transform playerRef;
+    public Transform playerRef;
     [Space(4)]
 
     [Header("Variables")]
     private Vector3 _originalPosition;
     float patrolDistance;
-    float originDistance;
+    float playerDistance; 
+    [SerializeField] float originDistance;
     private Rigidbody2D _rb;
     [SerializeField] private bool _inRange;
+    [SerializeField] private float aggroRange;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _distanceKeptMin;
     [SerializeField] private float _distanceKeptMax;
@@ -99,7 +101,7 @@ public class EnemyController : MonoBehaviour
     {
         float playerDist = 0;
 
-        if (playerRef != null)
+        if (playerRef)
             playerDist = Vector2.Distance(playerRef.position, transform.position);
 
         return playerDist;
@@ -107,12 +109,11 @@ public class EnemyController : MonoBehaviour
 
     private void EnemyMovement()
     {
-
         originDistance = Vector2.Distance(transform.position, _originalPosition);
         Vector2 direction = new Vector2(0, 0);
+
         if (playerRef != null)
             direction = playerRef.position - transform.position;
-
 
         if (!knockBack)
         {
@@ -163,8 +164,6 @@ public class EnemyController : MonoBehaviour
             _rb.AddForce(-direction * 2000 * Time.deltaTime);
             Invoke("KnockBackStateReversion", 0.5f);
         }
- 
-        
     }
 
 
@@ -201,22 +200,36 @@ public class EnemyController : MonoBehaviour
 
     private void StateManager()
     {
-        if (enemyState != EnemyState.engaged && !knockBack)
+        if (!knockBack)
         {
-            //if we aren't on patrol or are not attacking and not engaged
-            if (originDistance >= 0.25f && enemyState != EnemyState.patrol && enemyState != EnemyState.attacking)
-                enemyState = EnemyState.disengaged;
-            else if (originDistance <= 0.25f)
-                enemyState = EnemyState.patrol;
+            if (playerRef)
+            {
+                if (originDistance <= 3.5f)
+                {
+                    print("We have PlayerRef");
+                    enemyState = EnemyState.engaged;
+                }
+                else if (originDistance > 10)
+                {
+                    print("We must disengage");
+                    enemyState = EnemyState.patrol;
+                }
+            }
         }
+
+
 
     }
 
     private void KnockBackStateReversion()
     {
         knockBack = false;
-        enemyState = EnemyState.engaged;
-        print("End Knockback");
+
+        if (playerRef)
+            enemyState = EnemyState.engaged;
+        else
+            enemyState = EnemyState.patrol;
+
     }
 
     private int DirectionCheck()
@@ -272,13 +285,13 @@ public class EnemyController : MonoBehaviour
         return direction;
     }
 
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 8)
         {
             //print("Player in range");
             playerRef = collision.gameObject.transform;
-            enemyState = EnemyState.engaged;
             _inRange = true;
         }
     }
@@ -288,9 +301,9 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.layer == 8)
         {
             //print("Player out of range");
-            enemyState = EnemyState.disengaged;
+            playerRef = null;
             _inRange = false;
         }
     }
-
+    
 }

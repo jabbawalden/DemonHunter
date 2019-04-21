@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8539551881273329004}
   - component: {fileID: 8539551881273329005}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: SpriteRepresent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 8539551883183876279}
   - component: {fileID: 6539997480682330353}
   - component: {fileID: 8539551883183876276}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: PlayerMeleeAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
