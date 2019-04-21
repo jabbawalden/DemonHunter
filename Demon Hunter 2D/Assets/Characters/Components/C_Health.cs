@@ -7,7 +7,14 @@ public class C_Health : MonoBehaviour
     [Header("Variables")]
     [SerializeField] private float _maxHealth;
     public float _currentHealth;
-    public bool isPlayerComponent;  
+    public bool isPlayerComponent;
+    private UIManager _uiManager;
+
+    private void Awake()
+    {
+        if (isPlayerComponent)
+            _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+    }
 
     private void Start()
     {
@@ -22,6 +29,9 @@ public class C_Health : MonoBehaviour
         {
             _currentHealth -= damage;
         }
+
+        if (_uiManager)
+            _uiManager.UpdateHealthSlider();
 
     }
 

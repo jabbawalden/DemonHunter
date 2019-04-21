@@ -10,7 +10,7 @@ public class PlayerShoot : MonoBehaviour
     private PlayerEnergy _playerEnergy;
 
     [Header("Variables")]
-    [SerializeField] private float _projectileSpeed;
+    [SerializeField] private float _projSpeed;
     [SerializeField] private float _fireRate;
     [SerializeField] private float _shootAnimationTime;
     [SerializeField] private float _projDamage;
@@ -62,7 +62,7 @@ public class PlayerShoot : MonoBehaviour
             Vector2 direction = _playerController.AimDirection().normalized; //normalized not actually needed
 
             proj.transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
-            proj.GetComponent<Rigidbody2D>().velocity = direction * _projectileSpeed * Time.deltaTime;
+            proj.GetComponent<Rigidbody2D>().velocity = direction * _projSpeed * Time.deltaTime;
 
             //set damage
             projBehaviour = proj.GetComponent<ProjectileBehaviour>();
@@ -77,7 +77,6 @@ public class PlayerShoot : MonoBehaviour
 
     IEnumerator ShootBehaviour()
     {
-        
         yield return new WaitForSeconds(_shootAnimationTime);
         _playerController.canMove = true;
     }

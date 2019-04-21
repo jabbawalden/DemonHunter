@@ -88,7 +88,7 @@ MonoBehaviour:
   canMove: 0
   isDashing: 0
   _canDashDamage: 0
-  _dashDamage: 3.5
+  _dashDamage: 5
   _dashHealAmount: 2
   _dashEnergyCost: 32
   _circleCollider: {fileID: 1447648259}
@@ -110,7 +110,7 @@ MonoBehaviour:
   _attackWindUpTime: 0.08
   _attackRate: 0.8
   _newTime: 0
-  _attackTime: 1
+  _attackTime: 1.5
   _meleeDamage: 3
   _meleeSpawnRange: 0
   _canMeleeDamage: 0
@@ -128,11 +128,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 280494a4ebcda5a41ad4d058065961f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectileSpeed: 1200
+  _projSpeed: 2800
   _fireRate: 0.25
   _shootAnimationTime: 0.5
   _projDamage: 15
-  _healthCost: 10
+  _healthCost: 8
   _energyCost: 0
   projectile: {fileID: 5817606138077904511, guid: 63a02c98749e77d43aa35d73d312a2fb,
     type: 3}
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 50
   _currentHealth: 50
-  isPlayerComponent: 0
+  isPlayerComponent: 1
 --- !u!114 &8083524653263315906
 MonoBehaviour:
   m_ObjectHideFlags: 0

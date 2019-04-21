@@ -9,6 +9,7 @@ public class ProjectileBehaviour : MonoBehaviour
     private PlayerEnergy _playerEnergy;
     [System.NonSerialized] public int hitCount;
     [SerializeField] private int _maxHitCount;
+    public int targetLayer;
 
     private void Awake()
     {
@@ -30,19 +31,20 @@ public class ProjectileBehaviour : MonoBehaviour
 
     private void HitCounter()
     {
-        if (hitCount == _maxHitCount)
+        hitCount++;
+        if (hitCount >= _maxHitCount)
             Destroy(gameObject);
-        else
-            hitCount++;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 10 && collision.GetComponentInParent<C_Health>() != null)
-        {
+        if (collision.gameObject.layer == targetLayer && collision.GetComponentInParent<C_Health>() != null)
+        { 
+            print("Hit player");
             _healthComponent = collision.GetComponentInParent<C_Health>();
             _healthComponent.Damage(damage);
             HitCounter();
+
         }
 
         if (collision.gameObject.layer == 12)

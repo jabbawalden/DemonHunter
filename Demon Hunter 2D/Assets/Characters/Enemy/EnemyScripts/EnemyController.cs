@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum EnemyState {patrol, engaged, disengaged, attacking}
+public enum EnemyMovementType {ranged, melee}
 
 public class EnemyController : MonoBehaviour
 {
     public EnemyState enemyState;
+    public EnemyMovementType enemyMovementType;
 
     [Header("Scripts")]
     private C_Health _healthComponent;
@@ -19,7 +21,10 @@ public class EnemyController : MonoBehaviour
     float originDistance;
     private Rigidbody2D _rb;
     [SerializeField] private bool _inRange;
-    [SerializeField] private float _moveSpeed; 
+    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _distanceKeptMin;
+    [SerializeField] private float _distanceKeptMax;
+    [SerializeField] private float distanceKept;
     [SerializeField] private float _patrolRateMin;
     [SerializeField] private float _patrolRateMax;
     [SerializeField] private float _newPatrolTime;
@@ -27,6 +32,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float _destroyObjectSeconds;
     public Vector3 newDestination;
     public Vector3 newDirection;
+    [Space(4)]
+
+    [Header("Special Movement Behaviours")]
     public bool knockBack;
     [Space(4)]
 
@@ -47,6 +55,7 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
+        distanceKept = Random.Range(_distanceKeptMin, _distanceKeptMax);
         _originalPosition = transform.position;
         _inRange = false;
         knockBack = false;
@@ -88,25 +97,44 @@ public class EnemyController : MonoBehaviour
 
     public float PlayerDistance()
     {
-        float playerDist = Vector2.Distance(playerRef.position, transform.position);
-        //print(playerDist);
+        float playerDist = 0;
+
+        if (playerRef != null)
+            playerDist = Vector2.Distance(playerRef.position, transform.position);
+
         return playerDist;
     }
 
     private void EnemyMovement()
     {
+
         originDistance = Vector2.Distance(transform.position, _originalPosition);
         Vector2 direction = new Vector2(0, 0);
         if (playerRef != null)
             direction = playerRef.position - transform.position;
+
 
         if (!knockBack)
         {
             switch (enemyState)
             {
                 case EnemyState.engaged:
-                    if (PlayerDistance() > 0.5f)
-                        _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
+
+                    if (enemyMovementType == EnemyMovementType.ranged)
+                    {
+                        if (PlayerDistance() > distanceKept)
+                            _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
+                        //only moves away once within a certain radius
+                        else if (PlayerDistance() < distanceKept - 1)
+                            _rb.velocity = direction.normalized * -_moveSpeed * Time.deltaTime;
+                        else
+                            _rb.velocity = new Vector2(0, 0);
+                    }
+                    else
+                    {
+                        if (PlayerDistance() > distanceKept)
+                            _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
+                    }
                     break;
 
                 case EnemyState.attacking:

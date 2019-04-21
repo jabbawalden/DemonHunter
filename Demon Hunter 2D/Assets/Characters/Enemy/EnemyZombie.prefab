@@ -149,9 +149,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyState: 0
+  enemyMovementType: 1
   playerRef: {fileID: 0}
   _inRange: 0
   _moveSpeed: 170
+  _distanceKeptMin: 0.3
+  _distanceKeptMax: 0.5
+  distanceKept: 0
   _patrolRateMin: 2
   _patrolRateMax: 4
   _newPatrolTime: 0
@@ -159,6 +163,7 @@ MonoBehaviour:
   _destroyObjectSeconds: 3
   newDestination: {x: 0, y: 0, z: 0}
   newDirection: {x: 0, y: 0, z: 0}
+  knockBack: 0
   energyPickUp: {fileID: 2119201555398515205, guid: 3bdb3c0e477fc1b4db83915761c4136a,
     type: 3}
   enemyAlive: {fileID: 8186703901403068078}
