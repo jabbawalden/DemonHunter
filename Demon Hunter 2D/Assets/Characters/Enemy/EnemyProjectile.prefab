@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8684237652345596400}
   - component: {fileID: 684226115952015140}
   - component: {fileID: 2838536471055094484}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: EnemyProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,6 +49,9 @@ MonoBehaviour:
   damage: 0
   _maxHitCount: 1
   targetLayer: 8
+  isPlayerProj: 0
+  explosion: {fileID: 6818741511275062471, guid: defb9a09efd9ace42a63c15d21c5500d,
+    type: 3}
 --- !u!50 &684226115952015140
 Rigidbody2D:
   serializedVersion: 4
@@ -106,7 +109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8883317128152358930}
   - component: {fileID: 1140115372672307131}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: vadsom
   m_TagString: Untagged
   m_Icon: {fileID: 0}

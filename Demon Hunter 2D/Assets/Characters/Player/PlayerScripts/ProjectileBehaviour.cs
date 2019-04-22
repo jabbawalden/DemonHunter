@@ -11,6 +11,7 @@ public class ProjectileBehaviour : MonoBehaviour
     [SerializeField] private int _maxHitCount;
     public int targetLayer;
     public bool isPlayerProj;
+    [SerializeField] private GameObject explosion;
 
     private void Awake()
     {
@@ -48,6 +49,21 @@ public class ProjectileBehaviour : MonoBehaviour
         }
         else if (collision.gameObject.layer == 13 && !isPlayerProj)
         {
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.layer == 14 && !isPlayerProj)
+        {
+            //if we are enemy and run into playerproj layer
+            //explode
+            if (explosion)
+            {
+                Instantiate(explosion, transform.position, Quaternion.identity);
+            }
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.layer == 15 && isPlayerProj)
+        {
+            //if we are player proj and run into enemy proj
             Destroy(gameObject);
         }
 

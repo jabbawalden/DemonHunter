@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5817606138077904510}
   - component: {fileID: 2132095465}
   - component: {fileID: 6921870987713499287}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: PlayerProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5817606139511273747}
   - component: {fileID: 5817606139511273746}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: vadsom
   m_TagString: Untagged
   m_Icon: {fileID: 0}

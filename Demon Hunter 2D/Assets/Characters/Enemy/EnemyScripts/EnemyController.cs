@@ -95,7 +95,8 @@ public class EnemyController : MonoBehaviour
             if (haveDirectlyEngaged)
             {
                 haveDirectlyEngaged = false;
-                playerRef.gameObject.GetComponentInParent<PlayerController>().enemyEngagedCounter--;
+                if (playerRef)
+                    playerRef.gameObject.GetComponentInParent<PlayerController>().enemyEngagedCounter--;
             }
             opacityEnemyDead.a = Mathf.Lerp(opacityEnemyDead.a, 0, _deathLerpTime);
             enemyDead.GetComponent<SpriteRenderer>().color = opacityEnemyDead;
@@ -256,13 +257,11 @@ public class EnemyController : MonoBehaviour
             {
                 if (originDistance <= 3.5f)
                 {
-                    print("We have PlayerRef");
                     enemyState = EnemyState.engaged;
 
                 }
                 else if (originDistance > 10)
                 {
-                    print("We must disengage");
                     enemyState = EnemyState.patrol;
 
                     if (haveDirectlyEngaged)

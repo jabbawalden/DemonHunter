@@ -8,7 +8,12 @@ public class C_Health : MonoBehaviour
     [SerializeField] private float _maxHealth;
     public float _currentHealth;
     public bool isPlayerComponent;
+    [Space(4)]
+
+
+    [Header("Scripts")]
     private UIManager _uiManager;
+    [SerializeField] private PlayerCamera playerCam;
 
     private void Awake()
     {
@@ -32,6 +37,9 @@ public class C_Health : MonoBehaviour
 
         if (_uiManager)
             _uiManager.UpdateHealthSlider();
+
+        if (isPlayerComponent)
+            playerCam.CameraShake();
 
     }
 

@@ -65,7 +65,7 @@ public class PlayerShoot : MonoBehaviour
         projBehaviour = proj.GetComponent<ProjectileBehaviour>();
         projBehaviour.damage = _projDamage;
 
-        _healthComponent.Damage(_healthCost);
+        //_healthComponent.Damage(_healthCost);
         _uiManager.UpdateHealthSlider();
         _playerEnergy.RemoveEnergy(_energyCost);
         _uiManager.UpdateEnergySlider();

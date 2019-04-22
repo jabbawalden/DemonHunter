@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 2820954046073255290}
   - component: {fileID: 8186703901129291067}
   - component: {fileID: 8186703901129291066}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: EnemyZombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ MonoBehaviour:
   enemyMovementType: 1
   playerRef: {fileID: 0}
   originDistance: 0
-  _moveSpeed: 170
+  _moveSpeed: 120
   _distanceKeptMin: 0.4
   _distanceKeptMax: 0.7
   distanceKept: 0
@@ -185,6 +185,7 @@ MonoBehaviour:
   _maxHealth: 10
   _currentHealth: 0
   isPlayerComponent: 0
+  playerCam: {fileID: 0}
 --- !u!114 &2820954046073255290
 MonoBehaviour:
   m_ObjectHideFlags: 0

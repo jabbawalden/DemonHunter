@@ -25,8 +25,6 @@ public class PlayerMeleeStrike : MonoBehaviour
                 _enemyController = collision.GetComponentInParent<EnemyController>();
             }
             HitCounter();
-
-
         }
 
     }

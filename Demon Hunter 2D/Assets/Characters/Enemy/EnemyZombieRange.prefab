@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 9156256856039450906}
   - component: {fileID: 8169377811234811230}
   - component: {fileID: 2427362799708306853}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: EnemyZombieRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,19 +259,19 @@ MonoBehaviour:
   enemyMovementType: 0
   playerRef: {fileID: 0}
   originDistance: 0
-  _inRange: 0
-  aggroRange: 0
-  _moveSpeed: 170
+  _moveSpeed: 140
   _distanceKeptMin: 2
   _distanceKeptMax: 5
   distanceKept: 0
+  newDestination: {x: 0, y: 0, z: 0}
+  newDirection: {x: 0, y: 0, z: 0}
+  haveDirectlyEngaged: 0
+  routePosition: 0
   _patrolRateMin: 2
   _patrolRateMax: 4
   _newPatrolTime: 0
   _deathLerpTime: 0.03
   _destroyObjectSeconds: 3
-  newDestination: {x: 0, y: 0, z: 0}
-  newDirection: {x: 0, y: 0, z: 0}
   knockBack: 0
   energyPickUp: {fileID: 2119201555398515205, guid: 3bdb3c0e477fc1b4db83915761c4136a,
     type: 3}
@@ -291,7 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fireRate: 1.5
   _projDamage: 10
-  _projSpeed: 700
+  _projSpeed: 600
   _shootRange: 7
   _shootAnimationTime: 0.5
   _projectile: {fileID: 2114494265205725720, guid: 7c38996b7a4b0af4aa4ccf84ff0875cb,
@@ -312,6 +312,7 @@ MonoBehaviour:
   _maxHealth: 10
   _currentHealth: 0
   isPlayerComponent: 0
+  playerCam: {fileID: 0}
 --- !u!58 &8169377811234811230
 CircleCollider2D:
   m_ObjectHideFlags: 0
