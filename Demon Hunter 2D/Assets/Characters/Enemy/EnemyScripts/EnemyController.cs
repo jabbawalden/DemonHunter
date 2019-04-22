@@ -166,12 +166,16 @@ public class EnemyController : MonoBehaviour
 
                     if (enemyMovementType == EnemyMovementType.ranged)
                     {
-                        if (TargetDistance() > distanceKept)
-                            _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
-                        else if (TargetDistance() < distanceKept - 1)
-                            _rb.velocity = direction.normalized * -_moveSpeed * Time.deltaTime;
-                        else
-                            _rb.velocity = new Vector2(0, 0);
+                        if (playerRef)
+                        {
+                            if (TargetDistance() > distanceKept)
+                                _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
+                            else if (TargetDistance() < distanceKept - 1)
+                                _rb.velocity = direction.normalized * -_moveSpeed * Time.deltaTime;
+                            else
+                                _rb.velocity = new Vector2(0, 0);
+                        }
+
                     }
                     else
                     {
@@ -270,6 +274,10 @@ public class EnemyController : MonoBehaviour
                         playerRef.gameObject.GetComponentInParent<PlayerController>().enemyEngagedCounter--;
                     }
                 }
+            }
+            else
+            {
+                enemyState = EnemyState.disengaged;
             }
         }
     }

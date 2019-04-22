@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     [Header("Player Main Setup")]
     public PlayerState playerState;
     public int enemyEngagedCounter;
+    [SerializeField] private GameObject playerAlive, playerDead;
+    [SerializeField] private Collider2D playerBodyCollision;
+    private bool deathEnabled; 
     public Transform[] engagementPositions;
 
     [Header("Movement")]
@@ -68,6 +71,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        deathEnabled = false;
+        playerDead.SetActive(false);
         canMove = true;
         direction = 1;
         _playerState = 0;
@@ -86,10 +91,18 @@ public class PlayerController : MonoBehaviour
             DirectionCheck();
             Dash();
         }
-        else
+        else if (!deathEnabled)
         {
+            deathEnabled = true;
+            playerDead.SetActive(true);
+            playerAlive.SetActive(false);
             StopVelocity();
         }
+
+        //if (Input.GetKeyDown(KeyCode.K))
+        //{
+        //    _playerHealthComp.Damage(50);
+        //}
     }
 
     public Vector2 AimDirection()
@@ -122,7 +135,7 @@ public class PlayerController : MonoBehaviour
             //TODO - only dash when energy is equal or above dash cost
             StartCoroutine(DashBehaviour(4.5f, 0.3f));
             _uiManager.UpdateEnergySlider();
-            _playerCamera.CameraShake();
+            _playerCamera.CameraShake(0.15f, 0.08f);
         }
     }
 
@@ -134,7 +147,8 @@ public class PlayerController : MonoBehaviour
         canMove = false;
         _canDashDamage = true;
         _circleCollider.enabled = true;
-        
+        //set player collision off to avoid projectile damage when dashing
+        playerBodyCollision.enabled = false;
 
         while (count < time)
         {
@@ -147,6 +161,7 @@ public class PlayerController : MonoBehaviour
         canMove = true;
         _canDashDamage = false;
         _circleCollider.enabled = false;
+        playerBodyCollision.enabled = true;
     }
 
     public void StopVelocity()

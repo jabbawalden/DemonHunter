@@ -52,7 +52,7 @@ MonoBehaviour:
   _bounceForce: 300
   _timeBounceStart: 0.5
   _distanceReference: 2.3
-  _distanceToMove: 0.5
+  _distanceToMove: 1
 --- !u!50 &2119201555398515209
 Rigidbody2D:
   serializedVersion: 4
@@ -110,7 +110,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0, g: 1, b: 0.96275425, a: 1}
   m_FlipX: 0

@@ -40,7 +40,7 @@ public class PlayerMeleeAttack : MonoBehaviour
     {
         if (_playerHealthComp.IsAlive())
         {
-            if (Input.GetKey(KeyCode.Mouse1))
+            if (Input.GetKeyDown(KeyCode.Mouse1))
             {
                 MeleeAttack();
             }

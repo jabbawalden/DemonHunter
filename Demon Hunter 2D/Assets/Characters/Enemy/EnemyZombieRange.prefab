@@ -260,8 +260,8 @@ MonoBehaviour:
   playerRef: {fileID: 0}
   originDistance: 0
   _moveSpeed: 140
-  _distanceKeptMin: 2
-  _distanceKeptMax: 4
+  _distanceKeptMin: 3
+  _distanceKeptMax: 6.5
   distanceKept: 0
   newDestination: {x: 0, y: 0, z: 0}
   newDirection: {x: 0, y: 0, z: 0}
@@ -292,7 +292,7 @@ MonoBehaviour:
   _fireRate: 1.7
   _projDamage: 10
   _projSpeed: 400
-  _shootRange: 7
+  _shootRange: 12
   _shootAnimationTime: 0.5
   _projectile: {fileID: 2114494265205725720, guid: 7c38996b7a4b0af4aa4ccf84ff0875cb,
     type: 3}
@@ -328,7 +328,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 7
+  m_Radius: 12
 --- !u!50 &2427362799708306853
 Rigidbody2D:
   serializedVersion: 4

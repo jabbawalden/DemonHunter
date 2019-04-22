@@ -52,6 +52,8 @@ MonoBehaviour:
   isPlayerProj: 0
   explosion: {fileID: 6818741511275062471, guid: defb9a09efd9ace42a63c15d21c5500d,
     type: 3}
+  currentDirection: {x: 0, y: 0}
+  currentSpeed: 0
 --- !u!50 &684226115952015140
 Rigidbody2D:
   serializedVersion: 4
@@ -166,7 +168,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: edf97bb8b053dac468eae1b2a9fcbc71, type: 3}
   m_Color: {r: 0, g: 1, b: 1, a: 1}
   m_FlipX: 0

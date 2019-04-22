@@ -35,11 +35,15 @@ public class C_Health : MonoBehaviour
             _currentHealth -= damage;
         }
 
-        if (_uiManager)
-            _uiManager.UpdateHealthSlider();
+        if (IsAlive())
+        {
+            if (_uiManager)
+                _uiManager.UpdateHealthSlider();
 
-        if (isPlayerComponent)
-            playerCam.CameraShake();
+            if (isPlayerComponent)
+                playerCam.CameraShake(0.1f, 0.05f);
+        }
+
 
     }
 
