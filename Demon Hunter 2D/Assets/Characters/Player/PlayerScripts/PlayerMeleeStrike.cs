@@ -9,6 +9,7 @@ public class PlayerMeleeStrike : MonoBehaviour
     [System.NonSerialized] public int hitCount;
     [SerializeField] private int _maxHitCount;
     private EnemyController _enemyController;
+    
 
     private void Start()
     {
@@ -25,6 +26,14 @@ public class PlayerMeleeStrike : MonoBehaviour
                 _enemyController = collision.GetComponentInParent<EnemyController>();
             }
             HitCounter();
+        }
+
+        if (collision.gameObject.layer == 15 && collision.GetComponent<ProjectileBehaviour>())
+        {
+            //print("projectile reverted");
+            collision.GetComponent<Rigidbody2D>().velocity = -collision.GetComponent<ProjectileBehaviour>().currentDirection * collision.GetComponent<ProjectileBehaviour>().currentSpeed * Time.deltaTime;
+            collision.GetComponent<ProjectileBehaviour>().targetLayer = 10;
+            collision.GetComponent<ProjectileBehaviour>().isPlayerProj = true;
         }
 
     }

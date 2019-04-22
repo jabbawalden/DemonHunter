@@ -12,6 +12,8 @@ public class ProjectileBehaviour : MonoBehaviour
     public int targetLayer;
     public bool isPlayerProj;
     [SerializeField] private GameObject explosion;
+    public Vector2 currentDirection;
+    public float currentSpeed;
 
     private void Awake()
     {
@@ -49,7 +51,9 @@ public class ProjectileBehaviour : MonoBehaviour
         }
         else if (collision.gameObject.layer == 13 && !isPlayerProj)
         {
-            Destroy(gameObject);
+            //if player melee attack
+            //Destroy(gameObject);
+            print("projectile reverted");
         }
         else if (collision.gameObject.layer == 14 && !isPlayerProj)
         {

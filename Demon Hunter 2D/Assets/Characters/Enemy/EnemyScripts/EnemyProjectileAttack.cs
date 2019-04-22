@@ -56,6 +56,8 @@ public class EnemyProjectileAttack : MonoBehaviour
             proj.transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
             projBehaviour = proj.GetComponent<ProjectileBehaviour>();
             proj.GetComponent<Rigidbody2D>().velocity = -direction * _projSpeed * Time.deltaTime;
+            projBehaviour.currentDirection = -direction;
+            projBehaviour.currentSpeed = _projSpeed;
             projBehaviour.damage = _projDamage;
 
             StartCoroutine(ShootBehaviour());

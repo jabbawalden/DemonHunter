@@ -68,7 +68,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 5e642a0d3b99f37449820302f33ca48e, type: 3}
   m_Color: {r: 0, g: 1, b: 0.83787346, a: 1}
   m_FlipX: 0
@@ -184,7 +184,7 @@ MonoBehaviour:
   - {fileID: 9048280210024088167}
   - {fileID: 5643335345706877456}
   - {fileID: 584344198928667042}
-  _movementSpeed: 300
+  _movementSpeed: 350
   _dashSpeed: 1400
   direction: 0
   canMove: 0
@@ -235,7 +235,7 @@ MonoBehaviour:
   _shootAnimationTime: 0.5
   _projDamage: 10
   _healthCost: 0
-  _energyCost: 30
+  _energyCost: 20
   projectile: {fileID: 5817606138077904511, guid: 63a02c98749e77d43aa35d73d312a2fb,
     type: 3}
   _shootOrigin: {fileID: 1706719609}
@@ -269,7 +269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxEnergy: 100
   currentEnergy: 100
-  _regenRate: 0.12
+  _regenRate: 0.14
   uiManager: {fileID: 0}
 --- !u!50 &1538872659
 Rigidbody2D:
