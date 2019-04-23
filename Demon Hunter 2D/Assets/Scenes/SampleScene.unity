@@ -10461,25 +10461,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 333265701}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &337803999 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6074289155265617860, guid: 9e9213d944735e34098addd56dc031b4,
-    type: 3}
-  m_PrefabInstance: {fileID: 6074289155698386872}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &337804003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 337803999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: 43aaaabbeccd2ec4c83a95dea230b593, type: 2}
 --- !u!1001 &339957704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32140,7 +32121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.3443246, a: 1}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -58147,7 +58128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.779325, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.78039217, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -63438,6 +63419,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6074289155265617863, guid: 9e9213d944735e34098addd56dc031b4,
+        type: 3}
+      propertyPath: orthographic size
+      value: 6.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e9213d944735e34098addd56dc031b4, type: 3}
 --- !u!1001 &6116297118429439395
@@ -64676,11 +64662,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1538872665, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -152.06
+      value: -151.77
       objectReference: {fileID: 0}
     - target: {fileID: 1538872665, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -702.03
+      value: -701.45
       objectReference: {fileID: 0}
     - target: {fileID: 1538872665, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: m_LocalPosition.z
@@ -64722,10 +64708,30 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 33975191}
+    - target: {fileID: 1538872660, guid: f0012caabe927754790617fe3618fa17, type: 3}
+      propertyPath: _regenRate
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 1538872661, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: playerCam
       value: 
       objectReference: {fileID: 1105582906}
+    - target: {fileID: 1538872664, guid: f0012caabe927754790617fe3618fa17, type: 3}
+      propertyPath: _dashEnergyCost
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538872663, guid: f0012caabe927754790617fe3618fa17, type: 3}
+      propertyPath: _energyCost
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538872663, guid: f0012caabe927754790617fe3618fa17, type: 3}
+      propertyPath: _attackTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538872662, guid: f0012caabe927754790617fe3618fa17, type: 3}
+      propertyPath: _energyCost
+      value: 60
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0012caabe927754790617fe3618fa17, type: 3}
 --- !u!1001 &9036037233594948165

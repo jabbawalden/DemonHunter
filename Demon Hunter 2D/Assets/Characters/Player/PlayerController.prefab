@@ -197,7 +197,7 @@ MonoBehaviour:
   _canDashDamage: 0
   _dashDamage: 5
   _dashHealAmount: 3
-  _dashEnergyCost: 32
+  _dashEnergyCost: 40
   _circleCollider: {fileID: 1538872658}
   _playerState: 0
 --- !u!114 &5078907333326598290
@@ -250,12 +250,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 280494a4ebcda5a41ad4d058065961f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projSpeed: 2800
-  _fireRate: 0.25
-  _shootAnimationTime: 0.5
+  _projSpeed: 2400
+  _fireRate: 0.3
+  _shootAnimationTime: 0.4
   _projDamage: 10
   _healthCost: 0
-  _energyCost: 20
+  _energyCost: 40
   projectile: {fileID: 5817606138077904511, guid: 63a02c98749e77d43aa35d73d312a2fb,
     type: 3}
   _shootOrigin: {fileID: 1706719609}
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxEnergy: 100
   currentEnergy: 100
-  _regenRate: 0.14
+  _regenRate: 0.11
   uiManager: {fileID: 0}
 --- !u!50 &1538872659
 Rigidbody2D:

@@ -7,11 +7,14 @@ public class PlayerMeleeAttack : MonoBehaviour
     private C_Health _enemyHealthComp;
     private C_Health _playerHealthComp;
     private PlayerController _playerController;
+    private PlayerEnergy _playerEnergy;
+    private UIManager _uiManager;
 
     [Header("Variables")]
     [SerializeField] private float _recoveryAttackTime;
     [SerializeField] private float _initialAttackTime;
     [SerializeField] private float _attackWindUpTime;
+    [SerializeField] private float _energyCost;
     [SerializeField] private float _attackRate; 
     [SerializeField] private float _newTime;
     [SerializeField] private float _attackTime;
@@ -25,8 +28,10 @@ public class PlayerMeleeAttack : MonoBehaviour
     private void Awake()
     {
         _playerController = GetComponent<PlayerController>();
+        _playerEnergy = GetComponent<PlayerEnergy>();
         _playerHealthComp = GetComponent<C_Health>();
         _circleCollider = GetComponent<CircleCollider2D>();
+        _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
     }
 
     // Start is called before the first frame update
@@ -57,6 +62,8 @@ public class PlayerMeleeAttack : MonoBehaviour
             //_playerController.StopVelocity();
             _newTime = Time.time + _attackRate;
             StartCoroutine(MeleeBehaviour());
+            _playerEnergy.RemoveEnergy(_energyCost);
+            _uiManager.UpdateEnergySlider();
         }
     }
 

@@ -261,8 +261,8 @@ MonoBehaviour:
   playerRef: {fileID: 0}
   originDistance: 0
   _moveSpeed: 130
-  _distanceKeptMin: 4
-  _distanceKeptMax: 8
+  _distanceKeptMin: 3
+  _distanceKeptMax: 5.5
   _distanceKept: 0
   _AggroRange: 11
   newDestination: {x: 0, y: 0, z: 0}
@@ -294,7 +294,7 @@ MonoBehaviour:
   _fireRate: 1.7
   _projDamage: 10
   _projSpeed: 400
-  _shootRange: 12
+  _shootRange: 8
   _shootAnimationTime: 0.5
   _canShoot: 0
   _projectile: {fileID: 2114494265205725720, guid: 7c38996b7a4b0af4aa4ccf84ff0875cb,

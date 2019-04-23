@@ -97,14 +97,14 @@ public class EnemyController : MonoBehaviour
                 if (playerRef)
                     playerRef.gameObject.GetComponentInParent<PlayerController>().enemyEngagedCounter--;
             }
-            opacityEnemyDead.a = Mathf.Lerp(opacityEnemyDead.a, 0, _deathLerpTime);
-            enemyDead.GetComponent<SpriteRenderer>().color = opacityEnemyDead;
-            Invoke("DestroyOurObject", _destroyObjectSeconds);
+
         }
 
         if (deathEnabled)
         {
-
+            opacityEnemyDead.a = Mathf.Lerp(opacityEnemyDead.a, 0, _deathLerpTime);
+            enemyDead.GetComponent<SpriteRenderer>().color = opacityEnemyDead;
+            Invoke("DestroyOurObject", _destroyObjectSeconds);
         }
             
     }
@@ -202,7 +202,7 @@ public class EnemyController : MonoBehaviour
                     SetPatrol();
                     patrolDistance = Vector2.Distance(transform.position, newDestination);
                     direction = newDirection;
-                    if (patrolDistance >= 0.25f)
+                    if (patrolDistance >= 0.15f)
                         _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
                     else
                         _rb.velocity = new Vector2(0, 0);
@@ -273,7 +273,7 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                enemyState = EnemyState.disengaged;
+                enemyState = EnemyState.patrol;
             }
         }
     }
