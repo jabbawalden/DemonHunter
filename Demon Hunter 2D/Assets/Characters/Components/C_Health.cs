@@ -67,7 +67,10 @@ public class C_Health : MonoBehaviour
     public bool IsAlive()
     {
         if (_currentHealth <= 0)
+        {
+            
             return false;
+        }
         else
             return true;
     }

@@ -259,10 +259,11 @@ MonoBehaviour:
   enemyMovementType: 0
   playerRef: {fileID: 0}
   originDistance: 0
-  _moveSpeed: 140
-  _distanceKeptMin: 3
-  _distanceKeptMax: 6.5
-  distanceKept: 0
+  _moveSpeed: 130
+  _distanceKeptMin: 34
+  _distanceKeptMax: 8
+  _distanceKept: 0
+  _AggroRange: 11
   newDestination: {x: 0, y: 0, z: 0}
   newDirection: {x: 0, y: 0, z: 0}
   haveDirectlyEngaged: 0
@@ -290,7 +291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fireRate: 1.7
-  _projDamage: 10
+  _projDamage: 9
   _projSpeed: 400
   _shootRange: 12
   _shootAnimationTime: 0.5
@@ -320,7 +321,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3674476245345084137}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1

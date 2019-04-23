@@ -250,8 +250,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 10 && _canDashDamage && collision.GetComponentInParent<C_Health>() != null)
-        {
-            _enemyHealthComp = collision.GetComponentInParent<C_Health>();
+        {  
             /*
             //if they are about to die
             if (_enemyHealthComp._currentHealth <= _dashDamage)
@@ -259,11 +258,11 @@ public class PlayerController : MonoBehaviour
                 _playerHealthComp.Heal(_dashHealAmount);
             }
             */
+            _enemyHealthComp = collision.GetComponentInParent<C_Health>();
             _playerHealthComp.Heal(_dashHealAmount);
             _enemyHealthComp.Damage(_dashDamage);
             _uiManager.UpdateHealthSlider();
 
-            //print("hit enemy");
         }
     }
 

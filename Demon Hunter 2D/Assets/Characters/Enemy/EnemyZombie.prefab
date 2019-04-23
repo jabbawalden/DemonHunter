@@ -152,10 +152,11 @@ MonoBehaviour:
   enemyMovementType: 1
   playerRef: {fileID: 0}
   originDistance: 0
-  _moveSpeed: 120
+  _moveSpeed: 140
   _distanceKeptMin: 0.4
   _distanceKeptMax: 0.7
-  distanceKept: 0
+  _distanceKept: 0
+  _AggroRange: 9
   newDestination: {x: 0, y: 0, z: 0}
   newDirection: {x: 0, y: 0, z: 0}
   haveDirectlyEngaged: 0
@@ -212,7 +213,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8186703901129291071}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1

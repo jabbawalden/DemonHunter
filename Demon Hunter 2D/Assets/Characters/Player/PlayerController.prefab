@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1384944241}
   - component: {fileID: 1384944240}
   m_Layer: 8
-  m_Name: Character_Forward
+  m_Name: PlayerMain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

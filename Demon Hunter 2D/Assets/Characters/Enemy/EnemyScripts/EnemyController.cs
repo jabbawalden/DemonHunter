@@ -20,13 +20,14 @@ public class EnemyController : MonoBehaviour
     Vector2 direction;
     private Vector3 _originalPosition;
     float patrolDistance;
-    float playerDistance; 
     [SerializeField] float originDistance;
     private Rigidbody2D _rb;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _distanceKeptMin;
     [SerializeField] private float _distanceKeptMax;
-    [SerializeField] private float distanceKept;
+    [SerializeField] private float _distanceKept;
+    [SerializeField] private float _AggroRange;
+
     public Vector3 newDestination;
     public Vector3 newDirection;
     public bool haveDirectlyEngaged;
@@ -54,6 +55,7 @@ public class EnemyController : MonoBehaviour
 
     private void Awake()
     {
+        playerRef = GameObject.Find("PlayerMain").transform;
         opacityEnemyDead = enemyDead.GetComponent<SpriteRenderer>().color;
         deathEnabled = false;
         enemyDead.SetActive(false);
@@ -63,7 +65,7 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
-        distanceKept = Random.Range(_distanceKeptMin, _distanceKeptMax);
+        _distanceKept = Random.Range(_distanceKeptMin, _distanceKeptMax);
         _originalPosition = transform.position;
         knockBack = false;
         haveDirectlyEngaged = false;
@@ -88,10 +90,7 @@ public class EnemyController : MonoBehaviour
             enemyAlive.SetActive(false);
             enemyDead.SetActive(true);
             _rb.velocity = new Vector2(0, 0);
-        }
 
-        if (deathEnabled)
-        {
             if (haveDirectlyEngaged)
             {
                 haveDirectlyEngaged = false;
@@ -101,6 +100,11 @@ public class EnemyController : MonoBehaviour
             opacityEnemyDead.a = Mathf.Lerp(opacityEnemyDead.a, 0, _deathLerpTime);
             enemyDead.GetComponent<SpriteRenderer>().color = opacityEnemyDead;
             Invoke("DestroyOurObject", _destroyObjectSeconds);
+        }
+
+        if (deathEnabled)
+        {
+
         }
             
     }
@@ -114,13 +118,10 @@ public class EnemyController : MonoBehaviour
     {
         float playerDist = 0;
 
-        if (playerRef)
-        {
-            if (haveDirectlyEngaged)
-                playerDist = Vector2.Distance(playerRef.position, transform.position);
-            else
-                playerDist = Vector2.Distance(playerRef.gameObject.GetComponentInParent<PlayerController>().engagementPositions[routePosition].position, transform.position);
-        }
+        if (haveDirectlyEngaged)
+            playerDist = Vector2.Distance(playerRef.position, transform.position);
+        else
+            playerDist = Vector2.Distance(playerRef.gameObject.GetComponentInParent<PlayerController>().engagementPositions[routePosition].position, transform.position);
 
         return playerDist;
     }
@@ -138,25 +139,21 @@ public class EnemyController : MonoBehaviour
     {
         originDistance = Vector2.Distance(transform.position, _originalPosition);
 
-        if (playerRef)
+        if (haveDirectlyEngaged)
         {
-         
-            if (haveDirectlyEngaged)
-            {
-                direction = playerRef.position - transform.position;
-            }
-            else
-            {
-                direction = playerRef.gameObject.GetComponentInParent<PlayerController>().engagementPositions[routePosition].position - transform.position;
-                
-                if (canChangeRandomPosition)
-                {
-                    canChangeRandomPosition = false;
-                    StartCoroutine(RandomMoveTimer());
-                }
-            }
-        
+            direction = playerRef.position - transform.position;
         }
+        else
+        {
+            direction = playerRef.gameObject.GetComponentInParent<PlayerController>().engagementPositions[routePosition].position - transform.position;
+
+            if (canChangeRandomPosition)
+            {
+                canChangeRandomPosition = false;
+                StartCoroutine(RandomMoveTimer());
+            }
+        }
+
 
         if (!knockBack)
         {
@@ -166,15 +163,14 @@ public class EnemyController : MonoBehaviour
 
                     if (enemyMovementType == EnemyMovementType.ranged)
                     {
-                        if (playerRef)
-                        {
-                            if (TargetDistance() > distanceKept)
-                                _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
-                            else if (TargetDistance() < distanceKept - 1)
-                                _rb.velocity = direction.normalized * -_moveSpeed * Time.deltaTime;
-                            else
-                                _rb.velocity = new Vector2(0, 0);
-                        }
+                        if (TargetDistance() > _distanceKept + 0.5f)
+                            _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
+                        else if (TargetDistance() < _distanceKept - 1.5f)
+                            _rb.velocity = direction.normalized * -_moveSpeed * Time.deltaTime;
+                        else
+                            _rb.velocity = new Vector2(0, 0);
+
+                        //SetRoutedPosition(playerRef);
 
                     }
                     else
@@ -185,7 +181,7 @@ public class EnemyController : MonoBehaviour
                             playerRef.gameObject.GetComponentInParent<PlayerController>().enemyEngagedCounter++;
                         }
                         
-                        if (TargetDistance() > distanceKept)
+                        if (TargetDistance() > _distanceKept)
                             _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
                         else
                             _rb.velocity = new Vector2(0,0);
@@ -257,7 +253,7 @@ public class EnemyController : MonoBehaviour
     {
         if (!knockBack)
         {
-            if (playerRef)
+            if (TargetDistance() <= _AggroRange)
             {
                 if (originDistance <= 3.5f)
                 {
@@ -350,7 +346,7 @@ public class EnemyController : MonoBehaviour
     {
         routePosition = Random.Range(0, target.gameObject.GetComponentInParent<PlayerController>().engagementPositions.Length - 1);
     }
-
+    /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 8)
@@ -367,5 +363,5 @@ public class EnemyController : MonoBehaviour
             playerRef = null;
         }
     }
-    
+    */
 }
