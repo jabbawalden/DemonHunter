@@ -65,6 +65,20 @@ public class ProjectileBehaviour : MonoBehaviour
             }
             Destroy(gameObject);
         }
+        else if (gameObject.layer == 15 && collision.gameObject.layer == 15 && isPlayerProj)
+        {
+            //if we are enemyProj, and the other is enemyProj and WE have playerProj true, then explode and destroy
+            if (explosion)
+            {
+                Instantiate(explosion, transform.position, Quaternion.identity);
+            }
+            Destroy(gameObject);
+        }
+        else if (gameObject.layer == 15 && collision.gameObject.layer == 15 && !isPlayerProj && collision.GetComponent<ProjectileBehaviour>().isPlayerProj)
+        {
+            //if we are enmemyproj and they are enemyproj and our isPlayerProj is false but their isPlayerProj is true, then simply destroy.
+            Destroy(gameObject);
+        }
         else if (collision.gameObject.layer == 15 && isPlayerProj)
         {
             //if we are player proj and run into enemy proj

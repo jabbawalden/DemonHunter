@@ -55,6 +55,8 @@ public class C_Health : MonoBehaviour
         if (_currentHealth > _maxHealth)
             _currentHealth = _maxHealth;
 
+        _uiManager.UpdateHealthSlider();
+
         print("heal player");
     }
 

@@ -17,6 +17,7 @@ public class EnemyProjectileAttack : MonoBehaviour
     [SerializeField] private float _shootRange;
     [SerializeField] private float _shootAnimationTime;
     private float _newTime;
+    [SerializeField] private bool _canShoot;
     [Space(4)]
 
     [Header("Object References")] 
@@ -29,13 +30,18 @@ public class EnemyProjectileAttack : MonoBehaviour
         _healthComp = GetComponent<C_Health>();
     }
 
+    private void Start()
+    {
+        _canShoot = false;
+    }
+
 
     // Update is called once per frame
     void Update()
     {
         if (_healthComp.IsAlive())
         {
-            if (_enemyController.playerRef != null && _enemyController.TargetDistance() <= _shootRange)
+            if (_enemyController.playerRef != null && _enemyController.TargetDistance() <= _shootRange && _canShoot)
             {
                 ShootProjectile();
             }
@@ -71,5 +77,17 @@ public class EnemyProjectileAttack : MonoBehaviour
         _enemyController.enemyState = EnemyState.attacking;
         yield return new WaitForSeconds(_shootAnimationTime);
         _enemyController.enemyState = stateCheck;
+    }
+
+
+    //so that the player doesn't get shot from off-screen 
+    private void OnBecameVisible()
+    {
+        _canShoot = true;
+    }
+
+    private void OnBecameInvisible()
+    {
+        _canShoot = false;
     }
 }

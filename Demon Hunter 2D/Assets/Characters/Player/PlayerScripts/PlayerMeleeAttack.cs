@@ -53,8 +53,8 @@ public class PlayerMeleeAttack : MonoBehaviour
         if (_newTime <= Time.time)
         {
             _canMeleeDamage = true;
-            _playerController.canMove = false;
-            _playerController.StopVelocity();
+            //_playerController.canMove = false;
+            //_playerController.StopVelocity();
             _newTime = Time.time + _attackRate;
             StartCoroutine(MeleeBehaviour());
         }
@@ -75,7 +75,7 @@ public class PlayerMeleeAttack : MonoBehaviour
         }
 
         yield return new WaitForSeconds(_recoveryAttackTime);
-        _playerController.canMove = true;
+        //_playerController.canMove = true;
         _canMeleeDamage = false;       
     }
 
