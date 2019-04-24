@@ -913,6 +913,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthSlider: {fileID: 269689788}
   _energySlider: {fileID: 1102733364}
+  _healthImage: {fileID: 1107555299}
+  _energyImage: {fileID: 2103959348}
+  lerpColourTime: 0.03
+  colourResetTime: 0.5
 --- !u!1001 &45649372
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32083,7 +32087,7 @@ GameObject:
   - component: {fileID: 1107555300}
   - component: {fileID: 1107555299}
   m_Layer: 5
-  m_Name: Fill
+  m_Name: HealthFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58090,7 +58094,7 @@ GameObject:
   - component: {fileID: 2103959349}
   - component: {fileID: 2103959348}
   m_Layer: 5
-  m_Name: Fill
+  m_Name: EnergyFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58128,7 +58132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.78039217, b: 1, a: 1}
+  m_Color: {r: 0, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -64662,11 +64666,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1538872665, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -151.77
+      value: -153.7
       objectReference: {fileID: 0}
     - target: {fileID: 1538872665, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -701.45
+      value: -700
       objectReference: {fileID: 0}
     - target: {fileID: 1538872665, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: m_LocalPosition.z
@@ -64722,7 +64726,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1538872663, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: _energyCost
-      value: 15
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 1538872663, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: _attackTime

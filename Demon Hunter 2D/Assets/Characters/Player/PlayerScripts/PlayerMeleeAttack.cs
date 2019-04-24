@@ -64,6 +64,7 @@ public class PlayerMeleeAttack : MonoBehaviour
             StartCoroutine(MeleeBehaviour());
             _playerEnergy.RemoveEnergy(_energyCost);
             _uiManager.UpdateEnergySlider();
+            _uiManager.DamageEnergyBar();
         }
     }
 

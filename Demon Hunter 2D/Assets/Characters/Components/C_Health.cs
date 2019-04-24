@@ -38,7 +38,11 @@ public class C_Health : MonoBehaviour
         if (IsAlive())
         {
             if (_uiManager)
+            {
                 _uiManager.UpdateHealthSlider();
+                _uiManager.DamageHealthBar();
+            }
+
 
             if (isPlayerComponent)
                 playerCam.CameraShake(0.1f, 0.05f);
@@ -70,7 +74,9 @@ public class C_Health : MonoBehaviour
     {
         if (_currentHealth <= 0)
         {
-            
+            //to ensure healthbar reaches 0
+            if (_uiManager)
+                _uiManager.UpdateHealthSlider();
             return false;
         }
         else

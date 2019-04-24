@@ -56,6 +56,7 @@ public class EnemyMeleeAttack : MonoBehaviour
             _playerHealthComponent = _enemyController.playerRef.GetComponentInParent<C_Health>();
             _playerHealthComponent.Damage(_damage);
             _uiManager.UpdateHealthSlider();
+            _uiManager.DamageHealthBar();
 
         }
 
