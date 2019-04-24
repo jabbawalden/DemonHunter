@@ -116,6 +116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1538872665}
   - component: {fileID: 1538872664}
+  - component: {fileID: 7916383915472219977}
   - component: {fileID: 5078907333326598290}
   - component: {fileID: 1538872663}
   - component: {fileID: 1538872662}
@@ -197,9 +198,28 @@ MonoBehaviour:
   _canDashDamage: 0
   _dashDamage: 5
   _dashHealAmount: 3
-  _dashEnergyCost: 40
+  _dashEnergyCost: 50
   _circleCollider: {fileID: 1538872658}
   _playerState: 0
+--- !u!114 &7916383915472219977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538872657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6c6fac6910818f4c8282fcca56e5d31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerCamera: {fileID: 0}
+  _dashEnergyCost: 50
+  _dashSpeed: 1400
+  _dashDamage: 5
+  _dashHealAmount: 3
+  playerBodyCollision: {fileID: 1384944240}
+  _circleCollider: {fileID: 1538872658}
 --- !u!114 &5078907333326598290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,9 +250,10 @@ MonoBehaviour:
   _recoveryAttackTime: 0.1
   _initialAttackTime: 0.08
   _attackWindUpTime: 0.08
+  _energyCost: 17
   _attackRate: 0.4
   _newTime: 0
-  _attackTime: 0.25
+  _attackTime: 0.1
   _meleeDamage: 4
   _meleeSpawnRange: 0
   _canMeleeDamage: 0
@@ -255,7 +276,7 @@ MonoBehaviour:
   _shootAnimationTime: 0.4
   _projDamage: 10
   _healthCost: 0
-  _energyCost: 40
+  _energyCost: 60
   projectile: {fileID: 5817606138077904511, guid: 63a02c98749e77d43aa35d73d312a2fb,
     type: 3}
   _shootOrigin: {fileID: 1706719609}
@@ -289,7 +310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxEnergy: 100
   currentEnergy: 100
-  _regenRate: 0.11
+  _regenRate: 0.3
   uiManager: {fileID: 0}
 --- !u!50 &1538872659
 Rigidbody2D:

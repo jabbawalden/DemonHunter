@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
                 PlayerMovement(_movementSpeed);
 
             DirectionCheck();
-            Dash();
+            //Dash();
         }
         else if (!deathEnabled)
         {
@@ -127,6 +127,7 @@ public class PlayerController : MonoBehaviour
         _rb.velocity = move;
     }
 
+    /*
     private void Dash()
     {
         if (Input.GetKeyDown(KeyCode.Space) && _playerEnergy.currentEnergy >= _dashEnergyCost)
@@ -140,6 +141,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    
     IEnumerator DashBehaviour(float time, float speed)
     {
         float count = 0;
@@ -153,7 +155,7 @@ public class PlayerController : MonoBehaviour
 
         while (count < time)
         {
-            _playerState = 1;
+            //_playerState = 1;
             count += speed;
             _rb.velocity = currentAimDirection * _dashSpeed * Time.deltaTime;
             yield return new WaitForSeconds(0.01f);
@@ -164,12 +166,12 @@ public class PlayerController : MonoBehaviour
         _circleCollider.enabled = false;
         playerBodyCollision.enabled = true;
     }
-
+    */
     public void StopVelocity()
     {
         _rb.velocity = new Vector2(0, 0);
         isDashing = false;
-        _playerState = 0;
+        //_playerState = 0;
     }
 
     private void SetAnimationPlay(int state)
@@ -248,17 +250,11 @@ public class PlayerController : MonoBehaviour
         return direction;
     }
 
+    /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 10 && _canDashDamage && collision.GetComponentInParent<C_Health>() != null)
         {  
-            /*
-            //if they are about to die
-            if (_enemyHealthComp._currentHealth <= _dashDamage)
-            {
-                _playerHealthComp.Heal(_dashHealAmount);
-            }
-            */
             _enemyHealthComp = collision.GetComponentInParent<C_Health>();
             _playerHealthComp.Heal(_dashHealAmount);
             _enemyHealthComp.Damage(_dashDamage);
@@ -266,5 +262,5 @@ public class PlayerController : MonoBehaviour
             _uiManager.DamageHealthBar();
         }
     }
-
+    */
 }

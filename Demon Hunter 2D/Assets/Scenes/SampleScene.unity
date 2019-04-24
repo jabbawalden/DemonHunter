@@ -64712,30 +64712,15 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 33975191}
-    - target: {fileID: 1538872660, guid: f0012caabe927754790617fe3618fa17, type: 3}
-      propertyPath: _regenRate
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 1538872661, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: playerCam
       value: 
       objectReference: {fileID: 1105582906}
-    - target: {fileID: 1538872664, guid: f0012caabe927754790617fe3618fa17, type: 3}
-      propertyPath: _dashEnergyCost
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 1538872663, guid: f0012caabe927754790617fe3618fa17, type: 3}
-      propertyPath: _energyCost
-      value: 17
-      objectReference: {fileID: 0}
-    - target: {fileID: 1538872663, guid: f0012caabe927754790617fe3618fa17, type: 3}
-      propertyPath: _attackTime
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1538872662, guid: f0012caabe927754790617fe3618fa17, type: 3}
-      propertyPath: _energyCost
-      value: 60
-      objectReference: {fileID: 0}
+    - target: {fileID: 7916383915472219977, guid: f0012caabe927754790617fe3618fa17,
+        type: 3}
+      propertyPath: _playerCamera
+      value: 
+      objectReference: {fileID: 1105582906}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0012caabe927754790617fe3618fa17, type: 3}
 --- !u!1001 &9036037233594948165
