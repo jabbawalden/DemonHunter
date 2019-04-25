@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5898024786932070270}
   - component: {fileID: 5898024786932070271}
   - component: {fileID: 5898024786932070257}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GreyRock3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

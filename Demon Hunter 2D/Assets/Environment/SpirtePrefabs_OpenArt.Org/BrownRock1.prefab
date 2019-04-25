@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3736309628651211853}
   - component: {fileID: 3736309628651211852}
   - component: {fileID: 3736309628651211854}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: BrownRock1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

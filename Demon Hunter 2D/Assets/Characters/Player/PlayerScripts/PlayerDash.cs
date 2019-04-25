@@ -18,6 +18,7 @@ public class PlayerDash : MonoBehaviour
     [SerializeField] private float _dashHealAmount;
     [SerializeField] private BoxCollider2D playerBodyCollision;
     [SerializeField] private CircleCollider2D _circleCollider;
+    [SerializeField] private GameObject playerDashCollider;
 
     private bool _canDashDamage;
 
@@ -29,6 +30,11 @@ public class PlayerDash : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
 
+    }
+
+    private void Start()
+    {
+        playerDashCollider.SetActive(false);
     }
 
     // Update is called once per frame
@@ -55,6 +61,7 @@ public class PlayerDash : MonoBehaviour
         float count = 0;
         Vector2 currentAimDirection = _playerController.AimDirection();
 
+        playerDashCollider.SetActive(true);
         _playerController.canMove = false;
         _canDashDamage = true;
         _circleCollider.enabled = true;
@@ -71,6 +78,8 @@ public class PlayerDash : MonoBehaviour
         _canDashDamage = false;
         _circleCollider.enabled = false;
         playerBodyCollision.enabled = true;
+        yield return new WaitForSeconds(0.05f);
+        playerDashCollider.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -22,7 +22,7 @@ TagManager:
   - PlayerMeleeBlock
   - PlayerProj
   - EnemyProj
-  - 
+  - PlayerDashCollider
   - 
   - 
   - 

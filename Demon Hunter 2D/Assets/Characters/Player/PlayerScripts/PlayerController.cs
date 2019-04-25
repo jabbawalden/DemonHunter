@@ -22,22 +22,13 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float _movementSpeed;    //speed 
-    [SerializeField] private float _dashSpeed;
     [SerializeField] private int direction;
     //[SerializeField] private bool isDashing;
     public bool canMove;
 
-    [SerializeField] private bool isDashing;
     Vector2 mousePoint;
-
     [Space(4)]
 
-    [Header("Main Properties")]
-    [SerializeField] private bool _canDashDamage;
-    [SerializeField] private float _dashDamage;
-    [SerializeField] private float _dashHealAmount;
-    [SerializeField] private float _dashEnergyCost;
-    [Space(4)]
 
     [Header("Local Components")]
     private Rigidbody2D _rb;
@@ -68,7 +59,6 @@ public class PlayerController : MonoBehaviour
         _playerCamera = GameObject.Find("CameraHolder").GetComponent<PlayerCamera>();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         deathEnabled = false;
@@ -76,11 +66,9 @@ public class PlayerController : MonoBehaviour
         canMove = true;
         direction = 1;
         _playerState = 0;
-        _canDashDamage = false;
         _circleCollider.enabled = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (_playerHealthComp.IsAlive())
@@ -89,7 +77,6 @@ public class PlayerController : MonoBehaviour
                 PlayerMovement(_movementSpeed);
 
             DirectionCheck();
-            //Dash();
         }
         else if (!deathEnabled)
         {
@@ -99,10 +86,6 @@ public class PlayerController : MonoBehaviour
             StopVelocity();
         }
 
-        //if (Input.GetKeyDown(KeyCode.K))
-        //{
-        //    _playerHealthComp.Damage(50);
-        //}
     }
 
     public Vector2 AimDirection()
@@ -127,50 +110,10 @@ public class PlayerController : MonoBehaviour
         _rb.velocity = move;
     }
 
-    /*
-    private void Dash()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && _playerEnergy.currentEnergy >= _dashEnergyCost)
-        {
-            _playerEnergy.RemoveEnergy(_dashEnergyCost);
-            //TODO - only dash when energy is equal or above dash cost
-            StartCoroutine(DashBehaviour(4.5f, 0.3f));
-            _uiManager.UpdateEnergySlider();
-            _uiManager.DamageEnergyBar();
-            _playerCamera.CameraShake(0.15f, 0.08f);
-        }
-    }
 
-    
-    IEnumerator DashBehaviour(float time, float speed)
-    {
-        float count = 0;
-        Vector2 currentAimDirection = AimDirection();
-
-        canMove = false;
-        _canDashDamage = true;
-        _circleCollider.enabled = true;
-        //set player collision off to avoid projectile damage when dashing
-        playerBodyCollision.enabled = false;
-
-        while (count < time)
-        {
-            //_playerState = 1;
-            count += speed;
-            _rb.velocity = currentAimDirection * _dashSpeed * Time.deltaTime;
-            yield return new WaitForSeconds(0.01f);
-        }
-
-        canMove = true;
-        _canDashDamage = false;
-        _circleCollider.enabled = false;
-        playerBodyCollision.enabled = true;
-    }
-    */
     public void StopVelocity()
     {
         _rb.velocity = new Vector2(0, 0);
-        isDashing = false;
         //_playerState = 0;
     }
 
@@ -250,17 +193,4 @@ public class PlayerController : MonoBehaviour
         return direction;
     }
 
-    /*
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == 10 && _canDashDamage && collision.GetComponentInParent<C_Health>() != null)
-        {  
-            _enemyHealthComp = collision.GetComponentInParent<C_Health>();
-            _playerHealthComp.Heal(_dashHealAmount);
-            _enemyHealthComp.Damage(_dashDamage);
-            _uiManager.UpdateHealthSlider();
-            _uiManager.DamageHealthBar();
-        }
-    }
-    */
 }
