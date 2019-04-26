@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     public int enemyEngagedCounter;
     [SerializeField] private GameObject playerAlive, playerDead;
     [SerializeField] private Collider2D playerBodyCollision;
-    private bool deathEnabled; 
+    [System.NonSerialized] public bool deathEnabled; 
     public Transform[] engagementPositions;
 
     [Header("Movement")]

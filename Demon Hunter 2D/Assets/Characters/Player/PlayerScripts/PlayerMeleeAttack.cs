@@ -24,6 +24,8 @@ public class PlayerMeleeAttack : MonoBehaviour
     private CircleCollider2D _circleCollider;
 
     [SerializeField] private GameObject _meleeAttackObj;
+    public bool playerMeleeEnabled;
+    public bool meleeIconLit;
 
     private void Awake()
     {
@@ -45,17 +47,21 @@ public class PlayerMeleeAttack : MonoBehaviour
     {
         if (_playerHealthComp.IsAlive())
         {
-            if (Input.GetKeyDown(KeyCode.Mouse1))
+            if (Input.GetKeyDown(KeyCode.Mouse1) && playerMeleeEnabled)
             {
                 MeleeAttack();
             }
         }
 
+        if (_playerEnergy.currentEnergy >= _energyCost)
+            meleeIconLit = true;
+        else
+            meleeIconLit = false;
     }
 
     private void MeleeAttack()
     {
-        if (_newTime <= Time.time)
+        if (_newTime <= Time.time && _playerEnergy.currentEnergy >= _energyCost)
         {
             _canMeleeDamage = true;
             //_playerController.canMove = false;

@@ -9,7 +9,6 @@ public class PlayerMeleeStrike : MonoBehaviour
     [System.NonSerialized] public int hitCount;
     [SerializeField] private int _maxHitCount;
     private EnemyController _enemyController;
-    
 
     private void Start()
     {

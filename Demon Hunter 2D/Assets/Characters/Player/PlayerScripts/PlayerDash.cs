@@ -21,6 +21,8 @@ public class PlayerDash : MonoBehaviour
     [SerializeField] private GameObject playerDashCollider;
 
     private bool _canDashDamage;
+    public bool playerDashEnabled;
+    public bool dashIconLit;
 
     private void Awake()
     {
@@ -42,11 +44,16 @@ public class PlayerDash : MonoBehaviour
     {
         if (_playerHealthComp.IsAlive())
             Dash();
+
+        if (_playerEnergy.currentEnergy >= _dashEnergyCost)
+            dashIconLit = true;
+        else
+            dashIconLit = false;
     }
 
     private void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _playerEnergy.currentEnergy >= _dashEnergyCost)
+        if (Input.GetKeyDown(KeyCode.Space) && _playerEnergy.currentEnergy >= _dashEnergyCost && playerDashEnabled)
         {
             _playerEnergy.RemoveEnergy(_dashEnergyCost);
             StartCoroutine(DashBehaviour(4.5f, 0.3f));

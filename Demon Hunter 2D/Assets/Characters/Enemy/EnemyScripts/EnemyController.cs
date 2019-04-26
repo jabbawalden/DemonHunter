@@ -253,27 +253,30 @@ public class EnemyController : MonoBehaviour
     {
         if (!knockBack)
         {
-            if (TargetDistance() <= _AggroRange)
+            if (!playerRef.gameObject.GetComponentInParent<PlayerController>().deathEnabled)
             {
-                if (originDistance <= 3.5f)
+                if (TargetDistance() <= _AggroRange)
                 {
-                    enemyState = EnemyState.engaged;
-
-                }
-                else if (originDistance > 10)
-                {
-                    enemyState = EnemyState.patrol;
-
-                    if (haveDirectlyEngaged)
+                    if (originDistance <= 3.5f)
                     {
-                        haveDirectlyEngaged = false;
-                        playerRef.gameObject.GetComponentInParent<PlayerController>().enemyEngagedCounter--;
+                        enemyState = EnemyState.engaged;
+
+                    }
+                    else if (originDistance > 10)
+                    {
+                        enemyState = EnemyState.patrol;
+
+                        if (haveDirectlyEngaged)
+                        {
+                            haveDirectlyEngaged = false;
+                            playerRef.gameObject.GetComponentInParent<PlayerController>().enemyEngagedCounter--;
+                        }
                     }
                 }
-            }
-            else
-            {
-                enemyState = EnemyState.patrol;
+                else
+                {
+                    enemyState = EnemyState.patrol;
+                }
             }
         }
     }
@@ -346,22 +349,5 @@ public class EnemyController : MonoBehaviour
     {
         routePosition = Random.Range(0, target.gameObject.GetComponentInParent<PlayerController>().engagementPositions.Length - 1);
     }
-    /*
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == 8)
-        {
-            playerRef = collision.gameObject.transform;
-            SetRoutedPosition(playerRef);
-        }
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == 8)
-        {
-            playerRef = null;
-        }
-    }
-    */
 }

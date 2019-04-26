@@ -10,16 +10,25 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider _energySlider;
     [SerializeField] private Image _healthImage;
     [SerializeField] private Image _energyImage;
-    [SerializeField] private float lerpColourTime;
-    [SerializeField] private float colourResetTime;
+    [SerializeField] private float _lerpColourTime;
+    [SerializeField] private float _colourResetTime;
+    [SerializeField] private Text _meleeUI, _shootUI, _dashUI;
+    [SerializeField] private Color colorMoveReady, colorMoveRecharge;
     private bool canChangeColorHealth;
     private bool canChangeColorEnergy;
 
     private C_Health _playerHealthComponenent;
     private PlayerEnergy _playerEnergy;
 
+    private PlayerMeleeAttack playerMeleeAttack;
+    private PlayerShoot playerShoot;
+    private PlayerDash playerDash;
+
     private void Awake()
     {
+        playerMeleeAttack = GameObject.Find("PlayerController").GetComponent<PlayerMeleeAttack>();
+        playerShoot = GameObject.Find("PlayerController").GetComponent<PlayerShoot>();
+        playerDash = GameObject.Find("PlayerController").GetComponent<PlayerDash>();
         _playerHealthComponenent = GameObject.Find("PlayerController").GetComponent<C_Health>();
         _playerEnergy = GameObject.Find("PlayerController").GetComponent<PlayerEnergy>();
     }
@@ -34,15 +43,11 @@ public class UIManager : MonoBehaviour
     {
         if (canChangeColorHealth)
             BarColourReaction(false, _healthImage);
-        //else
-        //    BarColourReaction(true, _healthImage);
 
         if (canChangeColorEnergy)
             BarColourReaction(true, _energyImage);
-        /*
-        else
-            BarColourReaction(true, _energyImage);*/
 
+        MoveSetColour();
     }
     
     private void BarColourReaction(bool energy, Image barImage)
@@ -51,28 +56,21 @@ public class UIManager : MonoBehaviour
         {
             Color newColor;
             newColor = barImage.color;
-            newColor = new Color(Mathf.Lerp(barImage.color.r, 0, lerpColourTime), newColor.g, Mathf.Lerp(barImage.color.b, 0, lerpColourTime), newColor.a);
+            newColor = new Color(Mathf.Lerp(barImage.color.r, 0, _lerpColourTime), newColor.g, Mathf.Lerp(barImage.color.b, 0, _lerpColourTime), newColor.a);
             barImage.color = newColor;
         }
         else
         {
             Color newColor;
             newColor = barImage.color;
-            newColor = new Color(Mathf.Lerp(barImage.color.r, 0, lerpColourTime), newColor.g, newColor.b, newColor.a);
+            newColor = new Color(Mathf.Lerp(barImage.color.r, 0, _lerpColourTime), newColor.g, Mathf.Lerp(barImage.color.b, 0.9f, _lerpColourTime), newColor.a);
             barImage.color = newColor;
         }
-        /*
-        else
-        {
-            newColor = barImage.color;
-            barImage.color = new Color(0, newColor.g, newColor.b, newColor.a);
-        }*/
     }
     
     public void UpdateHealthSlider()
     {
         _healthSlider.value = _playerHealthComponenent.GetHealthPercent();
-        StartCoroutine(ReturnFalse(canChangeColorHealth));
     }
 
     public void DamageHealthBar()
@@ -80,12 +78,12 @@ public class UIManager : MonoBehaviour
         //set new colour
         _healthImage.color = new Color(1, _healthImage.color.g, 1, _healthImage.color.a);
         canChangeColorHealth = true;
+        StartCoroutine(ReturnFalse(canChangeColorHealth));
     }
 
     public void UpdateEnergySlider()
     {
         _energySlider.value = _playerEnergy.GetEnergyPercent();
-        StartCoroutine(ReturnFalse(canChangeColorEnergy));
     }
 
     public void DamageEnergyBar()
@@ -93,12 +91,33 @@ public class UIManager : MonoBehaviour
         //set new colour
         _energyImage.color = new Color(1, _energyImage.color.g, _energyImage.color.b, _energyImage.color.a);
         canChangeColorEnergy = true;
+        StartCoroutine(ReturnFalse(canChangeColorEnergy));
     }
 
     IEnumerator ReturnFalse (bool boolean)
     {
-        yield return new WaitForSeconds(colourResetTime);
+        yield return new WaitForSeconds(_colourResetTime);
         boolean = false;
+    }
+
+    private void MoveSetColour()
+    {
+        if (playerMeleeAttack.meleeIconLit)
+            _meleeUI.color = colorMoveReady;
+        else
+            _meleeUI.color = colorMoveRecharge;
+
+
+        if (playerShoot.shootIconLit)
+            _shootUI.color = colorMoveReady;
+        else
+            _shootUI.color = colorMoveRecharge;
+
+
+        if (playerDash.dashIconLit)
+            _dashUI.color = colorMoveReady;
+        else
+            _dashUI.color = colorMoveRecharge;
     }
 
 }

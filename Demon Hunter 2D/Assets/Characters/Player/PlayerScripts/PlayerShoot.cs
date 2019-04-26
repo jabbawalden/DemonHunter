@@ -23,6 +23,8 @@ public class PlayerShoot : MonoBehaviour
 
     //[Header("Scripts")]
     private ProjectileBehaviour projBehaviour;
+    public bool playerShootEnabled;
+    public bool shootIconLit;
 
     private void Awake()
     {
@@ -37,7 +39,7 @@ public class PlayerShoot : MonoBehaviour
     {
         if (_healthComponent.IsAlive())
         {
-            if (Input.GetKey(KeyCode.Mouse0))
+            if (Input.GetKey(KeyCode.Mouse0) && playerShootEnabled)
             {
                 if (Time.time >= _newTime && _playerEnergy.currentEnergy >= _energyCost)
                 {
@@ -45,6 +47,11 @@ public class PlayerShoot : MonoBehaviour
                 }     
             }
         }
+
+        if (_playerEnergy.currentEnergy >= _energyCost)
+            shootIconLit = true;
+        else
+            shootIconLit = false;
     }
 
     private void ShootAbility()
