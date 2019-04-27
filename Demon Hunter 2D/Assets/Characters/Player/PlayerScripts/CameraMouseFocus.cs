@@ -30,25 +30,25 @@ public class CameraMouseFocus : MonoBehaviour
         if (transform.localPosition.x < maxPositionValue)
         {
             if (mousePos.x > movementRadius)
-                xLerpPos = Mathf.Lerp(transform.localPosition.x, transform.localPosition.x + mousePos.x / xDivider, lerpTime);
+                xLerpPos = Mathf.Lerp(transform.localPosition.x, mousePos.x / xDivider, lerpTime);
         }
 
         if (transform.localPosition.x > -maxPositionValue)
         {
             if (mousePos.x < -movementRadius)
-                xLerpPos = Mathf.Lerp(transform.localPosition.x, transform.localPosition.x + mousePos.x / xDivider, lerpTime);
+                xLerpPos = Mathf.Lerp(transform.localPosition.x, mousePos.x / xDivider, lerpTime);
         }
 
-        if (transform.localPosition.y < maxPositionValue * 0.7f)
+        if (transform.localPosition.y < maxPositionValue)
         {
             if (mousePos.y > movementRadius)
-                yLerpPos = Mathf.Lerp(transform.localPosition.y, transform.localPosition.y + mousePos.y / yDivider, lerpTime);
+                yLerpPos = Mathf.Lerp(transform.localPosition.y, mousePos.y / yDivider, lerpTime);
         }
 
-        if (transform.localPosition.y > -maxPositionValue * 0.7f)
+        if (transform.localPosition.y > -maxPositionValue)
         {
             if (mousePos.y < -movementRadius)
-                yLerpPos = Mathf.Lerp(transform.localPosition.y, transform.localPosition.y + mousePos.y / yDivider, lerpTime);
+                yLerpPos = Mathf.Lerp(transform.localPosition.y, mousePos.y / yDivider, lerpTime);
         }
         //if (transform.localPosition.x )
 

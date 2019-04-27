@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyProjectileAttack : MonoBehaviour
+public class EnemyShoot : MonoBehaviour
 {
     [Header("Scripts")]
     private EnemyController _enemyController;
@@ -39,9 +39,10 @@ public class EnemyProjectileAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (_healthComp.IsAlive())
         {
-            if (_enemyController.playerRef != null && _enemyController.TargetDistance() <= _shootRange && _canShoot)
+            if (_enemyController.playerRef.GetComponentInParent<C_Health>().IsAlive() && _enemyController.playerRef != null && _enemyController.TargetDistance() <= _shootRange && _canShoot)
             {
                 ShootProjectile();
             }

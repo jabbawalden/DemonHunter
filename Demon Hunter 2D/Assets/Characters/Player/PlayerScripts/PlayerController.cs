@@ -23,7 +23,8 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float _currentMovementSpeed;    //speed 
     public float _defaultMovementSpeed;
-    public float _shootingMovementSpeed; 
+    public float _shootingMovementSpeed;
+    public float _meleeMovementSpeed;
     [SerializeField] private int direction;
     //[SerializeField] private bool isDashing;
     public bool canMove;

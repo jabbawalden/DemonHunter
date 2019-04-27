@@ -77,6 +77,8 @@ public class PlayerMeleeAttack : MonoBehaviour
     IEnumerator MeleeBehaviour()
     {
         Vector2 position = new Vector2(transform.position.x, transform.position.y) + _playerController.AimDirection();
+        _playerController._currentMovementSpeed = _playerController._meleeMovementSpeed;
+
         yield return new WaitForSeconds(_attackWindUpTime);
         //spawn melee attack collider
         //use instantiate instead of collier because 
@@ -90,19 +92,9 @@ public class PlayerMeleeAttack : MonoBehaviour
 
         yield return new WaitForSeconds(_recoveryAttackTime);
         //_playerController.canMove = true;
-        _canMeleeDamage = false;       
+        _canMeleeDamage = false;
+        _playerController._currentMovementSpeed = _playerController._defaultMovementSpeed;
     }
 
-    /*
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == 10 && _canMeleeDamage && collision.GetComponentInParent<C_Health>() != null)
-        {
-            _enemyHealthComp = collision.GetComponentInParent<C_Health>();
-            _enemyHealthComp.Damage(_meleeDamage);
-            print("hit enemy");
-            //add a small knock-back effect and also stun effect that interrupts attacks
-        }
-    }
-    */
+ 
 }
