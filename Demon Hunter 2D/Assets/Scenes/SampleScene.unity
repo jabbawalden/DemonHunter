@@ -64804,40 +64804,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6074289155265617863, guid: 9e9213d944735e34098addd56dc031b4,
-        type: 3}
-      propertyPath: orthographic size
-      value: 6.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6074289155265617720, guid: 9e9213d944735e34098addd56dc031b4,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6680255372188670555, guid: 9e9213d944735e34098addd56dc031b4,
-        type: 3}
-      propertyPath: xDivider
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 6680255372188670555, guid: 9e9213d944735e34098addd56dc031b4,
+    - target: {fileID: 7216241773067555830, guid: 9e9213d944735e34098addd56dc031b4,
         type: 3}
       propertyPath: yDivider
       value: 1000
       objectReference: {fileID: 0}
-    - target: {fileID: 6680255372188670555, guid: 9e9213d944735e34098addd56dc031b4,
+    - target: {fileID: 7216241773067555830, guid: 9e9213d944735e34098addd56dc031b4,
         type: 3}
-      propertyPath: movementRadius
-      value: 80
+      propertyPath: xDivider
+      value: 1100
       objectReference: {fileID: 0}
-    - target: {fileID: 6680255372188670555, guid: 9e9213d944735e34098addd56dc031b4,
-        type: 3}
-      propertyPath: maxPositionValue
-      value: 2.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6680255372188670555, guid: 9e9213d944735e34098addd56dc031b4,
+    - target: {fileID: 7216241773067555830, guid: 9e9213d944735e34098addd56dc031b4,
         type: 3}
       propertyPath: lerpTime
-      value: 0.5
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e9213d944735e34098addd56dc031b4, type: 3}

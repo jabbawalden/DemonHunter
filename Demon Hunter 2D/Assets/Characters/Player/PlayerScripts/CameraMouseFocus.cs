@@ -26,10 +26,8 @@ public class CameraMouseFocus : MonoBehaviour
     {
 
         mousePos = Input.mousePosition - screenCenter;
-        //mousePos = mousePos.normalized;
-        print(transform.localPosition.x);
 
-        if (transform.localPosition.x < maxPositionValue /*|| transform.localPosition.x > -maxPositionValue*/)
+        if (transform.localPosition.x < maxPositionValue)
         {
             if (mousePos.x > movementRadius)
                 xLerpPos = Mathf.Lerp(transform.localPosition.x, transform.localPosition.x + mousePos.x / xDivider, lerpTime);
@@ -41,8 +39,19 @@ public class CameraMouseFocus : MonoBehaviour
                 xLerpPos = Mathf.Lerp(transform.localPosition.x, transform.localPosition.x + mousePos.x / xDivider, lerpTime);
         }
 
+        if (transform.localPosition.y < maxPositionValue * 0.7f)
+        {
+            if (mousePos.y > movementRadius)
+                yLerpPos = Mathf.Lerp(transform.localPosition.y, transform.localPosition.y + mousePos.y / yDivider, lerpTime);
+        }
+
+        if (transform.localPosition.y > -maxPositionValue * 0.7f)
+        {
+            if (mousePos.y < -movementRadius)
+                yLerpPos = Mathf.Lerp(transform.localPosition.y, transform.localPosition.y + mousePos.y / yDivider, lerpTime);
+        }
         //if (transform.localPosition.x )
 
-        transform.localPosition = new Vector3(xLerpPos, /*mT.position.y + mousePos.y / yDivider*/ 0 , mT.position.z);
+        transform.localPosition = new Vector3(xLerpPos, yLerpPos, mT.position.z);
     }
 }
