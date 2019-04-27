@@ -19,7 +19,7 @@ public class ProjectileExplosionReaction : MonoBehaviour
 
     private void Start()
     {
-        playerCam.CameraShake(0.2f, 0.12f);
+        playerCam.CameraShake(0.2f, 0.15f);
     }
 
     private void Update()

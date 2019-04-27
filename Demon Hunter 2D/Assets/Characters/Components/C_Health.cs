@@ -45,7 +45,7 @@ public class C_Health : MonoBehaviour
 
 
             if (isPlayerComponent)
-                playerCam.CameraShake(0.1f, 0.05f);
+                playerCam.CameraShake(0.1f, 0.08f);
         }
 
 

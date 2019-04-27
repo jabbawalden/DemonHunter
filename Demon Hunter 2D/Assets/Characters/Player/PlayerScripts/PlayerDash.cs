@@ -59,7 +59,7 @@ public class PlayerDash : MonoBehaviour
             StartCoroutine(DashBehaviour(4.5f, 0.3f));
             _uiManager.UpdateEnergySlider();
             _uiManager.DamageEnergyBar();
-            _playerCamera.CameraShake(0.15f, 0.08f);
+            _playerCamera.CameraShake(0.15f, 0.11f);
         }
     }
 

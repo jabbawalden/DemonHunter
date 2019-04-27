@@ -43966,7 +43966,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 16
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
@@ -48095,7 +48095,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 16
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
@@ -58699,7 +58699,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 16
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
@@ -64806,18 +64806,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7216241773067555830, guid: 9e9213d944735e34098addd56dc031b4,
         type: 3}
+      propertyPath: maxPositionValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7216241773067555830, guid: 9e9213d944735e34098addd56dc031b4,
+        type: 3}
       propertyPath: yDivider
-      value: 1000
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 7216241773067555830, guid: 9e9213d944735e34098addd56dc031b4,
         type: 3}
       propertyPath: xDivider
-      value: 1100
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 7216241773067555830, guid: 9e9213d944735e34098addd56dc031b4,
         type: 3}
       propertyPath: lerpTime
-      value: 0.1
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7216241773067555830, guid: 9e9213d944735e34098addd56dc031b4,
+        type: 3}
+      propertyPath: movementRadius
+      value: 180
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e9213d944735e34098addd56dc031b4, type: 3}
@@ -66121,9 +66131,30 @@ PrefabInstance:
       propertyPath: playerMeleeEnabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1538872663, guid: f0012caabe927754790617fe3618fa17, type: 3}
+      propertyPath: _meleeDamage
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1538872662, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: playerShootEnabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538872664, guid: f0012caabe927754790617fe3618fa17, type: 3}
+      propertyPath: _currentMovementSpeed
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538872664, guid: f0012caabe927754790617fe3618fa17, type: 3}
+      propertyPath: _defaultMovementSpeed
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 1538872664, guid: f0012caabe927754790617fe3618fa17, type: 3}
+      propertyPath: _shootingMovementSpeed
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 5078907333326598290, guid: f0012caabe927754790617fe3618fa17,
+        type: 3}
+      propertyPath: MainGateKey
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0012caabe927754790617fe3618fa17, type: 3}
