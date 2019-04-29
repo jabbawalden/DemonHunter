@@ -36,13 +36,11 @@ public class PlayerMeleeAttack : MonoBehaviour
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         _canMeleeDamage = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (_playerHealthComp.IsAlive())
@@ -93,16 +91,4 @@ public class PlayerMeleeAttack : MonoBehaviour
         _canMeleeDamage = false;       
     }
 
-    /*
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == 10 && _canMeleeDamage && collision.GetComponentInParent<C_Health>() != null)
-        {
-            _enemyHealthComp = collision.GetComponentInParent<C_Health>();
-            _enemyHealthComp.Damage(_meleeDamage);
-            print("hit enemy");
-            //add a small knock-back effect and also stun effect that interrupts attacks
-        }
-    }
-    */
 }

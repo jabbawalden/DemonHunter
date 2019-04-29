@@ -79,7 +79,6 @@ public class EnemyProjectileAttack : MonoBehaviour
         _enemyController.enemyState = stateCheck;
     }
 
-
     //so that the player doesn't get shot from off-screen 
     private void OnBecameVisible()
     {

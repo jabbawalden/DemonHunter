@@ -21,18 +21,6 @@ public class ProjectileBehaviour : MonoBehaviour
         _playerEnergy = GetComponent<PlayerEnergy>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void HitCounter()
     {
         hitCount++;
