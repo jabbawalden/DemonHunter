@@ -45,6 +45,16 @@ public class EnemyMeleeAttack : MonoBehaviour
         }
     }
 
+    private void MeleeAttack()
+    {
+        //Instantiate attack
+    }
+
+    private void MeleeWindUp()
+    {
+
+    }
+
     IEnumerator MeleeAttackBehaviour()
     {
         stateCheck = _enemyController.enemyState;

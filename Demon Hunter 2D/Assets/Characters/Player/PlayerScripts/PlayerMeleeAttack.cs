@@ -75,6 +75,8 @@ public class PlayerMeleeAttack : MonoBehaviour
     IEnumerator MeleeBehaviour()
     {
         Vector2 position = new Vector2(transform.position.x, transform.position.y) + _playerController.AimDirection();
+        _playerController._currentMovementSpeed = _playerController._meleeMovementSpeed;
+
         yield return new WaitForSeconds(_attackWindUpTime);
         //spawn melee attack collider
         //use instantiate instead of collier because 
@@ -88,7 +90,8 @@ public class PlayerMeleeAttack : MonoBehaviour
 
         yield return new WaitForSeconds(_recoveryAttackTime);
         //_playerController.canMove = true;
-        _canMeleeDamage = false;       
+        _canMeleeDamage = false;
+        _playerController._currentMovementSpeed = _playerController._defaultMovementSpeed;
     }
 
 }

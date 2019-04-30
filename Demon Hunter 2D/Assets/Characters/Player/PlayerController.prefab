@@ -191,7 +191,10 @@ MonoBehaviour:
   - {fileID: 9048280210024088167}
   - {fileID: 5643335345706877456}
   - {fileID: 584344198928667042}
-  _movementSpeed: 350
+  _currentMovementSpeed: 350
+  _defaultMovementSpeed: 350
+  _shootingMovementSpeed: 140
+  _meleeMovementSpeed: 240
   direction: 0
   canMove: 0
   _circleCollider: {fileID: 1538872658}
@@ -216,7 +219,7 @@ MonoBehaviour:
   playerBodyCollision: {fileID: 1384944240}
   _circleCollider: {fileID: 1538872658}
   playerDashCollider: {fileID: 3024541856439200148}
-  playerDashEnabled: 1
+  playerDashEnabled: 0
   dashIconLit: 0
 --- !u!114 &5078907333326598290
 MonoBehaviour:
@@ -232,7 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arcanePeices: 0
   arcanumPowerDays: 0
-  MainGateKey: 0
+  MainGateKey: 1
 --- !u!114 &1538872663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,12 +255,12 @@ MonoBehaviour:
   _attackRate: 0.4
   _newTime: 0
   _attackTime: 0.1
-  _meleeDamage: 4
+  _meleeDamage: 6
   _meleeSpawnRange: 0
   _canMeleeDamage: 0
   _meleeAttackObj: {fileID: 8539551883183876278, guid: 9cdbf58f903615b40a506879ca22c17c,
     type: 3}
-  playerMeleeEnabled: 1
+  playerMeleeEnabled: 0
   meleeIconLit: 0
 --- !u!114 &1538872662
 MonoBehaviour:
@@ -280,7 +283,7 @@ MonoBehaviour:
   projectile: {fileID: 5817606138077904511, guid: 63a02c98749e77d43aa35d73d312a2fb,
     type: 3}
   _shootOrigin: {fileID: 1706719609}
-  playerShootEnabled: 1
+  playerShootEnabled: 0
   shootIconLit: 0
 --- !u!114 &1538872661
 MonoBehaviour:

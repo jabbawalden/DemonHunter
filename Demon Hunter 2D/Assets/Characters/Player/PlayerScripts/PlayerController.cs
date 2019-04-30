@@ -21,7 +21,10 @@ public class PlayerController : MonoBehaviour
     public Transform[] engagementPositions;
 
     [Header("Movement")]
-    [SerializeField] private float _movementSpeed;    //speed 
+    public float _currentMovementSpeed;    //speed 
+    public float _defaultMovementSpeed;
+    public float _shootingMovementSpeed;
+    public float _meleeMovementSpeed;
     [SerializeField] private int direction;
     //[SerializeField] private bool isDashing;
     public bool canMove;
@@ -74,7 +77,7 @@ public class PlayerController : MonoBehaviour
         if (_playerHealthComp.IsAlive())
         {
             if (canMove)
-                PlayerMovement(_movementSpeed);
+                PlayerMovement(_currentMovementSpeed);
 
             DirectionCheck();
         }
