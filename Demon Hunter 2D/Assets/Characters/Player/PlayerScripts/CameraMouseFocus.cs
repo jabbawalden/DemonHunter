@@ -14,15 +14,13 @@ public class CameraMouseFocus : MonoBehaviour
     [SerializeField] float yLerpPos;
     private Transform mT;
 
-    // Start is called before the first frame update
     void Start()
     {
         screenCenter = new Vector2(Screen.width / 2, Screen.height / 2);
         mT = transform;
     }
 
-    // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
 
         mousePos = Input.mousePosition - screenCenter;
@@ -50,7 +48,6 @@ public class CameraMouseFocus : MonoBehaviour
             if (mousePos.y < -movementRadius)
                 yLerpPos = Mathf.Lerp(transform.localPosition.y, mousePos.y / yDivider, lerpTime);
         }
-        //if (transform.localPosition.x )
 
         transform.localPosition = new Vector3(xLerpPos, yLerpPos, mT.position.z);
     }
