@@ -10,10 +10,13 @@ public class EnemyController : MonoBehaviour
     public EnemyState enemyState;
     public EnemyMovementType enemyMovementType;
 
-    [Header("Scripts")]
+    [Header("Scripts and Setup")]
     private C_Health _healthComponent;
+    [System.NonSerialized] public C_Health playerHealth;
     public Transform playerRef;
     private PlayerController _playerController;
+    private bool deathEnabled;
+/*    [System.NonSerialized] */public bool canRecieveDamage;
     [Space(4)]
 
     [Header("Movement")]
@@ -50,12 +53,12 @@ public class EnemyController : MonoBehaviour
     [Header("Prefabs and Objects")]
     public GameObject energyPickUp;
     public GameObject enemyAlive, enemyDead;
-    private bool deathEnabled;
     Color opacityEnemyDead;
 
     private void Awake()
     {
         playerRef = GameObject.Find("PlayerMain").transform;
+        playerHealth = GameObject.Find("PlayerController").GetComponent<C_Health>();
         opacityEnemyDead = enemyDead.GetComponent<SpriteRenderer>().color;
         deathEnabled = false;
         enemyDead.SetActive(false);
@@ -70,6 +73,7 @@ public class EnemyController : MonoBehaviour
         knockBack = false;
         haveDirectlyEngaged = false;
         canChangeRandomPosition = true;
+        canRecieveDamage = true;
     }
 
     void Update()
@@ -79,8 +83,13 @@ public class EnemyController : MonoBehaviour
             DirectionCheck();
             EnemyMovement();
             StateManager();
-            if (playerRef != null)
-                TargetDistance();
+
+            if (playerRef != null && playerHealth != null)
+            {
+                if (playerHealth.IsAlive())
+                    TargetDistance();
+            }
+
             //print(DirectionCheck());
         }
         else if (!deathEnabled)
@@ -277,6 +286,10 @@ public class EnemyController : MonoBehaviour
                 {
                     enemyState = EnemyState.patrol;
                 }
+            }
+            else //if the player has died
+            {
+                enemyState = EnemyState.patrol;
             }
         }
     }

@@ -63,7 +63,7 @@ public class PlayerShoot : MonoBehaviour
         StartCoroutine(ShootBehaviour());
 
         GameObject proj = Instantiate(projectile, _shootOrigin.position, projectile.transform.rotation);
-        Vector2 direction = _playerController.AimDirection().normalized; //normalized not actually needed
+        Vector2 direction = _playerController.AimDirection(); //normalized not actually needed
 
         proj.transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
         proj.GetComponent<Rigidbody2D>().velocity = direction * _projSpeed * Time.deltaTime;

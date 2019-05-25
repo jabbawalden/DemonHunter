@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Collider2D playerBodyCollision;
     [System.NonSerialized] public bool deathEnabled; 
     public Transform[] engagementPositions;
+    private EnemyController enemyControllerDetected;
 
     [Header("Movement")]
     public float _currentMovementSpeed;    //speed 
@@ -91,6 +92,11 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void FixedUpdate()
+    {
+        CheckEnemyBlockers();
+    }
+
     public Vector2 AimDirection()
     {
         Vector2 aimDirection;
@@ -118,6 +124,38 @@ public class PlayerController : MonoBehaviour
     {
         _rb.velocity = new Vector2(0, 0);
         //_playerState = 0;
+    }
+
+    private void CheckEnemyBlockers()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, AimDirection(), 10);
+        Debug.DrawRay(transform.position, AimDirection() * 10, Color.red, 0.1f);
+
+        if (hit.collider)
+        {
+            //if collider is enemy collider
+            if (hit.collider.gameObject.layer == 10)
+            {
+                if (hit.collider.GetComponentInParent<EnemyController>())
+                {
+                    enemyControllerDetected = hit.collider.GetComponentInParent<EnemyController>();
+                    enemyControllerDetected.canRecieveDamage = true;
+                }
+            }//if collider is shield
+            else if (hit.collider.gameObject.layer == 17)
+            {
+                if (hit.collider.GetComponentInParent<EnemyController>())
+                {
+                    enemyControllerDetected = hit.collider.GetComponentInParent<EnemyController>();
+                    enemyControllerDetected.canRecieveDamage = false;
+                }
+            }
+        }
+        else
+        {
+            if (enemyControllerDetected != null)
+                enemyControllerDetected.canRecieveDamage = false;
+        }
     }
 
     private void SetAnimationPlay(int state)

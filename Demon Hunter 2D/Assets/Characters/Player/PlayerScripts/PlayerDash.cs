@@ -12,6 +12,7 @@ public class PlayerDash : MonoBehaviour
     private Rigidbody2D _rb;
     [SerializeField] private PlayerCamera _playerCamera;
 
+    [SerializeField] private int[] layersToIgnore;
     [SerializeField] private float _dashEnergyCost;
     [SerializeField] private float _dashSpeed;
     [SerializeField] private float _dashDamage;
@@ -51,6 +52,7 @@ public class PlayerDash : MonoBehaviour
             dashIconLit = false;
     }
 
+
     private void Dash()
     {
         if (Input.GetKeyDown(KeyCode.Space) && _playerEnergy.currentEnergy >= _dashEnergyCost && playerDashEnabled)
@@ -62,6 +64,8 @@ public class PlayerDash : MonoBehaviour
             _playerCamera.CameraShake(0.15f, 0.11f);
         }
     }
+
+
 
     IEnumerator DashBehaviour(float time, float speed)
     {
@@ -91,11 +95,17 @@ public class PlayerDash : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 10 && _canDashDamage && collision.GetComponentInParent<C_Health>() != null)
+        if (collision.gameObject.layer == 10 && _canDashDamage && collision.GetComponentInParent<C_Health>() != null && collision.GetComponentInParent<EnemyController>() != null)
         {
-            _enemyHealthComp = collision.GetComponentInParent<C_Health>();
-            _playerHealthComp.Heal(_dashHealAmount);
-            _enemyHealthComp.Damage(_dashDamage);
+            //if damage from dash is enabled i.e. we can "see" the enemy
+            if (collision.GetComponentInParent<EnemyController>().canRecieveDamage)
+            {
+                _enemyHealthComp = collision.GetComponentInParent<C_Health>();
+                _playerHealthComp.Heal(_dashHealAmount);
+                _enemyHealthComp.Damage(_dashDamage);
+            }
+
+
             _uiManager.UpdateHealthSlider();
             //_uiManager.DamageHealthBar();
         }

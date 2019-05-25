@@ -17,14 +17,16 @@ public class PlayerMeleeStrike : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 10 && collision.GetComponentInParent<C_Health>() != null)
+        if (collision.gameObject.layer == 10 && collision.GetComponentInParent<C_Health>() != null && collision.GetComponentInParent<EnemyController>() != null)
         {
-            collision.GetComponentInParent<C_Health>().Damage(damage);
-            if (collision.GetComponentInParent<EnemyController>() != null)
+            _enemyController = collision.GetComponentInParent<EnemyController>();
+
+            if (_enemyController.canRecieveDamage)
             {
-                _enemyController = collision.GetComponentInParent<EnemyController>();
+                collision.GetComponentInParent<C_Health>().Damage(damage);
+                HitCounter();
             }
-            HitCounter();
+
         }
 
         if (collision.gameObject.layer == 15 && collision.GetComponent<ProjectileBehaviour>())
