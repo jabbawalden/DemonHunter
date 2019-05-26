@@ -4,11 +4,14 @@ using UnityEngine;
 
 public enum EnemyState {patrol, engaged, disengaged, attacking}
 public enum EnemyMovementType {ranged, melee}
+public enum EnemySpecialType {none, shield}
 
 public class EnemyController : MonoBehaviour
 {
+    public bool isVisible;
     public EnemyState enemyState;
     public EnemyMovementType enemyMovementType;
+    public EnemySpecialType enemySpecialType;
 
     [Header("Scripts and Setup")]
     private C_Health _healthComponent;
@@ -363,4 +366,25 @@ public class EnemyController : MonoBehaviour
         routePosition = Random.Range(0, target.gameObject.GetComponentInParent<PlayerController>().engagementPositions.Length - 1);
     }
 
+    private void OnBecameVisible()
+    {
+        if (enemySpecialType == EnemySpecialType.shield)
+        {
+            isVisible = true;
+            _playerController = playerRef.GetComponentInParent<PlayerController>();
+            if (_playerController)
+                _playerController.enemiesInRange.Add(this.gameObject);
+        }
+
+    }
+
+    private void OnBecameInvisible()
+    {
+        if (enemySpecialType == EnemySpecialType.shield)
+        {
+            isVisible = false;
+            if (_playerController)
+                _playerController.enemiesInRange.Remove(this.gameObject);
+        }
+    }
 }

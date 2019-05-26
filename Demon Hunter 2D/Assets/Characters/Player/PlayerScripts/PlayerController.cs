@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     [System.NonSerialized] public bool deathEnabled; 
     public Transform[] engagementPositions;
     private EnemyController enemyControllerDetected;
+    public List<GameObject> enemiesInRange = new List<GameObject>();
 
     [Header("Movement")]
     public float _currentMovementSpeed;    //speed 
@@ -128,34 +129,49 @@ public class PlayerController : MonoBehaviour
 
     private void CheckEnemyBlockers()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, AimDirection(), 10);
-        Debug.DrawRay(transform.position, AimDirection() * 10, Color.red, 0.1f);
-
-        if (hit.collider)
+        if (enemiesInRange.Count > 0)
         {
-            //if collider is enemy collider
-            if (hit.collider.gameObject.layer == 10)
+            foreach (GameObject obj in enemiesInRange)
             {
-                if (hit.collider.GetComponentInParent<EnemyController>())
+                Vector2 rayDirection = obj.transform.position - transform.position;
+
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, 15);
+                Debug.DrawRay(transform.position, rayDirection * 15, Color.red, 0.1f);
+
+                if (hit.collider)
                 {
-                    enemyControllerDetected = hit.collider.GetComponentInParent<EnemyController>();
-                    enemyControllerDetected.canRecieveDamage = true;
+                    //if collider is enemy collider
+                    if (hit.collider.gameObject.layer == 10)
+                    {
+                        if (hit.collider.GetComponentInParent<EnemyController>())
+                        {
+                            enemyControllerDetected = hit.collider.GetComponentInParent<EnemyController>();
+                            enemyControllerDetected.canRecieveDamage = true;
+                        }
+                    }//if collider is shield
+                    else if (hit.collider.gameObject.layer == 17)
+                    {
+                        if (hit.collider.GetComponentInParent<EnemyController>())
+                        {
+                            enemyControllerDetected = hit.collider.GetComponentInParent<EnemyController>();
+                            enemyControllerDetected.canRecieveDamage = false;
+                        }
+                    }
                 }
-            }//if collider is shield
-            else if (hit.collider.gameObject.layer == 17)
-            {
-                if (hit.collider.GetComponentInParent<EnemyController>())
+                else
                 {
-                    enemyControllerDetected = hit.collider.GetComponentInParent<EnemyController>();
-                    enemyControllerDetected.canRecieveDamage = false;
+                    if (enemyControllerDetected != null)
+                        enemyControllerDetected.canRecieveDamage = false;
                 }
             }
         }
-        else
-        {
-            if (enemyControllerDetected != null)
-                enemyControllerDetected.canRecieveDamage = false;
-        }
+
+
+        
+
+        
+
+
     }
 
     private void SetAnimationPlay(int state)
