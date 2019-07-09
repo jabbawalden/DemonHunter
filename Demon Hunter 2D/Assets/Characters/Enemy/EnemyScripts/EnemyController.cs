@@ -55,7 +55,7 @@ public class EnemyController : MonoBehaviour
 
     [Header("Prefabs and Objects")]
     public GameObject energyPickUp;
-    public GameObject enemyAlive, enemyDead;
+    public GameObject enemyAlive, enemyDead, enemyShield;
     Color opacityEnemyDead;
 
     private void Awake()
@@ -92,7 +92,6 @@ public class EnemyController : MonoBehaviour
                 if (playerHealth.IsAlive())
                     TargetDistance();
             }
-
             //print(DirectionCheck());
         }
         else if (!deathEnabled)
@@ -101,6 +100,8 @@ public class EnemyController : MonoBehaviour
             Instantiate(energyPickUp, transform.position, Quaternion.identity);
             enemyAlive.SetActive(false);
             enemyDead.SetActive(true);
+            if (enemyShield)
+                enemyShield.SetActive(false);
             _rb.velocity = new Vector2(0, 0);
 
             if (haveDirectlyEngaged)
@@ -109,7 +110,6 @@ public class EnemyController : MonoBehaviour
                 if (playerRef)
                     playerRef.gameObject.GetComponentInParent<PlayerController>().enemyEngagedCounter--;
             }
-
         }
 
         if (deathEnabled)
@@ -166,7 +166,6 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-
         if (!knockBack)
         {
             switch (enemyState)
@@ -183,7 +182,6 @@ public class EnemyController : MonoBehaviour
                             _rb.velocity = new Vector2(0, 0);
 
                         //SetRoutedPosition(playerRef);
-
                     }
                     else
                     {
@@ -197,7 +195,6 @@ public class EnemyController : MonoBehaviour
                             _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
                         else
                             _rb.velocity = new Vector2(0,0);
-
                     }
                     break;
 
@@ -375,7 +372,6 @@ public class EnemyController : MonoBehaviour
             if (_playerController)
                 _playerController.enemiesInRange.Add(this.gameObject);
         }
-
     }
 
     private void OnBecameInvisible()
