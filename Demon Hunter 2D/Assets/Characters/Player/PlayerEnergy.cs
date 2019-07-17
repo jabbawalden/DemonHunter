@@ -7,8 +7,12 @@ public class PlayerEnergy : MonoBehaviour
     public float maxEnergy;
     public float currentEnergy;
     [SerializeField] private float _regenRate;
-    [SerializeField] private UIManager uiManager;
+    private UIManager uiManager;
 
+    private void Awake()
+    {
+        uiManager = FindObjectOfType<UIManager>();
+    }
 
     // Start is called before the first frame update
     void Start()
