@@ -43,9 +43,8 @@ public class C_Health : MonoBehaviour
                 _uiManager.DamageHealthBar();
             }
 
-
             if (isPlayerComponent)
-                playerCam.CameraShake(0.1f, 0.08f);
+                playerCam.CameraShake(0.1f, 0.09f);
         }
 
 
@@ -60,8 +59,7 @@ public class C_Health : MonoBehaviour
             _currentHealth = _maxHealth;
 
         _uiManager.UpdateHealthSlider();
-
-        print("heal player");
+        //print("heal player");
     }
 
     public float GetHealthPercent()

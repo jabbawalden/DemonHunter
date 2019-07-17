@@ -10,12 +10,14 @@ public class EnemyMeleeAttack : MonoBehaviour
     [SerializeField] private float _attackRate;
     [SerializeField] private float _newTime;
     [SerializeField] private float _attackTime;
-    [SerializeField] private float _preAttackTime; 
+    [SerializeField] private float _preAttackTime;
+    [SerializeField] private float attackSpawnDistance;
     private EnemyController _enemyController;
     private C_Health _playerHealthComponent;
     private C_Health _ourHealthComp;
     private UIManager _uiManager;
-
+    private EnemyMeleeStrike _enemyMeleeStrike;
+    [SerializeField] private GameObject meeleStrike;
     public EnemyState stateCheck;
 
     private void Awake()
@@ -45,9 +47,20 @@ public class EnemyMeleeAttack : MonoBehaviour
         }
     }
 
+    private Vector2 AttackDirection()
+    {
+        Vector2 direction = _enemyController.playerRef.position - transform.position;
+        direction = direction.normalized;
+        return direction; 
+    }
+
     private void MeleeAttack()
     {
         //Instantiate attack
+        Vector2 attackLoc = new Vector2 (transform.position.x + AttackDirection().x, transform.position.y + AttackDirection().y);
+
+        GameObject obj = Instantiate(meeleStrike, attackLoc, Quaternion.identity);
+        obj.GetComponent<EnemyMeleeStrike>().damage = _damage;
     }
 
     private void MeleeWindUp()
@@ -60,7 +73,8 @@ public class EnemyMeleeAttack : MonoBehaviour
         stateCheck = _enemyController.enemyState;
         _enemyController.enemyState = EnemyState.attacking;
         yield return new WaitForSeconds(_preAttackTime);
-
+        MeleeAttack();
+        /*
         if (_enemyController.TargetDistance() <= _attackRange)
         {
             _playerHealthComponent = _enemyController.playerRef.GetComponentInParent<C_Health>();
@@ -69,7 +83,7 @@ public class EnemyMeleeAttack : MonoBehaviour
             _uiManager.DamageHealthBar();
 
         }
-
+        */
         yield return new WaitForSeconds(_attackTime);
         _enemyController.enemyState = EnemyState.engaged;
     }

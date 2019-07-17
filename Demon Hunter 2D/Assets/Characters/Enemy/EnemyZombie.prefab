@@ -148,9 +148,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07cd1e652d3eccd4baa3c2efe800408d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isVisible: 0
   enemyState: 0
   enemyMovementType: 1
+  enemySpecialType: 0
   playerRef: {fileID: 0}
+  canRecieveDamage: 0
   originDistance: 0
   _moveSpeed: 140
   _distanceKeptMin: 0.4
@@ -171,6 +174,7 @@ MonoBehaviour:
     type: 3}
   enemyAlive: {fileID: 8186703901403068078}
   enemyDead: {fileID: 5273675633365400911}
+  enemyShield: {fileID: 0}
 --- !u!114 &8186703901129291069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,7 +208,10 @@ MonoBehaviour:
   _attackRate: 0.7
   _newTime: 0
   _attackTime: 0.3
-  _preAttackTime: 0.3
+  _preAttackTime: 0.15
+  attackSpawnDistance: 1
+  meeleStrike: {fileID: 4469334042041512779, guid: db4bcd59c42c9a94f866099a360e31ec,
+    type: 3}
   stateCheck: 0
 --- !u!58 &8186703901129291067
 CircleCollider2D:

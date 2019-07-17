@@ -23,6 +23,7 @@ public class TutorialManager : MonoBehaviour
         tutMelee.color = whiteStartColor;
         tutShoot.color = whiteStartColor;
         tutDash.color = whiteStartColor;
+        FadeTutMove(true);
     }
 
     //private void Update()
