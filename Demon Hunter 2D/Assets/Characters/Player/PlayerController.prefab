@@ -191,6 +191,7 @@ MonoBehaviour:
   - {fileID: 9048280210024088167}
   - {fileID: 5643335345706877456}
   - {fileID: 584344198928667042}
+  enemiesInRange: []
   _currentMovementSpeed: 350
   _defaultMovementSpeed: 350
   _shootingMovementSpeed: 140
@@ -212,6 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerCamera: {fileID: 0}
+  layersToIgnore: 
   _dashEnergyCost: 40
   _dashSpeed: 1400
   _dashDamage: 5

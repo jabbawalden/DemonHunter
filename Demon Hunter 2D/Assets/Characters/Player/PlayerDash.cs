@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerDash : MonoBehaviour
 {
+    private GameManager _gameManager;
     private PlayerEnergy _playerEnergy;
     private C_Health _playerHealthComp;
     private C_Health _enemyHealthComp;
@@ -24,9 +25,11 @@ public class PlayerDash : MonoBehaviour
     private bool _canDashDamage;
     public bool playerDashEnabled;
     public bool dashIconLit;
+    
 
     private void Awake()
     {
+        _gameManager = FindObjectOfType<GameManager>();
         _playerEnergy = GetComponent<PlayerEnergy>();
         _playerHealthComp = GetComponent<C_Health>();
         _playerController = GetComponent<PlayerController>();
@@ -62,6 +65,8 @@ public class PlayerDash : MonoBehaviour
             _uiManager.UpdateEnergySlider();
             _uiManager.DamageEnergyBar();
             _playerCamera.CameraShake(0.15f, 0.11f);
+
+            _gameManager.TutorialCheckDash();
         }
     }
 
