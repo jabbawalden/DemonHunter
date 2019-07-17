@@ -32,11 +32,12 @@ public class ProjectileBehaviour : MonoBehaviour
     {
 
         //dealing damage code
-        if (/*collision.gameObject.layer == 17 && */collision.GetComponentInParent<EnemyController>() && !collision.GetComponentInParent<EnemyController>().canRecieveDamage)
+        if (collision.GetComponentInParent<EnemyController>() && !collision.GetComponentInParent<EnemyController>().canRecieveDamage)
         {
             //if enemy, and has enemy controller, but cannot recieve damage
             print("hit shield");
-            Destroy(gameObject);
+            if (isPlayerProj)
+                Destroy(gameObject);
         }
         else if (collision.gameObject.layer == targetLayer && collision.GetComponentInParent<C_Health>() != null /*&& collision.gameObject.GetComponent<EnemyController>() && collision.gameObject.GetComponent<EnemyController>().canRecieveDamage*/)
         { 
@@ -44,7 +45,11 @@ public class ProjectileBehaviour : MonoBehaviour
             print("Hit player");
             _healthComponent = collision.GetComponentInParent<C_Health>();
             _healthComponent.Damage(damage);
-            HitCounter();
+
+            if (_healthComponent.IsAlive())
+                Destroy(gameObject);
+            else
+                HitCounter();
         }
         else if (collision.gameObject.layer == 13 && !isPlayerProj)
         {

@@ -81,6 +81,7 @@ public class PlayerDash : MonoBehaviour
         _playerController.canMove = false;
         _canDashDamage = true;
         _circleCollider.enabled = true;
+        //ensures that attacks will not detect player collider, thus invulnerable
         playerBodyCollision.enabled = false;
 
         while (count < time)
