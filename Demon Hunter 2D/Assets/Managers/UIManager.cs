@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _energyImage;
     [SerializeField] private float _lerpColourTime;
     [SerializeField] private float _colourResetTime;
-    [SerializeField] private Text _meleeUI, _shootUI, _dashUI;
+    [SerializeField] private Text _meleeUI, _shootUI, _dashUI, _pointsUI;
     [SerializeField] private Color colorMoveReady, colorMoveRecharge;
     private bool canChangeColorHealth;
     private bool canChangeColorEnergy;
@@ -20,18 +20,20 @@ public class UIManager : MonoBehaviour
     private C_Health _playerHealthComponenent;
     private PlayerEnergy _playerEnergy;
 
-    private PlayerMeleeAttack playerMeleeAttack;
-    private PlayerShoot playerShoot;
-    private PlayerDash playerDash;
-    private bool isFadingIn, isFadingOut;
+    private PlayerMeleeAttack _playerMeleeAttack;
+    private PlayerShoot _playerShoot;
+    private PlayerDash _playerDash;
+    private PlayerEnergyPoints _playerEnergyPoints;
+    private bool _isFadingIn, _isFadingOut;
 
     private void Awake()
     {
-        playerMeleeAttack = GameObject.Find("PlayerController").GetComponent<PlayerMeleeAttack>();
-        playerShoot = GameObject.Find("PlayerController").GetComponent<PlayerShoot>();
-        playerDash = GameObject.Find("PlayerController").GetComponent<PlayerDash>();
+        _playerMeleeAttack = FindObjectOfType<PlayerMeleeAttack>();
+        _playerShoot = FindObjectOfType<PlayerShoot>();
+        _playerDash = FindObjectOfType<PlayerDash>();
         _playerHealthComponenent = GameObject.Find("PlayerController").GetComponent<C_Health>();
-        _playerEnergy = GameObject.Find("PlayerController").GetComponent<PlayerEnergy>();
+        _playerEnergy = FindObjectOfType<PlayerEnergy>();
+        _playerEnergyPoints = FindObjectOfType<PlayerEnergyPoints>();
     }
 
     private void Start()
@@ -69,6 +71,11 @@ public class UIManager : MonoBehaviour
         }
     }
     
+    public void UpdateEnergyPoints()
+    {
+        _pointsUI.text = _playerEnergyPoints.energyPoints.ToString();
+    } 
+
     public void UpdateHealthSlider()
     {
         _healthSlider.value = _playerHealthComponenent.GetHealthPercent();
@@ -103,17 +110,17 @@ public class UIManager : MonoBehaviour
 
     private void MoveSetColour()
     {
-        if (playerMeleeAttack.meleeIconLit)
+        if (_playerMeleeAttack.meleeIconLit)
             _meleeUI.color = colorMoveReady;
         else
             _meleeUI.color = colorMoveRecharge;
 
-        if (playerShoot.shootIconLit)
+        if (_playerShoot.shootIconLit)
             _shootUI.color = colorMoveReady;
         else
             _shootUI.color = colorMoveRecharge;
 
-        if (playerDash.dashIconLit)
+        if (_playerDash.dashIconLit)
             _dashUI.color = colorMoveReady;
         else
             _dashUI.color = colorMoveRecharge;
@@ -126,9 +133,9 @@ public class UIManager : MonoBehaviour
         if (isOn)
         {
             text.color = startColor;
-            isFadingIn = true;
-            isFadingOut = false;
-            while (speed < time && isFadingIn)
+            _isFadingIn = true;
+            _isFadingOut = false;
+            while (speed < time && _isFadingIn)
             {
                 speed++;
                 text.color = Color.Lerp(text.color, endColor, lerpSpeed);
@@ -140,9 +147,9 @@ public class UIManager : MonoBehaviour
         else
         {
             text.color = endColor;
-            isFadingIn = false;
-            isFadingOut = true;
-            while (speed < time && isFadingOut)
+            _isFadingIn = false;
+            _isFadingOut = true;
+            while (speed < time && _isFadingOut)
             {
                 speed++;
                 text.color = Color.Lerp(text.color, startColor, lerpSpeed);
@@ -152,10 +159,5 @@ public class UIManager : MonoBehaviour
             text.color = startColor;
         }
         //print("lerp complete");
-    }
-
-    public IEnumerator TextFadeOutCo()
-    {
-        yield return new WaitForSeconds(1);
     }
 }

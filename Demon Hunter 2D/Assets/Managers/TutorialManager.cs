@@ -12,9 +12,14 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private Text tutMove, tutMelee, tutShoot, tutDash;
     [SerializeField] private Color whiteStartColor, whiteEndColor;
 
+    //Debugging
+    GameManager gameManager;
+
+    
     private void Awake()
     {
         uiManager = FindObjectOfType<UIManager>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     private void Start()
@@ -23,7 +28,8 @@ public class TutorialManager : MonoBehaviour
         tutMelee.color = whiteStartColor;
         tutShoot.color = whiteStartColor;
         tutDash.color = whiteStartColor;
-        FadeTutMove(true);
+        if (!gameManager.finishedTutorial)
+            FadeTutMove(true);
     }
 
     //private void Update()

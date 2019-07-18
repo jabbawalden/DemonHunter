@@ -77,6 +77,10 @@ public class PlayerController : MonoBehaviour
         direction = 1;
         _playerState = 0;
         _circleCollider.enabled = false;
+
+        //debugging
+        if (_gameManager.finishedTutorial)
+            transform.position = _gameManager.startPosition.position;
     }
 
     void Update()

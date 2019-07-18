@@ -7,7 +7,7 @@ public class CrystalAttackBehaviour : MonoBehaviour
     private PlayerCamera playerCam;
     public float damage;
     CircleCollider2D circleCollider;
-    [SerializeField] private GameObject windUp, Crystalize; 
+    [SerializeField] private GameObject windUp, crystalize, crystalExplosion; 
     [SerializeField] private float attackTime;
 
     private void Awake()
@@ -28,7 +28,7 @@ public class CrystalAttackBehaviour : MonoBehaviour
         yield return new WaitForSeconds(attackTime);
         circleCollider.enabled = true;
         windUp.SetActive(false);
-        Crystalize.SetActive(true);
+        crystalize.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         Destroy(gameObject);
     }
@@ -38,6 +38,11 @@ public class CrystalAttackBehaviour : MonoBehaviour
         if (collision.gameObject.layer == 8)
         {
             collision.gameObject.GetComponentInParent<C_Health>().Damage(damage);
+            crystalExplosion.SetActive(true);
+            crystalize.SetActive(false);
+            circleCollider.enabled = false;
+            playerCam.CameraShake(0.12f, 0.15f);
+
         }
     }
 }

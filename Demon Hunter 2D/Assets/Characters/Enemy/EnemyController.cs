@@ -285,6 +285,12 @@ public class EnemyController : MonoBehaviour
                 else
                 {
                     enemyState = EnemyState.patrol;
+
+                    if (haveDirectlyEngaged)
+                    {
+                        haveDirectlyEngaged = false;
+                        playerRef.gameObject.GetComponentInParent<PlayerController>().enemyEngagedCounter--;
+                    }
                 }
             }
             else //if the player has died

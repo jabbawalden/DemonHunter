@@ -5,8 +5,10 @@ using UnityEngine;
 public class EnergyPickUp : MonoBehaviour
 {
     private PlayerEnergy _playerEnergy;
+    private PlayerEnergyPoints _playerEnergyPoints;
     private UIManager _uiManager;
-    Rigidbody2D _rb;
+    private Rigidbody2D _rb;
+    [SerializeField] private int _energyPointsValue; 
     [SerializeField] private int _energyToAdd;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _moveSpeedIncrease;
@@ -14,6 +16,7 @@ public class EnergyPickUp : MonoBehaviour
     [SerializeField] private float _timeBounceStart; 
     [SerializeField] private float _distanceReference;
     [SerializeField] private float _distanceToMove;
+
     
     bool canBounce;
     bool canBeConsumed;
@@ -22,6 +25,7 @@ public class EnergyPickUp : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        _playerEnergyPoints = FindObjectOfType<PlayerEnergyPoints>();
     }
 
     // Start is called before the first frame update
@@ -58,6 +62,7 @@ public class EnergyPickUp : MonoBehaviour
             {
                 _playerEnergy.AddEnergy(_energyToAdd);
                 _uiManager.UpdateEnergySlider();
+                _playerEnergyPoints.AddRemovePoints(_energyPointsValue);
                 Destroy(gameObject);
             }
            

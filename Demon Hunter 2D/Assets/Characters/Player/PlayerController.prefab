@@ -122,6 +122,7 @@ GameObject:
   - component: {fileID: 1538872662}
   - component: {fileID: 1538872661}
   - component: {fileID: 1538872660}
+  - component: {fileID: 6182891382143642563}
   - component: {fileID: 1538872659}
   - component: {fileID: 1538872658}
   m_Layer: 9
@@ -318,7 +319,19 @@ MonoBehaviour:
   maxEnergy: 100
   currentEnergy: 100
   _regenRate: 0.32
-  uiManager: {fileID: 0}
+--- !u!114 &6182891382143642563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538872657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a6670fdcac30604ba3adc04213ee84a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyPoints: 0
 --- !u!50 &1538872659
 Rigidbody2D:
   serializedVersion: 4
