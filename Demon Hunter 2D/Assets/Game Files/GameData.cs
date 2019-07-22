@@ -10,6 +10,7 @@ public class GameData
     public Vector3 camStartLocation;
 
     //player stats (health, energy, points collected, upgrades etc.)
+    public int energyPoints;
 
     //game state
     public bool tutorialComplete;

@@ -41,6 +41,11 @@ public class GameManager : MonoBehaviour
         _playerShoot = FindObjectOfType<PlayerShoot>();
     }
 
+    private void Start()
+    {
+
+    }
+
     void Update()
     {
         if (_playerController.deathEnabled)
@@ -52,7 +57,7 @@ public class GameManager : MonoBehaviour
 
     public void TutorialCheckMove()
     {
-        if (!gameIntroMove)
+        if (!_tutorialManager.tutorialComplete && !gameIntroMove)
         {
             gameIntroMove = true;
             _tutorialManager.FadeTutMove(false);

@@ -29,6 +29,8 @@ public class TutorialManager : MonoBehaviour
         tutMelee.color = whiteStartColor;
         tutShoot.color = whiteStartColor;
         tutDash.color = whiteStartColor;
+
+
         //if (!gameManager.finishedTutorial)
         //    FadeTutMove(true);
     }
@@ -38,6 +40,11 @@ public class TutorialManager : MonoBehaviour
     //    if (Input.GetKeyDown(KeyCode.F))
     //        StartCoroutine(uiManager.TextFadeCo(true, fadeSpeed, fadeTime, tutMove, whiteStartColor, whiteEndColor, lerpSpeed));
     //}
+
+    public void LoadData()
+    {
+        tutorialComplete = JsonDataManager.gameData.tutorialComplete;
+    }
 
     public void FadeTutMove(bool activate)
     {

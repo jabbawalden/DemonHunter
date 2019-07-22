@@ -10,6 +10,7 @@ public class JsonDataManager : MonoBehaviour
     //static to allow all scripts to access class
     public static GameData gameData = new GameData();
 
+
     PlayerController playerController;
     PlayerCamera playerCamera;
     TutorialManager tutorialManager;
@@ -46,10 +47,13 @@ public class JsonDataManager : MonoBehaviour
             //call load data functions in each class reference
             playerController.LoadData();
             playerCamera.LoadData();
+            tutorialManager.LoadData();
+            playerEnergyPoints.LoadData();
         }
         else
         {
-            SavePlayerStats();
+            //begin tutorial
+            tutorialManager.FadeTutMove(true);
         }
     }
 
@@ -87,6 +91,12 @@ public class JsonDataManager : MonoBehaviour
     public void SavePlayerStats()
     {
         //player stats (health, energy, points collected, upgrades etc.)
+
+    }
+
+    public void SavePlayerEnergyPoints()
+    {
+        gameData.energyPoints = playerEnergyPoints.energyPoints;
     }
 
     public void SavePlayerLocation()
@@ -108,6 +118,7 @@ public class JsonDataManager : MonoBehaviour
         SaveGameState();
         SavePlayerLocation();
         SavePlayerStats();
+        SavePlayerEnergyPoints();
 
         //class info to save + true for pretty print
         string contents = JsonUtility.ToJson(gameData, true);
@@ -119,6 +130,7 @@ public class JsonDataManager : MonoBehaviour
     public void MainSaveDeath()
     {
         //player loses points on death - so save energy points
+        SavePlayerEnergyPoints();
 
         //class info to save + true for pretty print
         string contents = JsonUtility.ToJson(gameData, true);
@@ -130,6 +142,8 @@ public class JsonDataManager : MonoBehaviour
     public void MainSaveGameExit()
     {
         SavePlayerStats();
+        SavePlayerLocation();
+        SavePlayerEnergyPoints();
 
         //class info to save + true for pretty print
         string contents = JsonUtility.ToJson(gameData, true);
