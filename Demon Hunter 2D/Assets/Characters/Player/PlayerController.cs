@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Player Main Setup")]
     public PlayerState playerState;
+    [System.NonSerialized] public Vector3 startLocation;
     public int enemyEngagedCounter;
     private GameManager _gameManager;
     [SerializeField] private GameObject playerAlive, playerDead;
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
     public float _defaultMovementSpeed;
     public float _shootingMovementSpeed;
     public float _meleeMovementSpeed;
+    private float h, v;
     [SerializeField] private int direction;
     //[SerializeField] private bool isDashing;
     public bool canMove;
@@ -79,8 +81,8 @@ public class PlayerController : MonoBehaviour
         _circleCollider.enabled = false;
 
         //debugging
-        if (_gameManager.finishedTutorial)
-            transform.position = _gameManager.startPosition.position;
+        //if (_gameManager.finishedTutorial)
+        //    transform.position = _gameManager.startPosition.position;
     }
 
     void Update()
@@ -88,9 +90,7 @@ public class PlayerController : MonoBehaviour
         if (_playerHealthComp.IsAlive())
         {
             if (canMove)
-                PlayerMovement(_currentMovementSpeed);
-
-            DirectionCheck();
+                PlayerMoveInput();
         }
         else if (!deathEnabled)
         {
@@ -104,7 +104,23 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_playerHealthComp.IsAlive())
+        {
+            if (canMove)
+                PlayerMovement(_currentMovementSpeed);
+
+            DirectionCheck();
+        }
         CheckEnemyBlockers();
+    }
+
+    public void LoadData()
+    {
+        //load data
+        startLocation = JsonDataManager.gameData.playerStartLocation;
+        //transport player to position
+        transform.position = startLocation;
+        Debug.Log("Player position loaded");
     }
 
     public Vector2 AimDirection()
@@ -117,12 +133,15 @@ public class PlayerController : MonoBehaviour
         return aimDirection;
     }
 
+    private void PlayerMoveInput()
+    {
+        h = Input.GetAxisRaw("Horizontal");
+        v = Input.GetAxisRaw("Vertical");
+    }
+
     private void PlayerMovement(float x)
     {
         x *= Time.deltaTime;
-
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
 
         Vector2 move = new Vector2(h, v);
         move = move.normalized * x;
@@ -130,8 +149,6 @@ public class PlayerController : MonoBehaviour
 
         if(h != 0 || v != 0)
             _gameManager.TutorialCheckMove();
-
-
     }
 
 

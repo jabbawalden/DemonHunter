@@ -18,13 +18,11 @@ public class GameManager : MonoBehaviour
     [System.NonSerialized] public bool gameIntroMelee;
     [System.NonSerialized] public bool gameIntroShoot;
    /* [System.NonSerialized]*/ public bool gameIntroDash;
-    [Space(4)]
-    [Header("Debug")]
-    public bool finishedTutorial;
-    public Transform startPosition;
 
     private void Awake()
     {
+        //Singleton code to be used for later reference
+        /*
         if (instance == null)
         {
             instance = this;
@@ -34,7 +32,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
+        */
 
         _tutorialManager = FindObjectOfType<TutorialManager>();
         _playerController = FindObjectOfType<PlayerController>();
@@ -43,37 +41,13 @@ public class GameManager : MonoBehaviour
         _playerShoot = FindObjectOfType<PlayerShoot>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (_playerController.deathEnabled)
             if (Input.GetKey(KeyCode.Return))
             {
-                startPosition = _playerController.gameObject.transform;
                 SceneManager.LoadScene(0);
             }
-
-        //debugging for the moment
-        if (finishedTutorial)
-        {
-            _tutorialManager = FindObjectOfType<TutorialManager>();
-            _playerController = FindObjectOfType<PlayerController>();
-            _playerMeleeAttack = FindObjectOfType<PlayerMeleeAttack>();
-            _playerDash = FindObjectOfType<PlayerDash>();
-            _playerShoot = FindObjectOfType<PlayerShoot>();
-            _playerDash.playerDashEnabled = true;
-            _playerShoot.playerShootEnabled = true;
-            _playerMeleeAttack.playerMeleeEnabled = true;
-
-        }
-
-
     }
 
     public void TutorialCheckMove()

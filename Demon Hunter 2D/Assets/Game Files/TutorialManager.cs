@@ -15,7 +15,8 @@ public class TutorialManager : MonoBehaviour
     //Debugging
     GameManager gameManager;
 
-    
+    [System.NonSerialized] public bool tutorialComplete;
+
     private void Awake()
     {
         uiManager = FindObjectOfType<UIManager>();
@@ -28,8 +29,8 @@ public class TutorialManager : MonoBehaviour
         tutMelee.color = whiteStartColor;
         tutShoot.color = whiteStartColor;
         tutDash.color = whiteStartColor;
-        if (!gameManager.finishedTutorial)
-            FadeTutMove(true);
+        //if (!gameManager.finishedTutorial)
+        //    FadeTutMove(true);
     }
 
     //private void Update()

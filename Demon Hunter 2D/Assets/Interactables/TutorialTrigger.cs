@@ -15,27 +15,33 @@ public class TutorialTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponentInParent<PlayerMeleeAttack>() && tutorialStage == 1 && !haveActivated)
+        if (!_tutorialManager.tutorialComplete)
         {
-            _tutorialManager.FadeTutMelee(true);
-            collision.GetComponentInParent<PlayerMeleeAttack>().playerMeleeEnabled = true;
-            haveActivated = true;
+            if (collision.GetComponentInParent<PlayerMeleeAttack>() && tutorialStage == 1 && !haveActivated)
+            {
+                _tutorialManager.FadeTutMelee(true);
+                collision.GetComponentInParent<PlayerMeleeAttack>().playerMeleeEnabled = true;
+                haveActivated = true;
+            }
+
+            if (collision.GetComponentInParent<PlayerShoot>() && tutorialStage == 2 && !haveActivated)
+            {
+                _tutorialManager.FadeTutShoot(true);
+                collision.GetComponentInParent<PlayerShoot>().playerShootEnabled = true;
+                haveActivated = true;
+            }
+
+            if (collision.GetComponentInParent<PlayerDash>() && tutorialStage == 3 && !haveActivated)
+            {
+                _tutorialManager.FadeTutDash(true);
+                collision.GetComponentInParent<PlayerDash>().playerDashEnabled = true;
+                haveActivated = true;
+            }
+
+            if (collision.gameObject.layer == 8 && tutorialStage == 4 && !haveActivated)
+            {
+                _tutorialManager.tutorialComplete = true;
+            }
         }
-
-        if (collision.GetComponentInParent<PlayerShoot>() && tutorialStage == 2 && !haveActivated)
-        {
-            _tutorialManager.FadeTutShoot(true);
-            collision.GetComponentInParent<PlayerShoot>().playerShootEnabled = true;
-            haveActivated = true;
-        }
-
-
-        if (collision.GetComponentInParent<PlayerDash>() && tutorialStage == 3 && !haveActivated)
-        {
-            _tutorialManager.FadeTutDash(true);
-            collision.GetComponentInParent<PlayerDash>().playerDashEnabled = true;
-            haveActivated = true;
-        }
-
     }
 }

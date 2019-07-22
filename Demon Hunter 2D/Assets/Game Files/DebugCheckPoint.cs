@@ -15,7 +15,7 @@ public class DebugCheckPoint : MonoBehaviour
     {
         if (collision.gameObject.layer == 8)
         {
-            gameManager.finishedTutorial = true;
+            //gameManager.finishedTutorial = true;
         }
     }
 

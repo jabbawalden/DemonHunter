@@ -8,16 +8,18 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] float sX, sY;
     private Vector2 velocity;
     private Vector3 originalPos;
+    public Vector3 startLocation;
     [SerializeField] private Transform cam;
 
     private void Awake()
     {
+        transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);
         originalPos = cam.localPosition;
     }
 
     private void Start()
     {
-        transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);
+
     }
     // Update is called once per frame
 
@@ -26,6 +28,11 @@ public class PlayerCamera : MonoBehaviour
         SmoothFollowPlayer();
     }
 
+    public void LoadData()
+    {
+        startLocation = JsonDataManager.gameData.camStartLocation;
+        transform.position = startLocation;
+    }
 
     private void SmoothFollowPlayer()
     {

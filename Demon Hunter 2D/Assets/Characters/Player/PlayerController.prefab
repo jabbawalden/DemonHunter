@@ -193,8 +193,8 @@ MonoBehaviour:
   - {fileID: 5643335345706877456}
   - {fileID: 584344198928667042}
   enemiesInRange: []
-  _currentMovementSpeed: 350
-  _defaultMovementSpeed: 350
+  _currentMovementSpeed: 300
+  _defaultMovementSpeed: 300
   _shootingMovementSpeed: 140
   _meleeMovementSpeed: 240
   direction: 0
