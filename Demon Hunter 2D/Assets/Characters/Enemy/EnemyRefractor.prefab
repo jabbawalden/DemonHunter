@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 1
-  _currentHealth: 0
+  currentHealth: 0
   isPlayerComponent: 0
   playerCam: {fileID: 0}
 --- !u!58 &5963954458328030183

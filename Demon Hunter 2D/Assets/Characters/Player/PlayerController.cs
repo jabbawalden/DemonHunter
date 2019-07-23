@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public PlayerState playerState;
     [System.NonSerialized] public Vector3 startLocation;
     public int enemyEngagedCounter;
+    public int enemyInRangeCounter;
     private GameManager _gameManager;
     [SerializeField] private GameObject playerAlive, playerDead;
     [SerializeField] private Collider2D playerBodyCollision;
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
     public Transform[] engagementPositions;
     private EnemyController enemyControllerDetected;
     public List<GameObject> enemiesInRange = new List<GameObject>();
+    /*[System.NonSerialized] */public bool inCombat;
 
     [Header("Movement")]
     public float _currentMovementSpeed;    //speed 
@@ -44,7 +46,7 @@ public class PlayerController : MonoBehaviour
     [Space(4)]
 
     [Header("Scripts")]
-    private C_Health _playerHealthComp;  
+    public C_Health playerHealthComp;  
     private C_Health _enemyHealthComp;
     private PlayerEnergy _playerEnergy;
     private Animator _animator;
@@ -62,7 +64,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _gameManager = FindObjectOfType<GameManager>();
-        _playerHealthComp = GetComponent<C_Health>();
+        playerHealthComp = GetComponent<C_Health>();
         _playerEnergy = GetComponent<PlayerEnergy>();
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponentInChildren<Animator>();
@@ -87,7 +89,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (_playerHealthComp.IsAlive())
+        if (playerHealthComp.IsAlive())
         {
             if (canMove)
                 PlayerMoveInput();
@@ -100,11 +102,16 @@ public class PlayerController : MonoBehaviour
             StopVelocity();
         }
 
+        //if (enemyEngagedCounter > 0)
+        //    inCombat = true;
+        //else
+        //    inCombat = false;
+
     }
 
     private void FixedUpdate()
     {
-        if (_playerHealthComp.IsAlive())
+        if (playerHealthComp.IsAlive())
         {
             if (canMove)
                 PlayerMovement(_currentMovementSpeed);
@@ -118,8 +125,10 @@ public class PlayerController : MonoBehaviour
     {
         //load data
         startLocation = JsonDataManager.gameData.playerStartLocation;
+        playerHealthComp.currentHealth = JsonDataManager.gameData.playerHealth;
         //transport player to position
         transform.position = startLocation;
+        _uiManager.UpdateHealthSlider();
         Debug.Log("Player position loaded");
     }
 

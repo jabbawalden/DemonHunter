@@ -55,6 +55,10 @@ public class PlayerDash : MonoBehaviour
             dashIconLit = false;
     }
 
+    public void LoadData()
+    {
+        playerDashEnabled = JsonDataManager.gameData.dashEnabled;
+    }
 
     private void Dash()
     {

@@ -61,6 +61,11 @@ public class PlayerMeleeAttack : MonoBehaviour
             meleeIconLit = false;
     }
 
+    public void LoadData()
+    {
+        playerMeleeEnabled = JsonDataManager.gameData.meleeEnabled;
+    }
+
     private void MeleeAttack()
     {
         if (_newTime <= Time.time && _playerEnergy.currentEnergy >= _energyCost)

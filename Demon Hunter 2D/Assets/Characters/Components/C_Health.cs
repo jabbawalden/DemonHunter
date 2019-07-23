@@ -6,7 +6,7 @@ public class C_Health : MonoBehaviour
 {
     [Header("Variables")]
     [SerializeField] private float _maxHealth;
-    public float _currentHealth;
+    public float currentHealth;
     public bool isPlayerComponent;
     [Space(4)]
 
@@ -23,16 +23,16 @@ public class C_Health : MonoBehaviour
 
     private void Start()
     {
-        _currentHealth = _maxHealth;
+        currentHealth = _maxHealth;
     }
 
     public void Damage(float damage)
     {
-        if (damage >= _currentHealth)
-            _currentHealth = 0;
+        if (damage >= currentHealth)
+            currentHealth = 0;
         else
         {
-            _currentHealth -= damage;
+            currentHealth -= damage;
         }
 
         if (IsAlive())
@@ -52,11 +52,11 @@ public class C_Health : MonoBehaviour
 
     public void Heal(float heal)
     {
-        if (_currentHealth < _maxHealth)
-            _currentHealth += heal;
+        if (currentHealth < _maxHealth)
+            currentHealth += heal;
         
-        if (_currentHealth > _maxHealth)
-            _currentHealth = _maxHealth;
+        if (currentHealth > _maxHealth)
+            currentHealth = _maxHealth;
 
         _uiManager.UpdateHealthSlider();
         //print("heal player");
@@ -64,13 +64,13 @@ public class C_Health : MonoBehaviour
 
     public float GetHealthPercent()
     {
-        float percent = _currentHealth / _maxHealth;
+        float percent = currentHealth / _maxHealth;
         return percent;
     }
 
     public bool IsAlive()
     {
-        if (_currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             //to ensure healthbar reaches 0
             if (_uiManager)

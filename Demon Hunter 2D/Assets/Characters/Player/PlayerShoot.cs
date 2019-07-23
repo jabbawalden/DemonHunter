@@ -58,6 +58,11 @@ public class PlayerShoot : MonoBehaviour
             shootIconLit = false;
     }
 
+    public void LoadData()
+    {
+        playerShootEnabled = JsonDataManager.gameData.shootEnabled;
+    }
+
     private void ShootAbility()
     {
         _playerController._currentMovementSpeed = _playerController._shootingMovementSpeed;

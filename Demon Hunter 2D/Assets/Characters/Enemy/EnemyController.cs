@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EnemyState {patrol, engaged, disengaged, attacking}
+public enum EnemyState {patrol, engaged, disengaged, attacking, dead}
 public enum EnemyMovementType {ranged, melee}
 public enum EnemySpecialType {none, shield}
 
@@ -20,6 +20,7 @@ public class EnemyController : MonoBehaviour
     private PlayerController _playerController;
     private bool deathEnabled;
 /*    [System.NonSerialized] */public bool canRecieveDamage;
+    private bool haveAdded, haveRemoved;
     [Space(4)]
 
     [Header("Movement")]
@@ -81,6 +82,8 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
+        PlayerEngagedState();
+
         if (_healthComponent.IsAlive())
         {
             DirectionCheck();
@@ -103,7 +106,6 @@ public class EnemyController : MonoBehaviour
             if (enemyShield)
                 enemyShield.SetActive(false);
             _rb.velocity = new Vector2(0, 0);
-
             if (haveDirectlyEngaged)
             {
                 haveDirectlyEngaged = false;
@@ -114,6 +116,7 @@ public class EnemyController : MonoBehaviour
 
         if (deathEnabled)
         {
+            enemyState = EnemyState.dead;
             opacityEnemyDead.a = Mathf.Lerp(opacityEnemyDead.a, 0, _deathLerpTime);
             enemyDead.GetComponent<SpriteRenderer>().color = opacityEnemyDead;
             Invoke("DestroyOurObject", _destroyObjectSeconds);
@@ -180,8 +183,6 @@ public class EnemyController : MonoBehaviour
                             _rb.velocity = direction.normalized * -_moveSpeed * Time.deltaTime;
                         else
                             _rb.velocity = new Vector2(0, 0);
-
-                        //SetRoutedPosition(playerRef);
                     }
                     else
                     {
@@ -226,6 +227,47 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    private void PlayerEngagedState()
+    {
+        if (enemyState == EnemyState.engaged)
+        {
+            if (!haveAdded)
+            {
+                print("add enemy counter");
+                haveAdded = true;
+                haveRemoved = false;
+
+                if (playerRef)
+                {
+                    playerRef.GetComponentInParent<PlayerController>().inCombat = true;
+                    playerRef.GetComponentInParent<PlayerController>().enemyInRangeCounter++;
+                }
+            }
+        }
+        else
+        {
+            if (!haveRemoved)
+            {
+                print("remove enemy counter");
+                haveRemoved = true;
+                haveAdded = false;
+
+                if (playerRef)
+                {
+                    playerRef.GetComponentInParent<PlayerController>().enemyInRangeCounter--;
+
+                    if (playerRef.GetComponentInParent<PlayerController>().enemyInRangeCounter <= 0)
+                    {
+                        playerRef.GetComponentInParent<PlayerController>().inCombat = false;
+                        playerRef.GetComponentInParent<PlayerController>().enemyInRangeCounter = 0;
+                    }
+                }
+                   
+
+            }
+        }
+
+    }
 
     private void SetPatrol()
     {
@@ -266,7 +308,7 @@ public class EnemyController : MonoBehaviour
             {
                 if (TargetDistance() <= _AggroRange)
                 {
-                    if (originDistance <= 3.5f)
+                    if (originDistance <= 3.8f)
                     {
                         enemyState = EnemyState.engaged;
 
@@ -376,7 +418,9 @@ public class EnemyController : MonoBehaviour
             isVisible = true;
             _playerController = playerRef.GetComponentInParent<PlayerController>();
             if (_playerController)
+            {
                 _playerController.enemiesInRange.Add(this.gameObject);
+            }
         }
     }
 
@@ -386,7 +430,9 @@ public class EnemyController : MonoBehaviour
         {
             isVisible = false;
             if (_playerController)
+            {
                 _playerController.enemiesInRange.Remove(this.gameObject);
+            }
         }
     }
 }

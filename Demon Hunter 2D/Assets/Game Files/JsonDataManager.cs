@@ -11,10 +11,14 @@ public class JsonDataManager : MonoBehaviour
     public static GameData gameData = new GameData();
 
 
-    PlayerController playerController;
-    PlayerCamera playerCamera;
-    TutorialManager tutorialManager;
-    PlayerEnergyPoints playerEnergyPoints;
+    private PlayerController _playerController;
+    private PlayerCamera _playerCamera;
+    private TutorialManager _tutorialManager;
+    private PlayerEnergyPoints _playerEnergyPoints;
+    private PlayerMeleeAttack _playerMeleeAttack;
+    private PlayerShoot _playerShoot;
+    private PlayerDash _playerDash;
+    private GameManager _gameManager;
 
     /*
     info to be saved:
@@ -29,11 +33,14 @@ public class JsonDataManager : MonoBehaviour
 
         path = Application.persistentDataPath + "/" + filename;
 
-        playerController = FindObjectOfType<PlayerController>();
-        playerCamera = FindObjectOfType<PlayerCamera>();
-        tutorialManager = FindObjectOfType<TutorialManager>();
-        playerEnergyPoints = FindObjectOfType<PlayerEnergyPoints>();
-
+        _playerController = FindObjectOfType<PlayerController>();
+        _playerCamera = FindObjectOfType<PlayerCamera>();
+        _tutorialManager = FindObjectOfType<TutorialManager>();
+        _playerEnergyPoints = FindObjectOfType<PlayerEnergyPoints>();
+        _playerMeleeAttack = FindObjectOfType<PlayerMeleeAttack>();
+        _playerShoot = FindObjectOfType<PlayerShoot>();
+        _playerDash = FindObjectOfType<PlayerDash>();
+        _gameManager = FindObjectOfType<GameManager>();
     }
 
     // Start is called before the first frame update
@@ -45,15 +52,19 @@ public class JsonDataManager : MonoBehaviour
             ReadData();
 
             //call load data functions in each class reference
-            playerController.LoadData();
-            playerCamera.LoadData();
-            tutorialManager.LoadData();
-            playerEnergyPoints.LoadData();
+            _playerController.LoadData();
+            _playerCamera.LoadData();
+            _tutorialManager.LoadData();
+            _playerEnergyPoints.LoadData();
+            _playerMeleeAttack.LoadData();
+            _playerShoot.LoadData();
+            _playerDash.LoadData();
+            _gameManager.LoadData();
         }
         else
         {
             //begin tutorial
-            tutorialManager.FadeTutMove(true);
+            _tutorialManager.FadeTutMove(true);
         }
     }
 
@@ -64,6 +75,15 @@ public class JsonDataManager : MonoBehaviour
             System.IO.File.Delete(path);
             print(path);
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (!_playerController.inCombat)
+                MainSaveGameExit();
+            else
+                Debug.Log("Cannot save, in combat");
+        }
+
     }
 
     public void ReadData()
@@ -91,32 +111,45 @@ public class JsonDataManager : MonoBehaviour
     public void SavePlayerStats()
     {
         //player stats (health, energy, points collected, upgrades etc.)
-
+        gameData.playerHealth = _playerController.playerHealthComp.currentHealth;
+        gameData.meleeEnabled = _playerMeleeAttack.playerMeleeEnabled;
+        gameData.shootEnabled = _playerShoot.playerShootEnabled;
+        gameData.dashEnabled = _playerDash.playerDashEnabled;
+        gameData.gameIntroMove = _gameManager.gameIntroMove;
+        gameData.gameIntroMelee = _gameManager.gameIntroMelee;
+        gameData.gameIntroShoot = _gameManager.gameIntroShoot;
+        gameData.gameIntroDash = _gameManager.gameIntroDash;
     }
 
     public void SavePlayerEnergyPoints()
     {
-        gameData.energyPoints = playerEnergyPoints.energyPoints;
+        gameData.energyPoints = _playerEnergyPoints.energyPoints;
     }
 
-    public void SavePlayerLocation()
+    public void SavePlayerLocationCheckPoint()
     {
-        gameData.playerStartLocation = playerController.startLocation;
-        gameData.camStartLocation = playerCamera.startLocation;
+        gameData.playerStartLocation = _playerController.startLocation;
+        gameData.camStartLocation = _playerCamera.startLocation;
+    }
+
+    public void SavePlayerLocationWorld()
+    {
+        gameData.playerStartLocation = _playerController.transform.position;
+        gameData.camStartLocation = _playerCamera.transform.position;
     }
 
     public void SaveGameState()
     {
         //save other game states - npcs, booleans, tutorial etc.
 
-        gameData.tutorialComplete = tutorialManager.tutorialComplete;
+        gameData.tutorialComplete = _tutorialManager.tutorialComplete;
 
     }
 
     public void MainSaveCheckPoint()
     {
         SaveGameState();
-        SavePlayerLocation();
+        SavePlayerLocationCheckPoint();
         SavePlayerStats();
         SavePlayerEnergyPoints();
 
@@ -130,26 +163,25 @@ public class JsonDataManager : MonoBehaviour
     public void MainSaveDeath()
     {
         //player loses points on death - so save energy points
-        SavePlayerEnergyPoints();
-
+        //SavePlayerEnergyPoints();
+        //SavePlayerStats();
         //class info to save + true for pretty print
         string contents = JsonUtility.ToJson(gameData, true);
         //write contents to a file in path location
         System.IO.File.WriteAllText(path, contents);
-        Debug.Log("Check Point Save");
+        Debug.Log("Death Save");
     }
 
     public void MainSaveGameExit()
     {
         SavePlayerStats();
-        SavePlayerLocation();
+        SavePlayerLocationWorld();
         SavePlayerEnergyPoints();
-
         //class info to save + true for pretty print
         string contents = JsonUtility.ToJson(gameData, true);
         //write contents to a file in path location
         System.IO.File.WriteAllText(path, contents);
-        Debug.Log("Check Point Save");
+        Debug.Log("Main Save Exit");
     }
 
 }

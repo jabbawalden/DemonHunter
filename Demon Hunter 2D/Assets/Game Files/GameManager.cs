@@ -55,6 +55,14 @@ public class GameManager : MonoBehaviour
             }
     }
 
+    public void LoadData()
+    {
+        gameIntroMove = JsonDataManager.gameData.gameIntroMove; 
+        gameIntroMelee = JsonDataManager.gameData.gameIntroMelee;
+        gameIntroShoot = JsonDataManager.gameData.gameIntroShoot;
+        gameIntroDash = JsonDataManager.gameData.gameIntroDash;
+    }
+
     public void TutorialCheckMove()
     {
         if (!_tutorialManager.tutorialComplete && !gameIntroMove)
