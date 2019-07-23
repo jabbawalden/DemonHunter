@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 1538872661}
   - component: {fileID: 1538872660}
   - component: {fileID: 6182891382143642563}
+  - component: {fileID: 2200351011396354857}
   - component: {fileID: 1538872659}
   - component: {fileID: 1538872658}
   m_Layer: 9
@@ -176,6 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerState: 0
   enemyEngagedCounter: 0
+  enemyInRangeCounter: 0
   playerAlive: {fileID: 1384944239}
   playerDead: {fileID: 5366494515694450531}
   playerBodyCollision: {fileID: 1384944240}
@@ -193,6 +195,7 @@ MonoBehaviour:
   - {fileID: 5643335345706877456}
   - {fileID: 584344198928667042}
   enemiesInRange: []
+  inCombat: 0
   _currentMovementSpeed: 300
   _defaultMovementSpeed: 300
   _shootingMovementSpeed: 140
@@ -278,7 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _projSpeed: 2400
-  _fireRate: 0.3
+  _fireRate: 0.1
   _shootAnimationTime: 0.4
   _projDamage: 10
   _healthCost: 0
@@ -301,7 +304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 60
-  _currentHealth: 60
+  currentHealth: 0
   isPlayerComponent: 1
   playerCam: {fileID: 0}
 --- !u!114 &1538872660
@@ -332,6 +335,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyPoints: 0
+  energyLossPercent: 0.15
+--- !u!114 &2200351011396354857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538872657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a63d3f4d6762294789bcf818ce9fa19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &1538872659
 Rigidbody2D:
   serializedVersion: 4

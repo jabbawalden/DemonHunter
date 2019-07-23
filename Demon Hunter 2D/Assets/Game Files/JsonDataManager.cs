@@ -76,14 +76,15 @@ public class JsonDataManager : MonoBehaviour
             print(path);
         }
 
+        
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (!_playerController.inCombat)
+            if (/*!_playerController.inCombat || */_gameManager.playerInTown)
                 MainSaveGameExit();
             else
-                Debug.Log("Cannot save, in combat");
+                Debug.Log("Cannot save outside of town area");
         }
-
+        
     }
 
     public void ReadData()
@@ -166,6 +167,7 @@ public class JsonDataManager : MonoBehaviour
         //SavePlayerEnergyPoints();
         //SavePlayerStats();
         //class info to save + true for pretty print
+        SavePlayerEnergyPoints();
         string contents = JsonUtility.ToJson(gameData, true);
         //write contents to a file in path location
         System.IO.File.WriteAllText(path, contents);

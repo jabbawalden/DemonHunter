@@ -39,19 +39,20 @@ public class PlayerController : MonoBehaviour
     Vector2 mousePoint;
     [Space(4)]
 
-
     [Header("Local Components")]
     private Rigidbody2D _rb;
-    [SerializeField] private CircleCollider2D _circleCollider; 
+    [SerializeField] private CircleCollider2D _circleCollider;
     [Space(4)]
 
     [Header("Scripts")]
-    public C_Health playerHealthComp;  
+    private JsonDataManager _jsonDataManager;
+    [System.NonSerialized] public C_Health playerHealthComp;  
     private C_Health _enemyHealthComp;
     private PlayerEnergy _playerEnergy;
     private Animator _animator;
     private UIManager _uiManager;
     private PlayerCamera _playerCamera;
+    private PlayerEnergyPoints _playerEnergyPoints;
     [Space(4)]
 
     [Header("Animations")]
@@ -59,10 +60,10 @@ public class PlayerController : MonoBehaviour
     //private Animation iF, iB, iR, iL, iFR, iFL, iBR, iBL;
 
     [SerializeField] private int _playerState;
-    //[System.NonSerialized] public bool haveMoved;
 
     private void Awake()
     {
+        _jsonDataManager = FindObjectOfType<JsonDataManager>();
         _gameManager = FindObjectOfType<GameManager>();
         playerHealthComp = GetComponent<C_Health>();
         _playerEnergy = GetComponent<PlayerEnergy>();
@@ -70,7 +71,7 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         _playerCamera = GameObject.Find("CameraHolder").GetComponent<PlayerCamera>();
-
+        _playerEnergyPoints = FindObjectOfType<PlayerEnergyPoints>();
     }
 
     void Start()
@@ -81,10 +82,6 @@ public class PlayerController : MonoBehaviour
         direction = 1;
         _playerState = 0;
         _circleCollider.enabled = false;
-
-        //debugging
-        //if (_gameManager.finishedTutorial)
-        //    transform.position = _gameManager.startPosition.position;
     }
 
     void Update()
@@ -99,13 +96,10 @@ public class PlayerController : MonoBehaviour
             deathEnabled = true;
             playerDead.SetActive(true);
             playerAlive.SetActive(false);
+            _playerEnergyPoints.PointsLossDeath();
+            _jsonDataManager.MainSaveDeath();
             StopVelocity();
         }
-
-        //if (enemyEngagedCounter > 0)
-        //    inCombat = true;
-        //else
-        //    inCombat = false;
 
     }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerEnergyPoints : MonoBehaviour
 {
     public int energyPoints;
+    public float energyLossPercent;
     private UIManager _uiManager;
 
     private void Awake()
@@ -21,8 +22,20 @@ public class PlayerEnergyPoints : MonoBehaviour
     public void AddRemovePoints(int amount)
     {
         energyPoints += amount;
+
+        if (energyPoints <= 0)
+        {
+            energyPoints = 0;
+        }
+
         _uiManager.UpdateEnergyPoints();
     }
 
+    public void PointsLossDeath()
+    {
+        float lossResult = energyPoints * energyLossPercent;
+        int lossAmount = Mathf.RoundToInt(lossResult);
+        AddRemovePoints(-lossAmount);
+    }
 }
 
