@@ -45,7 +45,7 @@ public class JsonDataManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    { 
+    {
         if (System.IO.File.Exists(path))
         {
             //read data
@@ -65,6 +65,7 @@ public class JsonDataManager : MonoBehaviour
         {
             //begin tutorial
             _tutorialManager.FadeTutMove(true);
+            StartGameSave();
         }
     }
 
@@ -76,7 +77,7 @@ public class JsonDataManager : MonoBehaviour
             print(path);
         }
 
-        
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (/*!_playerController.inCombat || */_gameManager.playerInTown)
@@ -84,7 +85,7 @@ public class JsonDataManager : MonoBehaviour
             else
                 Debug.Log("Cannot save outside of town area");
         }
-        
+
     }
 
     public void ReadData()
@@ -113,6 +114,10 @@ public class JsonDataManager : MonoBehaviour
     {
         //player stats (health, energy, points collected, upgrades etc.)
         gameData.playerHealth = _playerController.playerHealthComp.currentHealth;
+    }
+
+    public void SaveTutorialState()
+    {
         gameData.meleeEnabled = _playerMeleeAttack.playerMeleeEnabled;
         gameData.shootEnabled = _playerShoot.playerShootEnabled;
         gameData.dashEnabled = _playerDash.playerDashEnabled;
@@ -147,12 +152,28 @@ public class JsonDataManager : MonoBehaviour
 
     }
 
+    public void StartGameSave()
+    {
+        SaveGameState();
+        SavePlayerLocationWorld();
+        SavePlayerStats();
+        SavePlayerEnergyPoints();
+        SaveTutorialState();
+
+        //class info to save + true for pretty print
+        string contents = JsonUtility.ToJson(gameData, true);
+        //write contents to a file in path location
+        System.IO.File.WriteAllText(path, contents);
+        Debug.Log("Start Game Save");
+    }
+
     public void MainSaveCheckPoint()
     {
         SaveGameState();
         SavePlayerLocationCheckPoint();
         SavePlayerStats();
         SavePlayerEnergyPoints();
+        SaveTutorialState();
 
         //class info to save + true for pretty print
         string contents = JsonUtility.ToJson(gameData, true);
@@ -163,11 +184,9 @@ public class JsonDataManager : MonoBehaviour
 
     public void MainSaveDeath()
     {
-        //player loses points on death - so save energy points
-        //SavePlayerEnergyPoints();
-        //SavePlayerStats();
-        //class info to save + true for pretty print
         SavePlayerEnergyPoints();
+        SaveTutorialState();
+
         string contents = JsonUtility.ToJson(gameData, true);
         //write contents to a file in path location
         System.IO.File.WriteAllText(path, contents);
@@ -179,6 +198,8 @@ public class JsonDataManager : MonoBehaviour
         SavePlayerStats();
         SavePlayerLocationWorld();
         SavePlayerEnergyPoints();
+        SaveTutorialState();
+
         //class info to save + true for pretty print
         string contents = JsonUtility.ToJson(gameData, true);
         //write contents to a file in path location

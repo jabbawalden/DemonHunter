@@ -6,7 +6,23 @@ public class C_Health : MonoBehaviour
 {
     [Header("Variables")]
     [SerializeField] private float _maxHealth;
-    public float currentHealth;
+    [SerializeField] private float _currentHealth;
+    public float currentHealth
+    {
+        get
+        {
+            return _currentHealth;
+        }
+        set
+        {
+            if (_currentHealth > _maxHealth)
+                _currentHealth = _maxHealth;
+            else if (_currentHealth < 0)
+                _currentHealth = 0;
+            else
+                _currentHealth = value;
+        }
+    }
     public bool isPlayerComponent;
     [Space(4)]
 
@@ -28,12 +44,14 @@ public class C_Health : MonoBehaviour
 
     public void Damage(float damage)
     {
-        if (damage >= currentHealth)
-            currentHealth = 0;
-        else
-        {
-            currentHealth -= damage;
-        }
+        //if (damage >= currentHealth)
+        //    currentHealth = 0;
+        //else
+        //{
+        //    currentHealth -= damage;
+        //}
+
+        currentHealth -= damage;
 
         if (IsAlive())
         {
@@ -55,8 +73,8 @@ public class C_Health : MonoBehaviour
         if (currentHealth < _maxHealth)
             currentHealth += heal;
         
-        if (currentHealth > _maxHealth)
-            currentHealth = _maxHealth;
+        //if (currentHealth > _maxHealth)
+        //    currentHealth = _maxHealth;
 
         _uiManager.UpdateHealthSlider();
         //print("heal player");

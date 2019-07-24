@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
     [System.NonSerialized] public C_Health playerHealthComp;  
     private C_Health _enemyHealthComp;
     private PlayerEnergy _playerEnergy;
+    private PlayerInput _playerInput;
     private Animator _animator;
     private UIManager _uiManager;
     private PlayerCamera _playerCamera;
@@ -67,6 +68,7 @@ public class PlayerController : MonoBehaviour
         _gameManager = FindObjectOfType<GameManager>();
         playerHealthComp = GetComponent<C_Health>();
         _playerEnergy = GetComponent<PlayerEnergy>();
+        _playerInput = GetComponent<PlayerInput>();
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponentInChildren<Animator>();
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
@@ -88,8 +90,8 @@ public class PlayerController : MonoBehaviour
     {
         if (playerHealthComp.IsAlive())
         {
-            if (canMove)
-                PlayerMoveInput();
+            //if (canMove)
+                //PlayerMoveInput();
         }
         else if (!deathEnabled)
         {
@@ -136,21 +138,21 @@ public class PlayerController : MonoBehaviour
         return aimDirection;
     }
 
-    private void PlayerMoveInput()
-    {
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
-    }
+    //private void PlayerMoveInput()
+    //{
+    //    h = Input.GetAxisRaw("Horizontal");
+    //    v = Input.GetAxisRaw("Vertical");
+    //}
 
     private void PlayerMovement(float x)
     {
         x *= Time.deltaTime;
 
-        Vector2 move = new Vector2(h, v);
+        Vector2 move = new Vector2(_playerInput.h, _playerInput.v);
         move = move.normalized * x;
         _rb.velocity = move;
 
-        if(h != 0 || v != 0)
+        if(_playerInput.h != 0 || _playerInput.v != 0)
             _gameManager.TutorialCheckMove();
     }
 

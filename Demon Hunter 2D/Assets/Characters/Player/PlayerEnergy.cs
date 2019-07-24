@@ -4,8 +4,25 @@ using UnityEngine;
 
 public class PlayerEnergy : MonoBehaviour
 {
+    private float _maxEnergy;
+    private float _currentEnergy;
     public float maxEnergy;
-    public float currentEnergy;
+
+    public float currentEnergy
+    {
+        get
+        {
+            return _currentEnergy;
+        }
+        set
+        {
+            if (_currentEnergy < 0)
+                _currentEnergy = 0;
+            else
+                _currentEnergy = value;
+        }
+    }
+
     [SerializeField] private float _regenRate;
     private UIManager uiManager;
 
@@ -46,10 +63,11 @@ public class PlayerEnergy : MonoBehaviour
 
     public void RemoveEnergy(float energyAmount)
     {
-        if (currentEnergy >= energyAmount)
-            currentEnergy -= energyAmount;
-        else
-            currentEnergy = 0;
+        currentEnergy -= energyAmount;
+        //if (currentEnergy >= energyAmount)
+        //    currentEnergy -= energyAmount;
+        //else
+        //    currentEnergy = 0;
     }
 
     public float GetEnergyPercent()

@@ -42,14 +42,7 @@ public class PlayerShoot : MonoBehaviour
     {
         if (_healthComponent.IsAlive())
         {
-            if (Input.GetKey(KeyCode.Mouse0) && playerShootEnabled)
-            {
-                if (Time.time >= _newTime && _playerEnergy.currentEnergy >= _energyCost)
-                {
-                    ShootAbility();
-                    _gameManager.TutorialCheckShoot();
-                }     
-            }
+
         }
 
         if (_playerEnergy.currentEnergy >= _energyCost)
@@ -61,6 +54,15 @@ public class PlayerShoot : MonoBehaviour
     public void LoadData()
     {
         playerShootEnabled = JsonDataManager.gameData.shootEnabled;
+    }
+
+    public void ShootAction()
+    {
+        if (Time.time >= _newTime && _playerEnergy.currentEnergy >= _energyCost)
+        {
+            ShootAbility();
+            _gameManager.TutorialCheckShoot();
+        }
     }
 
     private void ShootAbility()

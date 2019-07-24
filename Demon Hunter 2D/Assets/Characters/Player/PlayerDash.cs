@@ -14,7 +14,14 @@ public class PlayerDash : MonoBehaviour
     [SerializeField] private PlayerCamera _playerCamera;
 
     [SerializeField] private int[] layersToIgnore;
-    [SerializeField] private float _dashEnergyCost;
+    [SerializeField] private float dashEnergyCostSet;
+    public float dashEnergyCost
+    {
+        get
+        {
+            return dashEnergyCostSet;
+        }
+    }
     [SerializeField] private float _dashSpeed;
     [SerializeField] private float _dashDamage;
     [SerializeField] private float _dashHealAmount;
@@ -47,12 +54,7 @@ public class PlayerDash : MonoBehaviour
     void Update()
     {
         if (_playerHealthComp.IsAlive())
-            Dash();
-
-        if (_playerEnergy.currentEnergy >= _dashEnergyCost)
-            dashIconLit = true;
-        else
-            dashIconLit = false;
+            DashIconUI();
     }
 
     public void LoadData()
@@ -60,21 +62,24 @@ public class PlayerDash : MonoBehaviour
         playerDashEnabled = JsonDataManager.gameData.dashEnabled;
     }
 
-    private void Dash()
+    public void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _playerEnergy.currentEnergy >= _dashEnergyCost && playerDashEnabled)
-        {
-            _playerEnergy.RemoveEnergy(_dashEnergyCost);
-            StartCoroutine(DashBehaviour(4.5f, 0.3f));
-            _uiManager.UpdateEnergySlider();
-            _uiManager.DamageEnergyBar();
-            _playerCamera.CameraShake(0.15f, 0.11f);
+        _playerEnergy.RemoveEnergy(dashEnergyCost);
+        StartCoroutine(DashBehaviour(4.5f, 0.3f));
+        _uiManager.UpdateEnergySlider();
+        _uiManager.DamageEnergyBar();
+        _playerCamera.CameraShake(0.15f, 0.11f);
 
-            _gameManager.TutorialCheckDash();
-        }
+        _gameManager.TutorialCheckDash();
     }
 
-
+    private void DashIconUI()
+    {
+        if (_playerEnergy.currentEnergy >= dashEnergyCost)
+            dashIconLit = true;
+        else
+            dashIconLit = false;
+    }
 
     IEnumerator DashBehaviour(float time, float speed)
     {
