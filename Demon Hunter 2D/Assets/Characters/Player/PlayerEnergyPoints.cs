@@ -6,6 +6,7 @@ public class PlayerEnergyPoints : MonoBehaviour
 {
     public int energyPoints;
     public float energyLossPercent;
+
     private UIManager _uiManager;
 
     private void Awake()

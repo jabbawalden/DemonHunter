@@ -189,8 +189,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 0
-  enemyEngagedCounter: 0
-  enemyInRangeCounter: 0
   playerAlive: {fileID: 1384944239}
   playerDead: {fileID: 5366494515694450531}
   playerBodyCollision: {fileID: 1384944240}
@@ -207,14 +205,12 @@ MonoBehaviour:
   - {fileID: 9048280210024088167}
   - {fileID: 5643335345706877456}
   - {fileID: 584344198928667042}
-  enemiesInRange: []
   inCombat: 0
-  _currentMovementSpeed: 300
-  _defaultMovementSpeed: 300
-  _shootingMovementSpeed: 140
-  _meleeMovementSpeed: 240
+  currentMovementSpeed: 300
+  defaultMovementSpeed: 300
+  shootingMovementSpeed: 235
+  meleeMovementSpeed: 180
   direction: 0
-  canMove: 0
   _circleCollider: {fileID: 1538872658}
   _playerState: 0
 --- !u!114 &7916383915472219977
@@ -316,8 +312,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13917f82b3f2164ba0e114b330bb6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 60
-  currentHealth: 0
+  maxHealth: 60
+  _currentHealth: 0
   isPlayerComponent: 1
   playerCam: {fileID: 0}
 --- !u!114 &1538872660
@@ -332,9 +328,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b5f19f0a9fc7046bbe625b62b1b4ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxEnergy: 100
-  currentEnergy: 100
-  _regenRate: 0.32
+  _currentEnergy: 0
+  playerMaxEnergy: 100
+  energyRegenPercentSet: 0.0035
+  energyAmount: 0
 --- !u!114 &6182891382143642563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,7 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyPoints: 0
-  energyLossPercent: 0.15
+  energyLossPercent: 0.025
 --- !u!114 &2200351011396354857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,6 +358,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a63d3f4d6762294789bcf818ce9fa19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedUpgradeAmountSet: 20
+  healthUpgradeAmountSet: 5
+  energyUpgradeAmountSet: 10
+  speedUpgradeCostSet: 100
+  healthUpgradeCostSet: 150
+  energyUpgradeCostSet: 200
 --- !u!50 &1538872659
 Rigidbody2D:
   serializedVersion: 4

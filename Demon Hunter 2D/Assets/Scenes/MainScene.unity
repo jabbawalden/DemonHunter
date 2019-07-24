@@ -1435,18 +1435,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 29607849}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &33975191 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4433074759892976709, guid: 036d3e4b7654a46499a8e4b07c447738,
-    type: 3}
-  m_PrefabInstance: {fileID: 4433074759859548114}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afedddc74639e1541a8c5d94648b0291, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &37334974
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -87298,10 +87286,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1538872660, guid: f0012caabe927754790617fe3618fa17, type: 3}
-      propertyPath: uiManager
-      value: 
-      objectReference: {fileID: 33975191}
     - target: {fileID: 1538872661, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: playerCam
       value: 

@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class JsonDataManager : MonoBehaviour
 {
-    string path;
-    string filename;
+    string filePath;
+    string fileName;
 
     //static to allow all scripts to access class
     public static GameData gameData = new GameData();
-
 
     private PlayerController _playerController;
     private PlayerCamera _playerCamera;
@@ -18,20 +17,14 @@ public class JsonDataManager : MonoBehaviour
     private PlayerMeleeAttack _playerMeleeAttack;
     private PlayerShoot _playerShoot;
     private PlayerDash _playerDash;
+    private PlayerEnergy _playerEnergy;
     private GameManager _gameManager;
-
-    /*
-    info to be saved:
-    - player location
-    - player ability unlocks
-    - player upgradable stats
-    */
 
     private void Awake()
     {
-        filename = "DemonHunterSave1.Json";
+        fileName = "DemonHunterSave1.Json";
 
-        path = Application.persistentDataPath + "/" + filename;
+        filePath = Application.persistentDataPath + "/" + fileName;
 
         _playerController = FindObjectOfType<PlayerController>();
         _playerCamera = FindObjectOfType<PlayerCamera>();
@@ -40,13 +33,14 @@ public class JsonDataManager : MonoBehaviour
         _playerMeleeAttack = FindObjectOfType<PlayerMeleeAttack>();
         _playerShoot = FindObjectOfType<PlayerShoot>();
         _playerDash = FindObjectOfType<PlayerDash>();
+        _playerEnergy = FindObjectOfType<PlayerEnergy>();
         _gameManager = FindObjectOfType<GameManager>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        if (System.IO.File.Exists(path))
+        if (System.IO.File.Exists(filePath))
         {
             //read data
             ReadData();
@@ -73,10 +67,9 @@ public class JsonDataManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            System.IO.File.Delete(path);
-            print(path);
+            System.IO.File.Delete(filePath);
+            print(filePath);
         }
-
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -92,11 +85,11 @@ public class JsonDataManager : MonoBehaviour
     {
         try
         {
-            if (System.IO.File.Exists(path))
+            if (System.IO.File.Exists(filePath))
             {
-                string contents = System.IO.File.ReadAllText(path);
+                string contents = System.IO.File.ReadAllText(filePath);
                 gameData = JsonUtility.FromJson<GameData>(contents);
-                Debug.Log(path);
+                Debug.Log(filePath);
             }
             else
             {
@@ -114,6 +107,9 @@ public class JsonDataManager : MonoBehaviour
     {
         //player stats (health, energy, points collected, upgrades etc.)
         gameData.playerHealth = _playerController.playerHealthComp.currentHealth;
+        gameData.playerMaxHealth = _playerController.playerHealthComp.maxHealth;
+        gameData.defaultMovementSpeed = _playerController.defaultMovementSpeed;
+        gameData.playerMaxEnergy = _playerEnergy.playerMaxEnergy;
     }
 
     public void SaveTutorialState()
@@ -163,7 +159,7 @@ public class JsonDataManager : MonoBehaviour
         //class info to save + true for pretty print
         string contents = JsonUtility.ToJson(gameData, true);
         //write contents to a file in path location
-        System.IO.File.WriteAllText(path, contents);
+        System.IO.File.WriteAllText(filePath, contents);
         Debug.Log("Start Game Save");
     }
 
@@ -178,7 +174,7 @@ public class JsonDataManager : MonoBehaviour
         //class info to save + true for pretty print
         string contents = JsonUtility.ToJson(gameData, true);
         //write contents to a file in path location
-        System.IO.File.WriteAllText(path, contents);
+        System.IO.File.WriteAllText(filePath, contents);
         Debug.Log("Check Point Save");
     }
 
@@ -189,7 +185,7 @@ public class JsonDataManager : MonoBehaviour
 
         string contents = JsonUtility.ToJson(gameData, true);
         //write contents to a file in path location
-        System.IO.File.WriteAllText(path, contents);
+        System.IO.File.WriteAllText(filePath, contents);
         Debug.Log("Death Save");
     }
 
@@ -203,7 +199,7 @@ public class JsonDataManager : MonoBehaviour
         //class info to save + true for pretty print
         string contents = JsonUtility.ToJson(gameData, true);
         //write contents to a file in path location
-        System.IO.File.WriteAllText(path, contents);
+        System.IO.File.WriteAllText(filePath, contents);
         Debug.Log("Main Save Exit");
     }
 

@@ -256,9 +256,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07cd1e652d3eccd4baa3c2efe800408d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isVisible: 0
   enemyState: 0
   enemyMovementType: 0
+  enemySpecialType: 0
   playerRef: {fileID: 0}
+  canRecieveDamage: 0
   originDistance: 0
   _moveSpeed: 130
   _distanceKeptMin: 3
@@ -279,6 +282,7 @@ MonoBehaviour:
     type: 3}
   enemyAlive: {fileID: 245244444377588906}
   enemyDead: {fileID: 1596878946821228588}
+  enemyShield: {fileID: 0}
 --- !u!114 &6051697262811835696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13917f82b3f2164ba0e114b330bb6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 10
+  maxHealth: 10
   _currentHealth: 0
   isPlayerComponent: 0
   playerCam: {fileID: 0}

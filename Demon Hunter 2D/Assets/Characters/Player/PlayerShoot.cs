@@ -67,7 +67,7 @@ public class PlayerShoot : MonoBehaviour
 
     private void ShootAbility()
     {
-        _playerController._currentMovementSpeed = _playerController._shootingMovementSpeed;
+        _playerController.currentMovementSpeed = _playerController.shootingMovementSpeed;
         _playerController.StopVelocity();
 
         _newTime = Time.time + _fireRate;
@@ -93,6 +93,6 @@ public class PlayerShoot : MonoBehaviour
     IEnumerator ShootBehaviour()
     {
         yield return new WaitForSeconds(_shootAnimationTime);
-        _playerController._currentMovementSpeed = _playerController._defaultMovementSpeed;
+        _playerController.currentMovementSpeed = _playerController.defaultMovementSpeed;
     }
 }

@@ -188,8 +188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13917f82b3f2164ba0e114b330bb6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 10
-  currentHealth: 0
+  maxHealth: 10
+  _currentHealth: 0
   isPlayerComponent: 0
   playerCam: {fileID: 0}
 --- !u!114 &2820954046073255290

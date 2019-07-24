@@ -15,28 +15,28 @@ public class PlayerController : MonoBehaviour
     [Header("Player Main Setup")]
     public PlayerState playerState;
     [System.NonSerialized] public Vector3 startLocation;
-    public int enemyEngagedCounter;
-    public int enemyInRangeCounter;
+    [System.NonSerialized] public int enemyEngagedCounter;
+    [System.NonSerialized] public int enemyInRangeCounter;
     private GameManager _gameManager;
     [SerializeField] private GameObject playerAlive, playerDead;
     [SerializeField] private Collider2D playerBodyCollision;
     [System.NonSerialized] public bool deathEnabled; 
     public Transform[] engagementPositions;
     private EnemyController enemyControllerDetected;
-    public List<GameObject> enemiesInRange = new List<GameObject>();
+    [System.NonSerialized] public List<GameObject> enemiesInRange = new List<GameObject>();
     /*[System.NonSerialized] */public bool inCombat;
 
-    [Header("Movement")]
-    public float _currentMovementSpeed;    //speed 
-    public float _defaultMovementSpeed;
-    public float _shootingMovementSpeed;
-    public float _meleeMovementSpeed;
+    [Header("Values")]
+    public float currentMovementSpeed;   
+    public float defaultMovementSpeed;
+    public float shootingMovementSpeed;
+    public float meleeMovementSpeed;
     private float h, v;
     [SerializeField] private int direction;
     //[SerializeField] private bool isDashing;
-    public bool canMove;
-
-    Vector2 mousePoint;
+    [System.NonSerialized] public bool canMove;
+    [System.NonSerialized] public float playerMaxHealth;
+    private Vector2 mousePoint;
     [Space(4)]
 
     [Header("Local Components")]
@@ -74,10 +74,12 @@ public class PlayerController : MonoBehaviour
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         _playerCamera = GameObject.Find("CameraHolder").GetComponent<PlayerCamera>();
         _playerEnergyPoints = FindObjectOfType<PlayerEnergyPoints>();
+
     }
 
     void Start()
     {
+        currentMovementSpeed = defaultMovementSpeed;
         deathEnabled = false;
         playerDead.SetActive(false);
         canMove = true;
@@ -110,7 +112,7 @@ public class PlayerController : MonoBehaviour
         if (playerHealthComp.IsAlive())
         {
             if (canMove)
-                PlayerMovement(_currentMovementSpeed);
+                PlayerMovement(currentMovementSpeed);
 
             DirectionCheck();
         }
@@ -122,9 +124,18 @@ public class PlayerController : MonoBehaviour
         //load data
         startLocation = JsonDataManager.gameData.playerStartLocation;
         playerHealthComp.currentHealth = JsonDataManager.gameData.playerHealth;
-        //transport player to position
+        defaultMovementSpeed = JsonDataManager.gameData.defaultMovementSpeed;
+        playerHealthComp.maxHealth = JsonDataManager.gameData.playerMaxHealth;
+        _playerEnergy.playerMaxEnergy = JsonDataManager.gameData.playerMaxEnergy;
+
+        currentMovementSpeed = defaultMovementSpeed;
+        _playerEnergy.currentEnergy = _playerEnergy.playerMaxEnergy;
+        playerHealthComp.currentHealth = playerHealthComp.maxHealth;
         transform.position = startLocation;
+
         _uiManager.UpdateHealthSlider();
+        _uiManager.UpdateEnergySlider();
+
         Debug.Log("Player position loaded");
     }
 
@@ -137,12 +148,6 @@ public class PlayerController : MonoBehaviour
 
         return aimDirection;
     }
-
-    //private void PlayerMoveInput()
-    //{
-    //    h = Input.GetAxisRaw("Horizontal");
-    //    v = Input.GetAxisRaw("Vertical");
-    //}
 
     private void PlayerMovement(float x)
     {
@@ -165,6 +170,7 @@ public class PlayerController : MonoBehaviour
 
     private void CheckEnemyBlockers()
     {
+        //enemies add and remove themselves to array based on visible
         if (enemiesInRange.Count > 0)
         {
             foreach (GameObject obj in enemiesInRange)

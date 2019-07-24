@@ -5,7 +5,7 @@ using UnityEngine;
 public class C_Health : MonoBehaviour
 {
     [Header("Variables")]
-    [SerializeField] private float _maxHealth;
+    public float maxHealth;
     [SerializeField] private float _currentHealth;
     public float currentHealth
     {
@@ -15,9 +15,9 @@ public class C_Health : MonoBehaviour
         }
         set
         {
-            if (_currentHealth > _maxHealth)
-                _currentHealth = _maxHealth;
-            else if (_currentHealth < 0)
+            if (value > maxHealth)
+                _currentHealth = maxHealth;
+            else if (value < 0)
                 _currentHealth = 0;
             else
                 _currentHealth = value;
@@ -39,7 +39,7 @@ public class C_Health : MonoBehaviour
 
     private void Start()
     {
-        currentHealth = _maxHealth;
+        currentHealth = maxHealth;
     }
 
     public void Damage(float damage)
@@ -70,7 +70,7 @@ public class C_Health : MonoBehaviour
 
     public void Heal(float heal)
     {
-        if (currentHealth < _maxHealth)
+        if (currentHealth < maxHealth)
             currentHealth += heal;
         
         //if (currentHealth > _maxHealth)
@@ -82,7 +82,7 @@ public class C_Health : MonoBehaviour
 
     public float GetHealthPercent()
     {
-        float percent = currentHealth / _maxHealth;
+        float percent = currentHealth / maxHealth;
         return percent;
     }
 

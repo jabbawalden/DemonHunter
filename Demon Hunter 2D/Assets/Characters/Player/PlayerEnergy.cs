@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PlayerEnergy : MonoBehaviour
 {
-    private float _maxEnergy;
-    private float _currentEnergy;
-    public float maxEnergy;
-
+    [SerializeField] private float _currentEnergy;
+    public float playerMaxEnergy;
     public float currentEnergy
     {
         get
@@ -16,14 +14,20 @@ public class PlayerEnergy : MonoBehaviour
         }
         set
         {
-            if (_currentEnergy < 0)
+            if (value < 0)
                 _currentEnergy = 0;
+            else if (value > playerMaxEnergy)
+                _currentEnergy = playerMaxEnergy;
             else
                 _currentEnergy = value;
         }
     }
 
-    [SerializeField] private float _regenRate;
+    [SerializeField] private float energyRegenPercentSet;
+    public float energyRegenPercent { get { return energyRegenPercentSet; } }
+    [SerializeField] private float energyAmount;
+
+    //[SerializeField] private float _regenRate;
     private UIManager uiManager;
 
     private void Awake()
@@ -34,7 +38,8 @@ public class PlayerEnergy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentEnergy = maxEnergy;
+        currentEnergy = playerMaxEnergy;
+        energyAmount = playerMaxEnergy * energyRegenPercent;
     }
 
     private void FixedUpdate()
@@ -44,35 +49,26 @@ public class PlayerEnergy : MonoBehaviour
 
     private void EnergyRegenerate()
     {
-        if (currentEnergy < maxEnergy)
+        if (currentEnergy < playerMaxEnergy)
         {
-            currentEnergy += _regenRate;
+            currentEnergy += energyAmount;
             uiManager.UpdateEnergySlider();
         }
     }
 
     public void AddEnergy(int energyToAdd)
     {
-        if (currentEnergy < maxEnergy)
-        {
-            currentEnergy += energyToAdd;
-            if (currentEnergy > maxEnergy)
-                currentEnergy = maxEnergy;
-        }
+        currentEnergy += energyToAdd;
     }
 
     public void RemoveEnergy(float energyAmount)
     {
         currentEnergy -= energyAmount;
-        //if (currentEnergy >= energyAmount)
-        //    currentEnergy -= energyAmount;
-        //else
-        //    currentEnergy = 0;
     }
 
     public float GetEnergyPercent()
     {
-        float percent = currentEnergy / maxEnergy;
+        float percent = currentEnergy / playerMaxEnergy;
         return percent;
     }
 }

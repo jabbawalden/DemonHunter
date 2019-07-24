@@ -11,6 +11,7 @@ public class PlayerInput : MonoBehaviour
     private C_Health _healthComponent;
     private PlayerEnergy _playerEnergy;
     private PlayerDash _playerDash;
+    private PlayerMeleeAttack _playerMeleeAttack;
 
     public float h {get; private set;}
     public float v {get; private set;}
@@ -22,6 +23,7 @@ public class PlayerInput : MonoBehaviour
         _healthComponent = GetComponent<C_Health>();
         _playerEnergy = GetComponent<PlayerEnergy>();
         _playerDash = GetComponent<PlayerDash>();
+        _playerMeleeAttack = GetComponent<PlayerMeleeAttack>();
     }
 
     // Update is called once per frame
@@ -33,6 +35,7 @@ public class PlayerInput : MonoBehaviour
                 PlayerMoveInput();
             PlayerDashInput();
             PlayerShootInput();
+            PlayerMeleeInput();
         }
     }
 
@@ -40,6 +43,22 @@ public class PlayerInput : MonoBehaviour
     {
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
+    }
+
+    private void PlayerMeleeInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse1) && _playerMeleeAttack.playerMeleeEnabled)
+        {
+            _playerMeleeAttack.MeleeAttack();
+        }
+    }
+
+    private void PlayerShootInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0) && _playerShoot.playerShootEnabled)
+        {
+            _playerShoot.ShootAction();
+        }
     }
 
     private void PlayerDashInput()
@@ -50,11 +69,7 @@ public class PlayerInput : MonoBehaviour
         }
     }
     
-    private void PlayerShootInput()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0) && _playerShoot.playerShootEnabled)
-        {
-            _playerShoot.ShootAction();
-        }
-    }
+
+
+
 }

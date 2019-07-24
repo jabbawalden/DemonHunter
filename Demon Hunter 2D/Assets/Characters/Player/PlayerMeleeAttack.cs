@@ -36,7 +36,7 @@ public class PlayerMeleeAttack : MonoBehaviour
         _playerEnergy = GetComponent<PlayerEnergy>();
         _playerHealthComp = GetComponent<C_Health>();
         _circleCollider = GetComponent<CircleCollider2D>();
-        _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        _uiManager = FindObjectOfType<UIManager>();
     }
 
     void Start()
@@ -46,14 +46,6 @@ public class PlayerMeleeAttack : MonoBehaviour
 
     void Update()
     {
-        if (_playerHealthComp.IsAlive())
-        {
-            if (Input.GetKeyDown(KeyCode.Mouse1) && playerMeleeEnabled)
-            {
-                MeleeAttack();
-                _gameManager.TutorialCheckMelee();
-            }
-        }
 
         if (_playerEnergy.currentEnergy >= _energyCost)
             meleeIconLit = true;
@@ -66,8 +58,10 @@ public class PlayerMeleeAttack : MonoBehaviour
         playerMeleeEnabled = JsonDataManager.gameData.meleeEnabled;
     }
 
-    private void MeleeAttack()
+    public void MeleeAttack()
     {
+        _gameManager.TutorialCheckMelee();
+
         if (_newTime <= Time.time && _playerEnergy.currentEnergy >= _energyCost)
         {
             _canMeleeDamage = true;
@@ -83,15 +77,15 @@ public class PlayerMeleeAttack : MonoBehaviour
 
     IEnumerator MeleeBehaviour()
     {
-        Vector2 position = new Vector2(transform.position.x, transform.position.y) + _playerController.AimDirection();
-        _playerController._currentMovementSpeed = _playerController._meleeMovementSpeed;
+        Vector2 spawnAttackPosition = new Vector2(transform.position.x, transform.position.y) + _playerController.AimDirection();
+        _playerController.currentMovementSpeed = _playerController.meleeMovementSpeed;
 
         yield return new WaitForSeconds(_attackWindUpTime);
         //spawn melee attack collider
         //use instantiate instead of collier because 
-        GameObject obj = Instantiate(_meleeAttackObj, position, Quaternion.identity);
+        GameObject obj = Instantiate(_meleeAttackObj, spawnAttackPosition, Quaternion.identity);
 
-        if (obj.GetComponent<PlayerMeleeStrike>() != null)
+        if (obj.GetComponent<PlayerMeleeStrike>())
         {
             obj.GetComponent<PlayerMeleeStrike>().attackTime = _attackTime;
             obj.GetComponent<PlayerMeleeStrike>().damage = _meleeDamage; 
@@ -100,7 +94,7 @@ public class PlayerMeleeAttack : MonoBehaviour
         yield return new WaitForSeconds(_recoveryAttackTime);
         //_playerController.canMove = true;
         _canMeleeDamage = false;
-        _playerController._currentMovementSpeed = _playerController._defaultMovementSpeed;
+        _playerController.currentMovementSpeed = _playerController.defaultMovementSpeed;
     }
 
 }
