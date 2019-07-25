@@ -10,7 +10,8 @@ public class EnergyPickUp : MonoBehaviour
     private Rigidbody2D _rb;
     [SerializeField] private int _energyPointsValue; 
     [SerializeField] private int _energyToAdd;
-    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _currentMoveSpeed;
+    [SerializeField] private float _startingMoveSpeed; 
     [SerializeField] private float _moveSpeedIncrease;
     [SerializeField] private float _bounceForce;
     [SerializeField] private float _timeBounceStart; 
@@ -36,6 +37,7 @@ public class EnergyPickUp : MonoBehaviour
         //Invoke("BounceyBehaviour", 0.4f);
         float r = Random.Range(-_bounceForce, _bounceForce);
         _rb.AddForce(new Vector2(r, _bounceForce));
+        _currentMoveSpeed = _startingMoveSpeed;
         Invoke("NewRigidbodyBehaviour", 0.7f);
     }
 
@@ -54,8 +56,13 @@ public class EnergyPickUp : MonoBehaviour
 
             if (distance <= _distanceReference)
             {
-                _rb.velocity = direction.normalized * _moveSpeed * Time.deltaTime;
-                _moveSpeed += _moveSpeedIncrease;
+                _rb.velocity = direction.normalized * _currentMoveSpeed * Time.deltaTime;
+                _currentMoveSpeed += _moveSpeedIncrease;
+            }
+            else
+            {
+                _rb.velocity = new Vector2(0,0);
+                _currentMoveSpeed = _startingMoveSpeed;
             }
 
             if (distance <= _distanceToMove)

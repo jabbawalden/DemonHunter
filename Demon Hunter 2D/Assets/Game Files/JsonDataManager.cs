@@ -109,18 +109,19 @@ public class JsonDataManager : MonoBehaviour
     public void SavePlayerStats()
     {
         //player stats (health, energy, points collected, upgrades etc.)
-        gameData.playerHealth = _playerController.playerHealthComp.currentHealth;
+        gameData.playerHealth = _playerController.playerHealthComp.CurrentHealth;
         gameData.playerMaxHealth = _playerController.playerHealthComp.maxHealth;
         gameData.defaultMovementSpeed = _playerController.defaultMovementSpeed;
         gameData.playerMaxEnergy = _playerEnergy.playerMaxEnergy;
         gameData.canHealthRegen = _playerController.playerHealthComp.canHealthRegen;
+        gameData.damageMultiplier = _playerController.DamageMultiplier;
 
-        gameData.speedUpgradeAmount = _playerUpgradesManager.speedUpgradeAmount;
-        gameData.healthUpgradeAmount = _playerUpgradesManager.healthUpgradeAmount;
-        gameData.energyUpgradeAmount = _playerUpgradesManager.energyUpgradeAmount;
-        gameData.speedUpgradeCost = _playerUpgradesManager.speedUpgradeCost;
-        gameData.healthUpgradeCost = _playerUpgradesManager.healthUpgradeCost;
-        gameData.energyUpgradeCost = _playerUpgradesManager.energyUpgradeCost;
+        gameData.speedUpgradeAmount = _playerUpgradesManager.SpeedUpgradeAmount;
+        gameData.healthUpgradeAmount = _playerUpgradesManager.HealthUpgradeAmount;
+        gameData.energyUpgradeAmount = _playerUpgradesManager.EnergyUpgradeAmount;
+        gameData.speedUpgradeCost = _playerUpgradesManager.SpeedUpgradeCost;
+        gameData.healthUpgradeCost = _playerUpgradesManager.HealthUpgradeCost;
+        gameData.energyUpgradeCost = _playerUpgradesManager.EnergyUpgradeCost;
 
     }
 

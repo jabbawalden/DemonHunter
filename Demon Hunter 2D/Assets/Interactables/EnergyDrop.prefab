@@ -48,7 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _energyPointsValue: 10
   _energyToAdd: 5
-  _moveSpeed: 100
+  _currentMoveSpeed: 70
+  _startingMoveSpeed: 0
   _moveSpeedIncrease: 70
   _bounceForce: 300
   _timeBounceStart: 0.5

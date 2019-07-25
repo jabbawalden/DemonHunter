@@ -117,7 +117,7 @@ public class PlayerDash : MonoBehaviour
             {
                 _enemyHealthComp = collision.GetComponentInParent<C_Health>();
                 _playerHealthComp.Heal(_dashHealAmount);
-                _enemyHealthComp.Damage(_dashDamage);
+                _enemyHealthComp.Damage(_dashDamage * _playerController.DamageMultiplier);
             }
 
 

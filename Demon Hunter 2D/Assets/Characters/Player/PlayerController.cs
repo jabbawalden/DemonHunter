@@ -26,12 +26,16 @@ public class PlayerController : MonoBehaviour
     [System.NonSerialized] public List<GameObject> enemiesInRange = new List<GameObject>();
     /*[System.NonSerialized] */public bool inCombat;
 
+
+
     [Header("Values")]
     public float currentMovementSpeed;   
-    public float defaultMovementSpeed;
+    public float defaultMovementSpeed; 
     public float shootingMovementSpeed;
-    public float meleeMovementSpeed;
-    private float h, v;
+    public float meleeMovementSpeed; 
+    [SerializeField] private float _damageMultiplier;
+    public float DamageMultiplier { get { return _damageMultiplier; } private set { _damageMultiplier = value; } }
+    private float h, v; 
     [SerializeField] private int direction;
     //[SerializeField] private bool isDashing;
     [System.NonSerialized] public bool canMove;
@@ -123,15 +127,17 @@ public class PlayerController : MonoBehaviour
     {
         //load data
         startLocation = JsonDataManager.gameData.playerStartLocation;
-        playerHealthComp.currentHealth = JsonDataManager.gameData.playerHealth;
+        playerHealthComp.CurrentHealth = JsonDataManager.gameData.playerHealth;
         defaultMovementSpeed = JsonDataManager.gameData.defaultMovementSpeed;
         playerHealthComp.maxHealth = JsonDataManager.gameData.playerMaxHealth;
         _playerEnergy.playerMaxEnergy = JsonDataManager.gameData.playerMaxEnergy;
         playerHealthComp.canHealthRegen = JsonDataManager.gameData.canHealthRegen;
+        DamageMultiplier = JsonDataManager.gameData.damageMultiplier;
 
         currentMovementSpeed = defaultMovementSpeed;
         _playerEnergy.currentEnergy = _playerEnergy.playerMaxEnergy;
-        playerHealthComp.currentHealth = playerHealthComp.maxHealth;
+        _playerEnergy.EnergyAmountCalc();
+        playerHealthComp.CurrentHealth = playerHealthComp.maxHealth;
         playerHealthComp.HealthRegenCalc();
         transform.position = startLocation;
 
@@ -209,6 +215,11 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void IncreaseDamageMultiplier(float amount)
+    {
+        DamageMultiplier += amount;
     }
 
     private void SetAnimationPlay(int state)

@@ -7,6 +7,7 @@ public class ProjectileBehaviour : MonoBehaviour
     public float damage;
     private C_Health _healthComponent;
     private PlayerEnergy _playerEnergy;
+    private PlayerController _playerController;
     [System.NonSerialized] public int hitCount;
     [SerializeField] private int _maxHitCount;
     public int targetLayer;
@@ -19,6 +20,8 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         _healthComponent = GetComponent<C_Health>();
         _playerEnergy = GetComponent<PlayerEnergy>();
+        if (isPlayerProj)
+            _playerController = FindObjectOfType<PlayerController>();
     }
 
     private void HitCounter()
@@ -44,7 +47,11 @@ public class ProjectileBehaviour : MonoBehaviour
             //if enemy and health component exists
             print("Hit player");
             _healthComponent = collision.GetComponentInParent<C_Health>();
-            _healthComponent.Damage(damage);
+
+            if (_playerController && isPlayerProj)
+                _healthComponent.Damage(damage * _playerController.DamageMultiplier);
+            else
+                _healthComponent.Damage(damage);
 
             if (_healthComponent.IsAlive())
                 Destroy(gameObject);
@@ -92,6 +99,12 @@ public class ProjectileBehaviour : MonoBehaviour
             //if enemy blocker, destroy object
             Destroy(gameObject);
         }
+    }
+
+    public void ConvertPlayerSettings()
+    {
+        if (isPlayerProj)
+            _playerController = FindObjectOfType<PlayerController>();
     }
 
     private void OnBecameInvisible()

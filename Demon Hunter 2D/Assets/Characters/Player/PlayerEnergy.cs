@@ -24,22 +24,22 @@ public class PlayerEnergy : MonoBehaviour
     }
 
     [SerializeField] private float energyRegenPercentSet;
-    public float energyRegenPercent { get { return energyRegenPercentSet; } }
+    public float EnergyRegenPercent { get { return energyRegenPercentSet; } }
     [SerializeField] private float energyAmount;
 
     //[SerializeField] private float _regenRate;
-    private UIManager uiManager;
+    private UIManager _uiManager;
 
     private void Awake()
     {
-        uiManager = FindObjectOfType<UIManager>();
+        _uiManager = FindObjectOfType<UIManager>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         currentEnergy = playerMaxEnergy;
-        energyAmount = playerMaxEnergy * energyRegenPercent;
+        EnergyAmountCalc();
     }
 
     private void FixedUpdate()
@@ -47,12 +47,18 @@ public class PlayerEnergy : MonoBehaviour
         EnergyRegenerate();
     }
 
+    public void EnergyAmountCalc()
+    {
+        energyAmount = playerMaxEnergy * EnergyRegenPercent;
+        _uiManager.UpdateEnergySlider();
+    }
+
     private void EnergyRegenerate()
     {
         if (currentEnergy < playerMaxEnergy)
         {
             currentEnergy += energyAmount;
-            uiManager.UpdateEnergySlider();
+            _uiManager.UpdateEnergySlider();
         }
     }
 

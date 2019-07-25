@@ -210,6 +210,7 @@ MonoBehaviour:
   defaultMovementSpeed: 300
   shootingMovementSpeed: 235
   meleeMovementSpeed: 180
+  _damageMultiplier: 1
   direction: 0
   _circleCollider: {fileID: 1538872658}
   _playerState: 0
@@ -316,8 +317,10 @@ MonoBehaviour:
   _currentHealth: 0
   isPlayerComponent: 1
   canHealthRegen: 0
-  healthRegenPercentSet: 0.0015
-  healthRegenAmount: 0
+  healthRegenPercentSet: 0.0025
+  _healthRegenAmount: 0
+  _healRate: 0.075
+  _newTime: 0
   playerCam: {fileID: 0}
 --- !u!114 &1538872660
 MonoBehaviour:
@@ -361,21 +364,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a63d3f4d6762294789bcf818ce9fa19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedUpgradeAmountSet: 20
-  _healthUpgradeAmountSet: 10
-  _energyUpgradeAmountSet: 10
+  _speedUpgradeAmountSet: 17
+  _healthUpgradeAmountSet: 7
+  _energyUpgradeAmountSet: 7
+  _damageMultiplierAmountSet: 0.25
   _speedUpgradeCostSet: 100
   _healthUpgradeCostSet: 300
   _energyUpgradeCostSet: 200
+  _damageMultiplierCostSet: 300
   _healthRegenCost: 2500
   upgradeValueMultiplier: 0.3
   upgradeCostMultiplier: 0.7
   currentSpeedUpgrade: 0
   currentHealthUpgrade: 0
   currentEnergyUpgrade: 0
+  currentDamageUpgrade: 0
   maxSpeedUpgrade: 4
   maxHealthUpgrade: 10
   maxEnergyUpgrade: 8
+  maxDamageUpgrade: 4
 --- !u!50 &1538872659
 Rigidbody2D:
   serializedVersion: 4

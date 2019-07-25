@@ -7,7 +7,7 @@ public class C_Health : MonoBehaviour
     [Header("Variables")]
     public float maxHealth;
     [SerializeField] private float _currentHealth;
-    public float currentHealth
+    public float CurrentHealth
     {
         get
         {
@@ -27,9 +27,9 @@ public class C_Health : MonoBehaviour
     public bool canHealthRegen;
 
     [SerializeField] private float healthRegenPercentSet;
-    public float healthRegenPercent { get { return healthRegenPercentSet; } }
-    [SerializeField] private float healthRegenAmount;
-
+    public float HealthRegenPercent { get { return healthRegenPercentSet; } }
+    [SerializeField] private float _healthRegenAmount;
+    [SerializeField] private float _healRate, _newTime;
     [Space(4)]
 
 
@@ -41,40 +41,38 @@ public class C_Health : MonoBehaviour
     private void Awake()
     {
         if (isPlayerComponent)
-            _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+            _uiManager = FindObjectOfType<UIManager>();
     }
 
     private void Start()
     {
-        currentHealth = maxHealth;
-        HealthRegenCalc();
+        CurrentHealth = maxHealth;
+        if (canHealthRegen)
+            HealthRegenCalc();
     }
 
     private void FixedUpdate()
     {
-        if (IsAlive() && canHealthRegen && currentHealth < maxHealth)
+        if (IsAlive() && canHealthRegen && CurrentHealth < maxHealth && _newTime <= Time.time)
         {
-            currentHealth += healthRegenAmount;
-            _uiManager.UpdateHealthSlider();
+            _newTime = Time.time + _healRate;
+            CurrentHealth += _healthRegenAmount;
+            if (_uiManager)
+                _uiManager.UpdateHealthSlider();
         }
     }
 
     public void HealthRegenCalc()
     {
-        healthRegenAmount = maxHealth * healthRegenPercent;
-        print("health regen calc activated");
+        _healthRegenAmount = maxHealth * HealthRegenPercent;
+        if (_uiManager)
+            _uiManager.UpdateHealthSlider();
+        //print("health regen calc activated");
     }
 
     public void Damage(float damage)
     {
-        //if (damage >= currentHealth)
-        //    currentHealth = 0;
-        //else
-        //{
-        //    currentHealth -= damage;
-        //}
-
-        currentHealth -= damage;
+        CurrentHealth -= damage;
 
         if (IsAlive())
         {
@@ -91,8 +89,8 @@ public class C_Health : MonoBehaviour
 
     public void Heal(float heal)
     {
-        if (currentHealth < maxHealth)
-            currentHealth += heal;
+        if (CurrentHealth < maxHealth)
+            CurrentHealth += heal;
         
         //if (currentHealth > _maxHealth)
         //    currentHealth = _maxHealth;
@@ -103,13 +101,13 @@ public class C_Health : MonoBehaviour
 
     public float GetHealthPercent()
     {
-        float percent = currentHealth / maxHealth;
+        float percent = CurrentHealth / maxHealth;
         return percent;
     }
 
     public bool IsAlive()
     {
-        if (currentHealth <= 0)
+        if (CurrentHealth <= 0)
         {
             //to ensure healthbar reaches 0
             if (_uiManager)

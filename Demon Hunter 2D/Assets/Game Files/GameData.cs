@@ -26,6 +26,7 @@ public class GameData
     public int energyUpgradeCost;
 
     public bool canHealthRegen;
+    public float damageMultiplier;
 
     //game state
     public bool tutorialComplete;

@@ -9,6 +9,12 @@ public class PlayerMeleeStrike : MonoBehaviour
     [System.NonSerialized] public int hitCount;
     [SerializeField] private int _maxHitCount;
     private EnemyController _enemyController;
+    private PlayerController _playerController;
+
+    private void Awake()
+    {
+        _playerController = FindObjectOfType<PlayerController>();
+    }
 
     private void Start()
     {
@@ -23,7 +29,7 @@ public class PlayerMeleeStrike : MonoBehaviour
 
             if (_enemyController.canRecieveDamage)
             {
-                collision.GetComponentInParent<C_Health>().Damage(damage);
+                collision.GetComponentInParent<C_Health>().Damage(damage * _playerController.DamageMultiplier);
                 HitCounter();
             }
 
@@ -35,6 +41,7 @@ public class PlayerMeleeStrike : MonoBehaviour
             collision.GetComponent<Rigidbody2D>().velocity = -collision.GetComponent<ProjectileBehaviour>().currentDirection * collision.GetComponent<ProjectileBehaviour>().currentSpeed * Time.deltaTime;
             collision.GetComponent<ProjectileBehaviour>().targetLayer = 10;
             collision.GetComponent<ProjectileBehaviour>().isPlayerProj = true;
+            collision.GetComponent<ProjectileBehaviour>().ConvertPlayerSettings();
         }
 
     }
