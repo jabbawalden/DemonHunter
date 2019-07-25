@@ -131,6 +131,7 @@ public class PlayerController : MonoBehaviour
         currentMovementSpeed = defaultMovementSpeed;
         _playerEnergy.currentEnergy = _playerEnergy.playerMaxEnergy;
         playerHealthComp.currentHealth = playerHealthComp.maxHealth;
+        playerHealthComp.HealthRegenCalc();
         transform.position = startLocation;
 
         _uiManager.UpdateHealthSlider();

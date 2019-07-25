@@ -24,12 +24,19 @@ public class C_Health : MonoBehaviour
         }
     }
     public bool isPlayerComponent;
+    public bool canRegen;
+
+    [SerializeField] private float healthRegenPercentSet;
+    public float healthRegenPercent { get { return healthRegenPercentSet; } }
+    [SerializeField] private float healthRegenAmount;
+
     [Space(4)]
 
 
     [Header("Scripts")]
     private UIManager _uiManager;
     [SerializeField] private PlayerCamera playerCam;
+
 
     private void Awake()
     {
@@ -40,6 +47,22 @@ public class C_Health : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
+        HealthRegenCalc();
+    }
+
+    private void FixedUpdate()
+    {
+        if (IsAlive() && canRegen && currentHealth < maxHealth)
+        {
+            currentHealth += healthRegenAmount;
+            _uiManager.UpdateHealthSlider();
+        }
+    }
+
+    public void HealthRegenCalc()
+    {
+        healthRegenAmount = maxHealth * healthRegenPercent;
+        print("health regen calc activated");
     }
 
     public void Damage(float damage)
@@ -64,8 +87,6 @@ public class C_Health : MonoBehaviour
             if (isPlayerComponent)
                 playerCam.CameraShake(0.11f, 0.14f);
         }
-
-
     }
 
     public void Heal(float heal)

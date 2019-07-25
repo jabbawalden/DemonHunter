@@ -315,6 +315,9 @@ MonoBehaviour:
   maxHealth: 60
   _currentHealth: 0
   isPlayerComponent: 1
+  canRegen: 0
+  healthRegenPercentSet: 0.0015
+  healthRegenAmount: 0
   playerCam: {fileID: 0}
 --- !u!114 &1538872660
 MonoBehaviour:
@@ -358,12 +361,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a63d3f4d6762294789bcf818ce9fa19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedUpgradeAmountSet: 20
-  healthUpgradeAmountSet: 5
-  energyUpgradeAmountSet: 10
-  speedUpgradeCostSet: 100
-  healthUpgradeCostSet: 150
-  energyUpgradeCostSet: 200
+  _speedUpgradeAmountSet: 20
+  _healthUpgradeAmountSet: 10
+  _energyUpgradeAmountSet: 10
+  _speedUpgradeCostSet: 100
+  _healthUpgradeCostSet: 300
+  _energyUpgradeCostSet: 200
+  upgradeValueMultiplier: 0.3
+  upgradeCostMultiplier: 0.7
+  currentSpeedUpgrade: 0
+  currentHealthUpgrade: 0
+  currentEnergyUpgrade: 0
+  maxSpeedUpgrade: 0
+  maxHealthUpgrade: 0
+  maxEnergyUpgrade: 0
 --- !u!50 &1538872659
 Rigidbody2D:
   serializedVersion: 4

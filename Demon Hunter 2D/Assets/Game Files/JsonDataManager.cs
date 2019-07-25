@@ -19,6 +19,7 @@ public class JsonDataManager : MonoBehaviour
     private PlayerDash _playerDash;
     private PlayerEnergy _playerEnergy;
     private GameManager _gameManager;
+    private PlayerUpgradesManager _playerUpgradesManager;
 
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class JsonDataManager : MonoBehaviour
         _playerDash = FindObjectOfType<PlayerDash>();
         _playerEnergy = FindObjectOfType<PlayerEnergy>();
         _gameManager = FindObjectOfType<GameManager>();
+        _playerUpgradesManager = FindObjectOfType<PlayerUpgradesManager>();
     }
 
     // Start is called before the first frame update
@@ -54,6 +56,7 @@ public class JsonDataManager : MonoBehaviour
             _playerShoot.LoadData();
             _playerDash.LoadData();
             _gameManager.LoadData();
+            _playerUpgradesManager.LoadData();
         }
         else
         {
@@ -110,6 +113,14 @@ public class JsonDataManager : MonoBehaviour
         gameData.playerMaxHealth = _playerController.playerHealthComp.maxHealth;
         gameData.defaultMovementSpeed = _playerController.defaultMovementSpeed;
         gameData.playerMaxEnergy = _playerEnergy.playerMaxEnergy;
+
+        gameData.speedUpgradeAmount = _playerUpgradesManager.speedUpgradeAmount;
+        gameData.healthUpgradeAmount = _playerUpgradesManager.healthUpgradeAmount;
+        gameData.energyUpgradeAmount = _playerUpgradesManager.energyUpgradeAmount;
+        gameData.speedUpgradeCost = _playerUpgradesManager.speedUpgradeCost;
+        gameData.healthUpgradeCost = _playerUpgradesManager.healthUpgradeCost;
+        gameData.energyUpgradeCost = _playerUpgradesManager.energyUpgradeCost;
+
     }
 
     public void SaveTutorialState()

@@ -18,6 +18,12 @@ public class GameData
     public bool meleeEnabled, shootEnabled, dashEnabled;
     public bool gameIntroMove, gameIntroMelee, gameIntroShoot, gameIntroDash;
 
+    public float speedUpgradeAmount;
+    public float healthUpgradeAmount;
+    public float energyUpgradeAmount;
+    public int speedUpgradeCost;
+    public int healthUpgradeCost;
+    public int energyUpgradeCost;
 
     //game state
     public bool tutorialComplete;
