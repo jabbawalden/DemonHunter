@@ -12,6 +12,7 @@ public class PlayerInput : MonoBehaviour
     private PlayerEnergy _playerEnergy;
     private PlayerDash _playerDash;
     private PlayerMeleeAttack _playerMeleeAttack;
+    private PlayerAbilities _playerAbilities;
 
     public float h {get; private set;}
     public float v {get; private set;}
@@ -24,6 +25,7 @@ public class PlayerInput : MonoBehaviour
         _playerEnergy = GetComponent<PlayerEnergy>();
         _playerDash = GetComponent<PlayerDash>();
         _playerMeleeAttack = GetComponent<PlayerMeleeAttack>();
+        _playerAbilities = GetComponent<PlayerAbilities>();
     }
 
     // Update is called once per frame
@@ -33,9 +35,8 @@ public class PlayerInput : MonoBehaviour
         {
             if(_playerController.canMove)
                 PlayerMoveInput();
-            PlayerDashInput();
-            PlayerShootInput();
-            PlayerMeleeInput();
+            PlayerBasicAttacks();
+            PlayerAbilitySelect();
         }
     }
 
@@ -45,28 +46,37 @@ public class PlayerInput : MonoBehaviour
         v = Input.GetAxisRaw("Vertical");
     }
 
-    private void PlayerMeleeInput()
+    private void PlayerBasicAttacks()
     {
         if (Input.GetKeyDown(KeyCode.Mouse1) && _playerMeleeAttack.playerMeleeEnabled)
         {
             _playerMeleeAttack.MeleeAttack();
         }
-    }
 
-    private void PlayerShootInput()
-    {
         if (Input.GetKeyDown(KeyCode.Mouse0) && _playerShoot.playerShootEnabled)
         {
             _playerShoot.ShootAction();
         }
-    }
 
-    private void PlayerDashInput()
-    {
         if (Input.GetKeyDown(KeyCode.Space) && _playerEnergy.currentEnergy >= _playerDash.dashEnergyCost && _playerDash.playerDashEnabled)
         {
             _playerDash.Dash();
         }
+    }
+
+    private void PlayerAbilitySelect()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+            _playerAbilities.SwitchSelectedAbility(1);
+
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+            _playerAbilities.SwitchSelectedAbility(2);
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+            _playerAbilities.SwitchSelectedAbility(3);
+
+        if (Input.GetKeyDown(KeyCode.Q))
+            _playerAbilities.upgradeActivate();
     }
     
 

@@ -12,6 +12,7 @@ public enum PlayerState
 
 public class PlayerController : MonoBehaviour
 {
+    
     [Header("Player Main Setup")]
     public PlayerState playerState;
     [System.NonSerialized] public Vector3 startLocation;

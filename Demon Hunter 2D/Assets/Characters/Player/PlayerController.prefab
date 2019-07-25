@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 1538872660}
   - component: {fileID: 6182891382143642563}
   - component: {fileID: 2200351011396354857}
+  - component: {fileID: 1021226514976844720}
   - component: {fileID: 1538872659}
   - component: {fileID: 1538872658}
   m_Layer: 9
@@ -264,6 +265,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 078b7b52f0c69854b865f720870f4482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerState: 0
+  playerAlive: {fileID: 0}
+  playerDead: {fileID: 0}
+  playerBodyCollision: {fileID: 0}
+  engagementPositions: []
+  inCombat: 0
+  currentMovementSpeed: 0
+  defaultMovementSpeed: 0
+  shootingMovementSpeed: 0
+  meleeMovementSpeed: 0
+  _damageMultiplier: 0
+  direction: 0
+  _circleCollider: {fileID: 0}
+  _playerState: 0
   _recoveryAttackTime: 0.1
   _initialAttackTime: 0.08
   _attackWindUpTime: 0.08
@@ -383,6 +398,21 @@ MonoBehaviour:
   maxHealthUpgrade: 10
   maxEnergyUpgrade: 8
   maxDamageUpgrade: 4
+--- !u!114 &1021226514976844720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538872657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e1b5154e44cacb4d805db1369120859, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healingGraceCost: 0
+  _bombPlantCost: 0
+  _EnergyMaximizerCost: 0
 --- !u!50 &1538872659
 Rigidbody2D:
   serializedVersion: 4

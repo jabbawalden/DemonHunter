@@ -168,7 +168,7 @@ public class PlayerUpgradesManager : MonoBehaviour
 
     }
 
-    public void EnergyMaximiserUpgrade()
+    public void EnergyMaximizerUpgrade()
     {
          
     }

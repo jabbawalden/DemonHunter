@@ -74,7 +74,7 @@ public class JsonDataManager : MonoBehaviour
             print(filePath);
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             if (/*!_playerController.inCombat || */_gameManager.playerInTown)
                 MainSaveGameExit();
