@@ -113,6 +113,7 @@ public class JsonDataManager : MonoBehaviour
         gameData.playerMaxHealth = _playerController.playerHealthComp.maxHealth;
         gameData.defaultMovementSpeed = _playerController.defaultMovementSpeed;
         gameData.playerMaxEnergy = _playerEnergy.playerMaxEnergy;
+        gameData.canHealthRegen = _playerController.playerHealthComp.canHealthRegen;
 
         gameData.speedUpgradeAmount = _playerUpgradesManager.speedUpgradeAmount;
         gameData.healthUpgradeAmount = _playerUpgradesManager.healthUpgradeAmount;

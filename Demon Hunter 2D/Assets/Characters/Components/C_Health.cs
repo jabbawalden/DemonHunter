@@ -24,7 +24,7 @@ public class C_Health : MonoBehaviour
         }
     }
     public bool isPlayerComponent;
-    public bool canRegen;
+    public bool canHealthRegen;
 
     [SerializeField] private float healthRegenPercentSet;
     public float healthRegenPercent { get { return healthRegenPercentSet; } }
@@ -52,7 +52,7 @@ public class C_Health : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (IsAlive() && canRegen && currentHealth < maxHealth)
+        if (IsAlive() && canHealthRegen && currentHealth < maxHealth)
         {
             currentHealth += healthRegenAmount;
             _uiManager.UpdateHealthSlider();

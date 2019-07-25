@@ -127,6 +127,7 @@ public class PlayerController : MonoBehaviour
         defaultMovementSpeed = JsonDataManager.gameData.defaultMovementSpeed;
         playerHealthComp.maxHealth = JsonDataManager.gameData.playerMaxHealth;
         _playerEnergy.playerMaxEnergy = JsonDataManager.gameData.playerMaxEnergy;
+        playerHealthComp.canHealthRegen = JsonDataManager.gameData.canHealthRegen;
 
         currentMovementSpeed = defaultMovementSpeed;
         _playerEnergy.currentEnergy = _playerEnergy.playerMaxEnergy;

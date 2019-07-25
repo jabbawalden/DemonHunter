@@ -26,6 +26,7 @@ public class PlayerUpgradesManager : MonoBehaviour
     public int speedUpgradeCost { get { return _speedUpgradeCostSet; } private set { _speedUpgradeCostSet = value; } }
     public int healthUpgradeCost { get { return _healthUpgradeCostSet; } private set { _healthUpgradeCostSet = value; } }
     public int energyUpgradeCost { get { return _energyUpgradeCostSet; } private set { _energyUpgradeCostSet = value; } }
+    [SerializeField] private int _healthRegenCost;
 
     [SerializeField] private float upgradeValueMultiplier, upgradeCostMultiplier;
     [SerializeField] private int currentSpeedUpgrade, currentHealthUpgrade, currentEnergyUpgrade;
@@ -55,6 +56,11 @@ public class PlayerUpgradesManager : MonoBehaviour
         {
             PlayerEnergyUpgrade(energyUpgradeAmount, energyUpgradeCost);
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            PlayerHealthRegen(_healthRegenCost);
+        }
     }
 
     public void LoadData()
@@ -70,7 +76,7 @@ public class PlayerUpgradesManager : MonoBehaviour
 
     void PlayerSpeedUpgrade(float amount, int cost)
     {
-        if (_playerEnergyPoints.energyPoints >= cost)
+        if (_playerEnergyPoints.energyPoints >= cost && currentSpeedUpgrade < maxSpeedUpgrade)
         {
             _playerEnergyPoints.AddRemovePoints(-cost);
             _playerController.defaultMovementSpeed += amount;
@@ -79,13 +85,15 @@ public class PlayerUpgradesManager : MonoBehaviour
             speedUpgradeAmount += speedUpgradeAmount * upgradeValueMultiplier;
             int newSpeedUpgradeCost = Mathf.RoundToInt(speedUpgradeCost * upgradeCostMultiplier);
             speedUpgradeCost += newSpeedUpgradeCost;
+
+            currentSpeedUpgrade++;
         }
 
     }
 
     void PlayerHealthUpgrade(float amount, int cost)
     {
-        if (_playerEnergyPoints.energyPoints >= cost)
+        if (_playerEnergyPoints.energyPoints >= cost && currentHealthUpgrade < maxHealthUpgrade)
         {
             _playerEnergyPoints.AddRemovePoints(-cost);
             _playerController.playerHealthComp.maxHealth += amount;
@@ -94,13 +102,15 @@ public class PlayerUpgradesManager : MonoBehaviour
             healthUpgradeAmount += healthUpgradeAmount * upgradeValueMultiplier;
             int newHealthUpgradeCost = Mathf.RoundToInt(healthUpgradeCost * upgradeCostMultiplier);
             healthUpgradeCost += newHealthUpgradeCost;
+
+            currentHealthUpgrade++;
         }
 
     }
 
     void PlayerEnergyUpgrade(float amount, int cost)
     {
-        if (_playerEnergyPoints.energyPoints >= cost)
+        if (_playerEnergyPoints.energyPoints >= cost && currentEnergyUpgrade < maxEnergyUpgrade)
         {
             _playerEnergyPoints.AddRemovePoints(-cost);
             _playerEnergy.playerMaxEnergy += amount;
@@ -109,13 +119,21 @@ public class PlayerUpgradesManager : MonoBehaviour
             energyUpgradeAmount += energyUpgradeAmount * upgradeValueMultiplier;
             int newEnergyUpgradeCost = Mathf.RoundToInt(energyUpgradeCost * upgradeCostMultiplier);
             energyUpgradeCost += newEnergyUpgradeCost;
+
+            currentEnergyUpgrade++;
         }
 
     }
 
-    void PlayerHealthRegen()
+    void PlayerHealthRegen(int cost)
     {
         //do from health comp
+        if (_playerEnergyPoints.energyPoints >= cost && !_playerController.playerHealthComp.canHealthRegen)
+        {
+            _playerController.playerHealthComp.canHealthRegen = true;
+            _playerEnergyPoints.AddRemovePoints(-cost);
+        }
+
     }
 
     void PlayerEnergyRegenUpgrade()
