@@ -26,6 +26,8 @@ public class UIManager : MonoBehaviour
     private PlayerEnergyPoints _playerEnergyPoints;
     private bool _isFadingIn, _isFadingOut;
 
+    public Text _npcDialogue;
+
     private void Awake()
     {
         _playerMeleeAttack = FindObjectOfType<PlayerMeleeAttack>();
@@ -163,16 +165,16 @@ public class UIManager : MonoBehaviour
 
     public void TurnOnUpgradeNPC()
     {
-        print("upgrade npc");
+        print("upgrade NPC");
     }
 
     public void TurnOnShopNPC()
     {
-        print("shop npc");
+        print("shop NPC");
     }
 
     public void TurnOnOldWomanNPC()
     {
-        print("old woman npc");
+        print("old woman NPC");
     }
 }
