@@ -64,8 +64,13 @@ public class PlayerController : MonoBehaviour
     [Header("Animations")]
     //private Animation runF, runB, runR, runL, runFR, runFL, runBR, runBL;
     //private Animation iF, iB, iR, iL, iFR, iFL, iBR, iBL;
-
+    [Space(4)]
+     
     [SerializeField] private int _playerState;
+    public delegate void SelectedNPC(bool convOn);
+    public SelectedNPC selectedNPC;
+    public bool isNPCInteracting;
+    public bool npcSet;
 
     private void Awake()
     {

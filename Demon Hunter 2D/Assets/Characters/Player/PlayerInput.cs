@@ -33,10 +33,15 @@ public class PlayerInput : MonoBehaviour
     {
         if (_healthComponent.IsAlive())
         {
-            if(_playerController.canMove)
-                PlayerMoveInput();
-            PlayerBasicAttacks();
-            PlayerAbilitySelect();
+            if (!_playerController.isNPCInteracting)
+            {
+                if (_playerController.canMove)
+                    PlayerMoveInput();
+                PlayerBasicAttacks();
+                PlayerAbilitySelect();
+            }
+
+            PlayerNPCInteract();
         }
     }
 
@@ -79,7 +84,18 @@ public class PlayerInput : MonoBehaviour
             _playerAbilities.upgradeActivate();
     }
     
+    private void PlayerNPCInteract()
+    {
 
+        if (Input.GetKeyDown(KeyCode.E) && !_playerController.isNPCInteracting && _playerController.npcSet)
+        {
+            _playerController.selectedNPC(true);
+        }
+        else if (Input.GetKeyDown(KeyCode.E) && _playerController.isNPCInteracting && _playerController.npcSet)
+        {
+            _playerController.selectedNPC(false);
+        }
+    }
 
 
 }

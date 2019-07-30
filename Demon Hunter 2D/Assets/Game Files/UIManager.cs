@@ -160,4 +160,19 @@ public class UIManager : MonoBehaviour
         }
         //print("lerp complete");
     }
+
+    public void TurnOnUpgradeNPC()
+    {
+        print("upgrade npc");
+    }
+
+    public void TurnOnShopNPC()
+    {
+        print("shop npc");
+    }
+
+    public void TurnOnOldWomanNPC()
+    {
+        print("old woman npc");
+    }
 }

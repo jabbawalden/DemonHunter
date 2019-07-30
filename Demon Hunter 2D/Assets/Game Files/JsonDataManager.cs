@@ -68,7 +68,7 @@ public class JsonDataManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.T))
         {
             System.IO.File.Delete(filePath);
             print(filePath);
