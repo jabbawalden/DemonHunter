@@ -13,6 +13,7 @@ public class PlayerInput : MonoBehaviour
     private PlayerDash _playerDash;
     private PlayerMeleeAttack _playerMeleeAttack;
     private PlayerAbilities _playerAbilities;
+    private NPCManager _npcManager;
 
     public float h {get; private set;}
     public float v {get; private set;}
@@ -26,6 +27,7 @@ public class PlayerInput : MonoBehaviour
         _playerDash = GetComponent<PlayerDash>();
         _playerMeleeAttack = GetComponent<PlayerMeleeAttack>();
         _playerAbilities = GetComponent<PlayerAbilities>();
+        _npcManager = FindObjectOfType<NPCManager>();
     }
 
     // Update is called once per frame
@@ -86,14 +88,21 @@ public class PlayerInput : MonoBehaviour
     
     private void PlayerNPCInteract()
     {
-
+        //check bools then set npcmanager values
         if (Input.GetKeyDown(KeyCode.E) && !_playerController.isNPCInteracting && _playerController.npcSet)
         {
             _playerController.selectedNPC(true);
+            _npcManager.SetSpeechCounters();
+            _npcManager.ActivateSpeech();
         }
         else if (Input.GetKeyDown(KeyCode.E) && _playerController.isNPCInteracting && _playerController.npcSet)
         {
             _playerController.selectedNPC(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && _playerController.isNPCInteracting) 
+        {
+            _npcManager.ActivateSpeech();
         }
     }
 

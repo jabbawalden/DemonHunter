@@ -20,6 +20,7 @@ public class JsonDataManager : MonoBehaviour
     private PlayerEnergy _playerEnergy;
     private GameManager _gameManager;
     private PlayerUpgradesManager _playerUpgradesManager;
+    private NPCManager _npcManager;
 
     private void Awake()
     {
@@ -37,6 +38,7 @@ public class JsonDataManager : MonoBehaviour
         _playerEnergy = FindObjectOfType<PlayerEnergy>();
         _gameManager = FindObjectOfType<GameManager>();
         _playerUpgradesManager = FindObjectOfType<PlayerUpgradesManager>();
+        _npcManager = FindObjectOfType<NPCManager>();
     }
 
     // Start is called before the first frame update
@@ -57,6 +59,7 @@ public class JsonDataManager : MonoBehaviour
             _playerDash.LoadData();
             _gameManager.LoadData();
             _playerUpgradesManager.LoadData();
+            _npcManager.LoadData();
         }
         else
         {
@@ -158,7 +161,13 @@ public class JsonDataManager : MonoBehaviour
         //save other game states - npcs, booleans, tutorial etc.
 
         gameData.tutorialComplete = _tutorialManager.tutorialComplete;
+    }
 
+    public void SaveNPCState()
+    {
+        gameData.oldWomanConv = _npcManager.oldWomanConv;
+        gameData.shopConv = _npcManager.shopConv;
+        gameData.upgradeConv = _npcManager.upgradeConv;
     }
 
     public void StartGameSave()
@@ -168,6 +177,8 @@ public class JsonDataManager : MonoBehaviour
         SavePlayerStats();
         SavePlayerEnergyPoints();
         SaveTutorialState();
+        //remove later
+        SaveNPCState();
 
         //class info to save + true for pretty print
         string contents = JsonUtility.ToJson(gameData, true);
@@ -183,6 +194,8 @@ public class JsonDataManager : MonoBehaviour
         SavePlayerStats();
         SavePlayerEnergyPoints();
         SaveTutorialState();
+        //remove later
+        SaveNPCState();
 
         //class info to save + true for pretty print
         string contents = JsonUtility.ToJson(gameData, true);
@@ -195,6 +208,8 @@ public class JsonDataManager : MonoBehaviour
     {
         SavePlayerEnergyPoints();
         SaveTutorialState();
+        //remove later
+        SaveNPCState();
 
         string contents = JsonUtility.ToJson(gameData, true);
         //write contents to a file in path location
@@ -208,6 +223,7 @@ public class JsonDataManager : MonoBehaviour
         SavePlayerLocationWorld();
         SavePlayerEnergyPoints();
         SaveTutorialState();
+        SaveNPCState();
 
         //class info to save + true for pretty print
         string contents = JsonUtility.ToJson(gameData, true);

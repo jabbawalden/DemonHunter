@@ -13,8 +13,14 @@ public class NPCOldWoman : NPCInteraction
     public void OldWomanOptions(bool convOn)
     {
         if (convOn)
-            _uiManager.TurnOnOldWomanNPC();
+        {
+            uiManager.TurnOnOldWomanNPC(convOn);
+            npcManager.SetOldWomanSpeech();
+        }
         else
-            _uiManager.TurnOnOldWomanNPC();
+        {
+            uiManager.TurnOnOldWomanNPC(convOn);
+        }
+
     }
 }

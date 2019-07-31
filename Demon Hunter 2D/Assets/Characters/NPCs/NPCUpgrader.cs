@@ -12,7 +12,8 @@ public class NPCUpgrader : NPCInteraction
 
     public void UgradeOptions(bool convOn)
     {
-        _uiManager.TurnOnUpgradeNPC();
+
+        
     }
 
 }

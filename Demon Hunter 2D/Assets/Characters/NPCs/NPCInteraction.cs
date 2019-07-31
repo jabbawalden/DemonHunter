@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class NPCInteraction : MonoBehaviour
 {
-    public UIManager _uiManager { get; private set;}
+    public UIManager uiManager { get; private set;}
     private PlayerController _playerController;
+    public NPCManager npcManager { get; protected set; }
 
     public bool canInteract;
     public delegate void SetUI(bool convOn);
@@ -13,8 +14,9 @@ public class NPCInteraction : MonoBehaviour
 
     private void Awake()
     {
-        _uiManager = FindObjectOfType<UIManager>();
+        uiManager = FindObjectOfType<UIManager>();
         _playerController = FindObjectOfType<PlayerController>();
+        npcManager = FindObjectOfType<NPCManager>();
     }
 
     public void Interaction(bool convOn)

@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     private bool _isFadingIn, _isFadingOut;
 
     public Text _npcDialogue;
+    [SerializeField] private GameObject npcPanel;
 
     private void Awake()
     {
@@ -40,6 +41,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        npcPanel.SetActive(false);
         canChangeColorHealth = false;
         canChangeColorEnergy = false; 
     }
@@ -163,18 +165,27 @@ public class UIManager : MonoBehaviour
         //print("lerp complete");
     }
 
-    public void TurnOnUpgradeNPC()
+    public void TurnOnUpgradeNPC(bool on)
     {
-        print("upgrade NPC");
+        if (on)
+            npcPanel.SetActive(true);
+        else
+            npcPanel.SetActive(false);
     }
 
-    public void TurnOnShopNPC()
+    public void TurnOnShopNPC(bool on)
     {
-        print("shop NPC");
+        if (on)
+            npcPanel.SetActive(true);
+        else
+            npcPanel.SetActive(false);
     }
 
-    public void TurnOnOldWomanNPC()
+    public void TurnOnOldWomanNPC(bool on)
     {
-        print("old woman NPC");
+        if (on)
+            npcPanel.SetActive(true);
+        else
+            npcPanel.SetActive(false);
     }
 }

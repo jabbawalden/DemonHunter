@@ -18,16 +18,16 @@ public class GameData
     public bool meleeEnabled, shootEnabled, dashEnabled;
     public bool gameIntroMove, gameIntroMelee, gameIntroShoot, gameIntroDash;
 
-    public float speedUpgradeAmount;
-    public float healthUpgradeAmount;
-    public float energyUpgradeAmount;
-    public int speedUpgradeCost;
-    public int healthUpgradeCost;
-    public int energyUpgradeCost;
+    public float speedUpgradeAmount, healthUpgradeAmount, energyUpgradeAmount;
+    public int speedUpgradeCost, healthUpgradeCost, energyUpgradeCost;
 
     public bool canHealthRegen;
     public float damageMultiplier;
 
     //game state
     public bool tutorialComplete;
+
+    //NPCs
+    public bool oldWomanConv, shopConv, upgradeConv;
+
 }
