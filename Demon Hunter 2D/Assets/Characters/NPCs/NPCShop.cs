@@ -12,6 +12,16 @@ public class NPCShop : NPCInteraction
 
     public void ShopOptions(bool convOn)
     {
+        if (convOn)
+        {
+            npcManager.maxTalkCount = maxTalkCount;
+            uiManager.TurnOnShopNPC(convOn);
+            npcManager.SetShopSpeech();
+        }
+        else
+        {
+            uiManager.TurnOnShopNPC(convOn);
+        }
 
     }
 

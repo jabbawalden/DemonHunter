@@ -129,6 +129,14 @@ public class PlayerController : MonoBehaviour
         CheckEnemyBlockers();
     }
 
+    public void StartGameInitiate()
+    {
+        if (playerHealthComp.canHealthRegen)
+            _uiManager.healthRegenStatus.text = _uiManager.regenStatusOn;
+        else
+            _uiManager.healthRegenStatus.text = _uiManager.regenStatusOff;
+    }
+
     public void LoadData()
     {
         //load data
@@ -150,6 +158,10 @@ public class PlayerController : MonoBehaviour
         _uiManager.UpdateHealthSlider();
         _uiManager.UpdateEnergySlider();
 
+        if (playerHealthComp.canHealthRegen)
+            _uiManager.healthRegenStatus.text = _uiManager.regenStatusOn;
+        else
+            _uiManager.healthRegenStatus.text = _uiManager.regenStatusOff;
         Debug.Log("Player position loaded");
     }
 

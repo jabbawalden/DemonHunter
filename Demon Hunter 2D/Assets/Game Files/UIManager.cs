@@ -24,10 +24,25 @@ public class UIManager : MonoBehaviour
     private PlayerShoot _playerShoot;
     private PlayerDash _playerDash;
     private PlayerEnergyPoints _playerEnergyPoints;
+    //private PlayerUpgradesManager _playerUpgradesManager;
     private bool _isFadingIn, _isFadingOut;
+    [Space(4)]
 
+    [Header("NPC and Upgrades UI")]
     public Text _npcDialogue;
     [SerializeField] private GameObject npcPanel;
+    [SerializeField] private Text _speedUpgradesLeft;
+    [SerializeField] private Text _healthUpgradesLeft;
+    [SerializeField] private Text _energyUpgradeLeft;
+    [SerializeField] private Text _damageUpgradesLeft;
+    [SerializeField] private Text _healthRegenStatus;
+    public Text speedUpgradesLeft { get { return _speedUpgradesLeft; } private set { _speedUpgradesLeft = value; } }
+    public Text healthUpgradesLeft { get { return _healthUpgradesLeft; } private set { _healthUpgradesLeft = value; } }
+    public Text energyUpgradeLeft { get { return _energyUpgradeLeft; } private set { _energyUpgradeLeft = value; } }
+    public Text damageUpgradesLeft { get { return _damageUpgradesLeft; } private set { _damageUpgradesLeft = value; } }
+    public Text healthRegenStatus { get { return _healthRegenStatus; } private set { _healthRegenStatus = value; } }
+    public string regenStatusOn;
+    public string regenStatusOff;
 
     private void Awake()
     {
@@ -37,6 +52,7 @@ public class UIManager : MonoBehaviour
         _playerHealthComponenent = GameObject.Find("PlayerController").GetComponent<C_Health>();
         _playerEnergy = FindObjectOfType<PlayerEnergy>();
         _playerEnergyPoints = FindObjectOfType<PlayerEnergyPoints>();
+        //_playerUpgradesManager = FindObjectOfType<PlayerUpgradesManager>();
     }
 
     private void Start()
@@ -187,5 +203,10 @@ public class UIManager : MonoBehaviour
             npcPanel.SetActive(true);
         else
             npcPanel.SetActive(false);
+    }
+
+    public void UpdateUpgradesCount(int amount, Text text)
+    {
+        text.text = amount.ToString();
     }
 }

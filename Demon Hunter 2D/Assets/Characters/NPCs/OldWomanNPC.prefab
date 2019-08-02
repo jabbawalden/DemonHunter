@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f50703d705540654b839eb008c7fc165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxTalkCount: 3
   canInteract: 0
 --- !u!1001 &8427163082966308005
 PrefabInstance:

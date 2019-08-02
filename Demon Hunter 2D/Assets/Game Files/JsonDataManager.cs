@@ -65,6 +65,8 @@ public class JsonDataManager : MonoBehaviour
         {
             //begin tutorial
             _tutorialManager.FadeTutMove(true);
+            _playerUpgradesManager.StartGameInitiate();
+            _playerController.StartGameInitiate();
             StartGameSave();
         }
     }
@@ -125,6 +127,12 @@ public class JsonDataManager : MonoBehaviour
         gameData.speedUpgradeCost = _playerUpgradesManager.SpeedUpgradeCost;
         gameData.healthUpgradeCost = _playerUpgradesManager.HealthUpgradeCost;
         gameData.energyUpgradeCost = _playerUpgradesManager.EnergyUpgradeCost;
+        gameData.damageMultiplierUpgradeCost = _playerUpgradesManager.DamageMultiplierUpgradeCost;
+
+        gameData.speedUpgradesLeft = _playerUpgradesManager.SpeedUpgradesLeft;
+        gameData.healthUpgradesLeft = _playerUpgradesManager.HealthUpgradesLeft;
+        gameData.energyUpgradesLeft = _playerUpgradesManager.EnergyUpgradesLeft;
+        gameData.damageUpgradesLeft = _playerUpgradesManager.DamageUpgradesLeft;
 
     }
 

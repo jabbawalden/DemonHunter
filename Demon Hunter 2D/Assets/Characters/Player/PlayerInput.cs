@@ -15,8 +15,9 @@ public class PlayerInput : MonoBehaviour
     private PlayerAbilities _playerAbilities;
     private NPCManager _npcManager;
 
-    public float h {get; private set;}
-    public float v {get; private set;}
+    [SerializeField] private float _h, _v;
+    public float h { get { return _h; } private set { _h = value; } }
+    public float v { get { return _v; } private set { _v = value; } }
 
     private void Awake()
     {
@@ -51,6 +52,12 @@ public class PlayerInput : MonoBehaviour
     {
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
+    }
+
+    private void StopInput()
+    {
+        h = 0;
+        v = 0;
     }
 
     private void PlayerBasicAttacks()
@@ -88,12 +95,15 @@ public class PlayerInput : MonoBehaviour
     
     private void PlayerNPCInteract()
     {
+        _playerController.StopVelocity();
+
         //check bools then set npcmanager values
         if (Input.GetKeyDown(KeyCode.E) && !_playerController.isNPCInteracting && _playerController.npcSet)
         {
             _playerController.selectedNPC(true);
             _npcManager.SetSpeechCounters();
             _npcManager.ActivateSpeech();
+            StopInput();
         }
         else if (Input.GetKeyDown(KeyCode.E) && _playerController.isNPCInteracting && _playerController.npcSet)
         {
@@ -102,7 +112,21 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && _playerController.isNPCInteracting) 
         {
-            _npcManager.ActivateSpeech();
+            if (_npcManager.currentConvCheck)
+            {
+                //if true, use 1 liner dialogue instead
+                print(_npcManager.currentConvCheck);
+                _playerController.selectedNPC(false);
+            }
+            else if (_npcManager.mainTalkCount <= _npcManager.maxTalkCount)
+            {
+                _npcManager.ActivateSpeech();
+            }
+            else if(_npcManager.mainTalkCount > _npcManager.maxTalkCount)
+            {
+                _playerController.selectedNPC(false);
+
+            }
         }
     }
 

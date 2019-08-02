@@ -19,7 +19,8 @@ public class GameData
     public bool gameIntroMove, gameIntroMelee, gameIntroShoot, gameIntroDash;
 
     public float speedUpgradeAmount, healthUpgradeAmount, energyUpgradeAmount;
-    public int speedUpgradeCost, healthUpgradeCost, energyUpgradeCost;
+    public int speedUpgradesLeft, healthUpgradesLeft, energyUpgradesLeft, damageUpgradesLeft;
+    public int speedUpgradeCost, healthUpgradeCost, energyUpgradeCost, damageMultiplierUpgradeCost;
 
     public bool canHealthRegen;
     public float damageMultiplier;

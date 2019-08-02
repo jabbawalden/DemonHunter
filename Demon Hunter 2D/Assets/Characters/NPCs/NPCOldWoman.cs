@@ -14,6 +14,7 @@ public class NPCOldWoman : NPCInteraction
     {
         if (convOn)
         {
+            npcManager.maxTalkCount = maxTalkCount;
             uiManager.TurnOnOldWomanNPC(convOn);
             npcManager.SetOldWomanSpeech();
         }

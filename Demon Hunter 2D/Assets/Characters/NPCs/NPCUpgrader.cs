@@ -12,8 +12,17 @@ public class NPCUpgrader : NPCInteraction
 
     public void UgradeOptions(bool convOn)
     {
+        if (convOn)
+        {
+            npcManager.maxTalkCount = maxTalkCount;
+            uiManager.TurnOnUpgradeNPC(convOn);
+            npcManager.SetUpgradeSpeech();
+        }
+        else
+        {
+            uiManager.TurnOnUpgradeNPC(convOn);
+        }
 
-        
     }
 
 }

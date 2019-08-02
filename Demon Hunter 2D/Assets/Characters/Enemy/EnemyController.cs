@@ -248,7 +248,7 @@ public class EnemyController : MonoBehaviour
         {
             if (!haveRemoved)
             {
-                print("remove enemy counter");
+                //print("remove enemy counter");
                 haveRemoved = true;
                 haveAdded = false;
 

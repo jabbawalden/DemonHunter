@@ -9,6 +9,7 @@ public class PlayerUpgradesManager : MonoBehaviour
     private PlayerShoot _playerShoot;
     private PlayerEnergy _playerEnergy;
     private PlayerEnergyPoints _playerEnergyPoints;
+    private UIManager _uiManager;
 
     [Header("Upgrade Amounts")]
     [SerializeField] private float _speedUpgradeAmountSet;
@@ -25,16 +26,21 @@ public class PlayerUpgradesManager : MonoBehaviour
     [SerializeField] private int _speedUpgradeCostSet;
     [SerializeField] private int _healthUpgradeCostSet;
     [SerializeField] private int _energyUpgradeCostSet;
-    [SerializeField] private int _damageMultiplierCostSet;
+    [SerializeField] private int _damageMultiplierUpgradeCostSet;
     public int SpeedUpgradeCost { get { return _speedUpgradeCostSet; } private set { _speedUpgradeCostSet = value; } }
     public int HealthUpgradeCost { get { return _healthUpgradeCostSet; } private set { _healthUpgradeCostSet = value; } }
     public int EnergyUpgradeCost { get { return _energyUpgradeCostSet; } private set { _energyUpgradeCostSet = value; } }
-    public int DamageMultiplierCost { get { return _damageMultiplierCostSet; } private set { _damageMultiplierCostSet = value; } }
+    public int DamageMultiplierUpgradeCost { get { return _damageMultiplierUpgradeCostSet; } private set { _damageMultiplierUpgradeCostSet = value; } }
     [SerializeField] private int _healthRegenCost;
 
-    [SerializeField] private float upgradeValueMultiplier, upgradeCostMultiplier;
-    [SerializeField] private int currentSpeedUpgrade, currentHealthUpgrade, currentEnergyUpgrade, currentDamageUpgrade;
-    [SerializeField] private int maxSpeedUpgrade, maxHealthUpgrade, maxEnergyUpgrade, maxDamageUpgrade;
+    [SerializeField] private float _upgradeValueMultiplier, _upgradeCostMultiplier;
+    [SerializeField] private int _currentSpeedUpgrade, _currentHealthUpgrade, _currentEnergyUpgrade, _currentDamageUpgrade;
+    [SerializeField] private int _maxSpeedUpgrade, _maxHealthUpgrade, _maxEnergyUpgrade, _maxDamageUpgrade;
+    [SerializeField] private int _speedUpgradesLeft, _healthUpgradesLeft, _energyUpgradesLeft, _damageUpgradesLeft;
+    public int SpeedUpgradesLeft { get { return _speedUpgradesLeft; } private set { _speedUpgradesLeft = value; } }
+    public int HealthUpgradesLeft { get { return _healthUpgradesLeft; } private set { _healthUpgradesLeft = value; } }
+    public int EnergyUpgradesLeft { get { return _energyUpgradesLeft; } private set { _energyUpgradesLeft = value; } }
+    public int DamageUpgradesLeft { get { return _damageUpgradesLeft; } private set { _damageUpgradesLeft = value; } }
 
     private void Awake() 
     {
@@ -42,6 +48,7 @@ public class PlayerUpgradesManager : MonoBehaviour
         _playerShoot = FindObjectOfType<PlayerShoot>();
         _playerEnergy = FindObjectOfType<PlayerEnergy>();
         _playerEnergyPoints = FindObjectOfType<PlayerEnergyPoints>();
+        _uiManager = FindObjectOfType<UIManager>();
     }
 
     private void Update()
@@ -68,8 +75,16 @@ public class PlayerUpgradesManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            PlayerDamageUpgrade(DamageMultiplierCost);
+            PlayerDamageUpgrade(DamageMultiplierUpgradeCost);
         }
+    }
+
+    public void StartGameInitiate()
+    {
+        _uiManager.UpdateUpgradesCount(_speedUpgradesLeft, _uiManager.speedUpgradesLeft);
+        _uiManager.UpdateUpgradesCount(_healthUpgradesLeft, _uiManager.healthUpgradesLeft);
+        _uiManager.UpdateUpgradesCount(_energyUpgradesLeft, _uiManager.energyUpgradeLeft);
+        _uiManager.UpdateUpgradesCount(_damageUpgradesLeft, _uiManager.damageUpgradesLeft);
     }
 
     public void LoadData()
@@ -77,65 +92,99 @@ public class PlayerUpgradesManager : MonoBehaviour
         SpeedUpgradeAmount = JsonDataManager.gameData.speedUpgradeAmount;
         HealthUpgradeAmount = JsonDataManager.gameData.healthUpgradeAmount;
         EnergyUpgradeAmount = JsonDataManager.gameData.energyUpgradeAmount;
+        //damage upgrade not required as it stays the same amount
 
         SpeedUpgradeCost = JsonDataManager.gameData.speedUpgradeCost;
         HealthUpgradeCost = JsonDataManager.gameData.healthUpgradeCost;
         EnergyUpgradeCost = JsonDataManager.gameData.energyUpgradeCost;
+        DamageMultiplierUpgradeCost = JsonDataManager.gameData.damageMultiplierUpgradeCost;
+
+        //upgrades left numbers
+        SpeedUpgradesLeft = JsonDataManager.gameData.speedUpgradesLeft;
+        HealthUpgradesLeft = JsonDataManager.gameData.healthUpgradesLeft;
+        EnergyUpgradesLeft = JsonDataManager.gameData.energyUpgradesLeft;
+        DamageUpgradesLeft = JsonDataManager.gameData.damageUpgradesLeft;
+
+        //ui updates
+        _uiManager.UpdateUpgradesCount(_speedUpgradesLeft, _uiManager.speedUpgradesLeft);
+        _uiManager.UpdateUpgradesCount(_healthUpgradesLeft, _uiManager.healthUpgradesLeft);
+        _uiManager.UpdateUpgradesCount(_energyUpgradesLeft, _uiManager.energyUpgradeLeft);
+        _uiManager.UpdateUpgradesCount(_damageUpgradesLeft, _uiManager.damageUpgradesLeft);
+        //player controller deals with the health regen status
     }
 
     void PlayerSpeedUpgrade(float amount, int cost)
     {
-        if (_playerEnergyPoints.energyPoints >= cost && currentSpeedUpgrade < maxSpeedUpgrade)
+        if (_playerEnergyPoints.energyPoints >= cost && _currentSpeedUpgrade < _maxSpeedUpgrade)
         {
             _playerEnergyPoints.AddRemovePoints(-cost);
             _playerController.defaultMovementSpeed += amount;
             _playerController.currentMovementSpeed = _playerController.defaultMovementSpeed;
 
-            SpeedUpgradeAmount += SpeedUpgradeAmount * upgradeValueMultiplier;
-            int newSpeedUpgradeCost = Mathf.RoundToInt(SpeedUpgradeCost * upgradeCostMultiplier);
+            SpeedUpgradeAmount += SpeedUpgradeAmount * _upgradeValueMultiplier;
+            int newSpeedUpgradeCost = Mathf.RoundToInt(SpeedUpgradeCost * _upgradeCostMultiplier);
             SpeedUpgradeCost += newSpeedUpgradeCost;
 
-            currentSpeedUpgrade++;
+            _currentSpeedUpgrade++;
             print("Upgrade complete");
+
+            _speedUpgradesLeft = _maxSpeedUpgrade - _currentSpeedUpgrade;
+            _uiManager.UpdateUpgradesCount(SpeedUpgradesLeft, _uiManager.speedUpgradesLeft);
+        }
+        else
+        {
+            print("max upgrades reached");
         }
 
     }
 
     void PlayerHealthUpgrade(float amount, int cost)
     {
-        if (_playerEnergyPoints.energyPoints >= cost && currentHealthUpgrade < maxHealthUpgrade)
+        if (_playerEnergyPoints.energyPoints >= cost && _currentHealthUpgrade < _maxHealthUpgrade)
         {
             _playerEnergyPoints.AddRemovePoints(-cost);
             _playerController.playerHealthComp.maxHealth += amount;
             _playerController.playerHealthComp.CurrentHealth = _playerController.playerHealthComp.maxHealth;
 
-            HealthUpgradeAmount += HealthUpgradeAmount * upgradeValueMultiplier;
-            int newHealthUpgradeCost = Mathf.RoundToInt(HealthUpgradeCost * upgradeCostMultiplier);
+            HealthUpgradeAmount += HealthUpgradeAmount * _upgradeValueMultiplier;
+            int newHealthUpgradeCost = Mathf.RoundToInt(HealthUpgradeCost * _upgradeCostMultiplier);
             HealthUpgradeCost += newHealthUpgradeCost;
 
-            currentHealthUpgrade++;
+            _currentHealthUpgrade++;
             print("Upgrade complete");
-        }
 
+            _healthUpgradesLeft = _maxHealthUpgrade - _currentHealthUpgrade;
+            _uiManager.UpdateUpgradesCount(HealthUpgradesLeft, _uiManager.healthUpgradesLeft);
+        }
+        else
+        {
+            print("max upgrades reached");
+        }
     }
 
     void PlayerEnergyUpgrade(float amount, int cost)
     {
-        if (_playerEnergyPoints.energyPoints >= cost && currentEnergyUpgrade < maxEnergyUpgrade)
+        if (_playerEnergyPoints.energyPoints >= cost && _currentEnergyUpgrade < _maxEnergyUpgrade)
         {
             _playerEnergyPoints.AddRemovePoints(-cost);
             _playerEnergy.playerMaxEnergy += amount;
             _playerEnergy.currentEnergy = _playerEnergy.playerMaxEnergy;
             _playerEnergy.EnergyAmountCalc();
 
-            EnergyUpgradeAmount += EnergyUpgradeAmount * upgradeValueMultiplier;
-            int newEnergyUpgradeCost = Mathf.RoundToInt(EnergyUpgradeCost * upgradeCostMultiplier);
+            EnergyUpgradeAmount += EnergyUpgradeAmount * _upgradeValueMultiplier;
+            int newEnergyUpgradeCost = Mathf.RoundToInt(EnergyUpgradeCost * _upgradeCostMultiplier);
             EnergyUpgradeCost += newEnergyUpgradeCost;
 
-            currentEnergyUpgrade++;
+            _currentEnergyUpgrade++;
             print("Upgrade complete");
-        }
 
+            _energyUpgradesLeft = _maxEnergyUpgrade - _currentEnergyUpgrade;
+            _uiManager.UpdateUpgradesCount(EnergyUpgradesLeft, _uiManager.energyUpgradeLeft);
+        }
+        else
+        {
+            print("max upgrades reached");
+        }
     }
 
     void PlayerHealthRegen(int cost)
@@ -146,15 +195,29 @@ public class PlayerUpgradesManager : MonoBehaviour
             _playerController.playerHealthComp.canHealthRegen = true;
             _playerController.playerHealthComp.HealthRegenCalc();
             _playerEnergyPoints.AddRemovePoints(-cost);
+            _uiManager.healthRegenStatus.text = _uiManager.regenStatusOn;
+        }
+        else
+        {
+            print("max upgrades reached");
         }
     }
 
     void PlayerDamageUpgrade(int cost)
     {
-        if (_playerEnergyPoints.energyPoints >= cost && currentDamageUpgrade < maxDamageUpgrade)
+        if (_playerEnergyPoints.energyPoints >= cost && _currentDamageUpgrade < _maxDamageUpgrade)
         {
             _playerController.IncreaseDamageMultiplier(DamageMultiplierAmount);
-            currentDamageUpgrade++;
+            _currentDamageUpgrade++;
+            int newDamageCost = Mathf.RoundToInt(DamageMultiplierUpgradeCost * _upgradeCostMultiplier);
+            DamageMultiplierUpgradeCost += newDamageCost;
+
+            _damageUpgradesLeft = _maxDamageUpgrade - _currentDamageUpgrade;
+            _uiManager.UpdateUpgradesCount(DamageUpgradesLeft, _uiManager.damageUpgradesLeft);
+        }
+        else
+        {
+            print("max upgrades reached");
         }
     }
 

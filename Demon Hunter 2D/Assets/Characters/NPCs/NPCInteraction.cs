@@ -7,6 +7,19 @@ public class NPCInteraction : MonoBehaviour
     public UIManager uiManager { get; private set;}
     private PlayerController _playerController;
     public NPCManager npcManager { get; protected set; }
+    [SerializeField] private int _maxTalkCount;
+    public int maxTalkCount
+    {
+        get
+        {
+            return _maxTalkCount;
+        }
+
+        protected set
+        {
+            _maxTalkCount = value;
+        }
+    }
 
     public bool canInteract;
     public delegate void SetUI(bool convOn);

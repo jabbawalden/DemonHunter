@@ -40,11 +40,6 @@ public class PlayerShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_healthComponent.IsAlive())
-        {
-
-        }
-
         if (_playerEnergy.currentEnergy >= _energyCost)
             shootIconLit = true;
         else
