@@ -36,6 +36,7 @@ public class PlayerUpgradesManager : MonoBehaviour
     [SerializeField] private float _upgradeValueMultiplier, _upgradeCostMultiplier;
     [SerializeField] private int _currentSpeedUpgrade, _currentHealthUpgrade, _currentEnergyUpgrade, _currentDamageUpgrade;
     [SerializeField] private int _maxSpeedUpgrade, _maxHealthUpgrade, _maxEnergyUpgrade, _maxDamageUpgrade;
+
     [SerializeField] private int _speedUpgradesLeft, _healthUpgradesLeft, _energyUpgradesLeft, _damageUpgradesLeft;
     public int SpeedUpgradesLeft { get { return _speedUpgradesLeft; } private set { _speedUpgradesLeft = value; } }
     public int HealthUpgradesLeft { get { return _healthUpgradesLeft; } private set { _healthUpgradesLeft = value; } }
@@ -106,11 +107,12 @@ public class PlayerUpgradesManager : MonoBehaviour
         DamageUpgradesLeft = JsonDataManager.gameData.damageUpgradesLeft;
 
         //ui updates
-        _uiManager.UpdateUpgradesCount(_speedUpgradesLeft, _uiManager.speedUpgradesLeft);
-        _uiManager.UpdateUpgradesCount(_healthUpgradesLeft, _uiManager.healthUpgradesLeft);
-        _uiManager.UpdateUpgradesCount(_energyUpgradesLeft, _uiManager.energyUpgradeLeft);
-        _uiManager.UpdateUpgradesCount(_damageUpgradesLeft, _uiManager.damageUpgradesLeft);
+        _uiManager.UpdateUpgradesCount(SpeedUpgradesLeft, _uiManager.speedUpgradesLeft);
+        _uiManager.UpdateUpgradesCount(HealthUpgradesLeft, _uiManager.healthUpgradesLeft);
+        _uiManager.UpdateUpgradesCount(EnergyUpgradesLeft, _uiManager.energyUpgradeLeft);
+        _uiManager.UpdateUpgradesCount(DamageUpgradesLeft, _uiManager.damageUpgradesLeft);
         //player controller deals with the health regen status
+
     }
 
     void PlayerSpeedUpgrade(float amount, int cost)
@@ -128,7 +130,7 @@ public class PlayerUpgradesManager : MonoBehaviour
             _currentSpeedUpgrade++;
             print("Upgrade complete");
 
-            _speedUpgradesLeft = _maxSpeedUpgrade - _currentSpeedUpgrade;
+            SpeedUpgradesLeft = _maxSpeedUpgrade - _currentSpeedUpgrade;
             _uiManager.UpdateUpgradesCount(SpeedUpgradesLeft, _uiManager.speedUpgradesLeft);
         }
         else
@@ -153,7 +155,7 @@ public class PlayerUpgradesManager : MonoBehaviour
             _currentHealthUpgrade++;
             print("Upgrade complete");
 
-            _healthUpgradesLeft = _maxHealthUpgrade - _currentHealthUpgrade;
+            HealthUpgradesLeft = _maxHealthUpgrade - _currentHealthUpgrade;
             _uiManager.UpdateUpgradesCount(HealthUpgradesLeft, _uiManager.healthUpgradesLeft);
         }
         else
@@ -178,7 +180,7 @@ public class PlayerUpgradesManager : MonoBehaviour
             _currentEnergyUpgrade++;
             print("Upgrade complete");
 
-            _energyUpgradesLeft = _maxEnergyUpgrade - _currentEnergyUpgrade;
+            EnergyUpgradesLeft = _maxEnergyUpgrade - _currentEnergyUpgrade;
             _uiManager.UpdateUpgradesCount(EnergyUpgradesLeft, _uiManager.energyUpgradeLeft);
         }
         else
@@ -212,7 +214,7 @@ public class PlayerUpgradesManager : MonoBehaviour
             int newDamageCost = Mathf.RoundToInt(DamageMultiplierUpgradeCost * _upgradeCostMultiplier);
             DamageMultiplierUpgradeCost += newDamageCost;
 
-            _damageUpgradesLeft = _maxDamageUpgrade - _currentDamageUpgrade;
+            DamageUpgradesLeft = _maxDamageUpgrade - _currentDamageUpgrade;
             _uiManager.UpdateUpgradesCount(DamageUpgradesLeft, _uiManager.damageUpgradesLeft);
         }
         else
@@ -223,6 +225,8 @@ public class PlayerUpgradesManager : MonoBehaviour
 
     public void HealingGraceUpgrade()
     {
+
+
 
     }
 

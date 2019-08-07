@@ -8,6 +8,8 @@ public enum EnemySpecialType {none, shield}
 
 public class EnemyController : MonoBehaviour
 {
+    public AssetPaths assetPaths = new AssetPaths();
+
     public bool isVisible;
     public EnemyState enemyState;
     public EnemyMovementType enemyMovementType;
@@ -55,7 +57,7 @@ public class EnemyController : MonoBehaviour
     [Space(4)]
 
     [Header("Prefabs and Objects")]
-    public GameObject energyPickUp;
+    //public GameObject energyPickUp;
     public GameObject enemyAlive, enemyDead, enemyShield;
     Color opacityEnemyDead;
 
@@ -100,7 +102,7 @@ public class EnemyController : MonoBehaviour
         else if (!deathEnabled)
         {
             deathEnabled = true;
-            Instantiate(energyPickUp, transform.position, Quaternion.identity);
+            Instantiate(Resources.Load<GameObject>(assetPaths.p_energyDrop), transform.position, Quaternion.identity);
             enemyAlive.SetActive(false);
             enemyDead.SetActive(true);
             if (enemyShield)

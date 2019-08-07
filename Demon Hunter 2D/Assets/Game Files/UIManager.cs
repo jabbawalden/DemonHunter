@@ -31,6 +31,8 @@ public class UIManager : MonoBehaviour
     [Header("NPC and Upgrades UI")]
     public Text _npcDialogue;
     [SerializeField] private GameObject npcPanel;
+    [SerializeField] private GameObject upgradePanel;
+
     [SerializeField] private Text _speedUpgradesLeft;
     [SerializeField] private Text _healthUpgradesLeft;
     [SerializeField] private Text _energyUpgradeLeft;
@@ -58,6 +60,8 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         npcPanel.SetActive(false);
+        upgradePanel.SetActive(false);
+
         canChangeColorHealth = false;
         canChangeColorEnergy = false; 
     }
@@ -184,9 +188,16 @@ public class UIManager : MonoBehaviour
     public void TurnOnUpgradeNPC(bool on)
     {
         if (on)
+        {
             npcPanel.SetActive(true);
+            upgradePanel.SetActive(true);
+        }
         else
+        {
             npcPanel.SetActive(false);
+            upgradePanel.SetActive(false);
+        }
+
     }
 
     public void TurnOnShopNPC(bool on)

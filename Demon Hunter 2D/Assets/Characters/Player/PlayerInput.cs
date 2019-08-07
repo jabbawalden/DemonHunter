@@ -90,7 +90,7 @@ public class PlayerInput : MonoBehaviour
             _playerAbilities.SwitchSelectedAbility(3);
 
         if (Input.GetKeyDown(KeyCode.Q))
-            _playerAbilities.upgradeActivate();
+            _playerAbilities.specialAbilityActivate();
     }
     
     private void PlayerNPCInteract()

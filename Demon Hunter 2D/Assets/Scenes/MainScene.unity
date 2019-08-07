@@ -59289,6 +59289,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1499682019}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1500225147 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8239132798846582141, guid: 036d3e4b7654a46499a8e4b07c447738,
+    type: 3}
+  m_PrefabInstance: {fileID: 4433074759859548114}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1502805421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -84760,6 +84766,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4433074759892976709, guid: 036d3e4b7654a46499a8e4b07c447738,
+        type: 3}
+      propertyPath: upgradePanel
+      value: 
+      objectReference: {fileID: 1500225147}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 036d3e4b7654a46499a8e4b07c447738, type: 3}
 --- !u!1001 &4478782997766732798
@@ -87382,11 +87393,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1538872665, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -315.75
+      value: -316.7
       objectReference: {fileID: 0}
     - target: {fileID: 1538872665, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -484.18
+      value: -482
       objectReference: {fileID: 0}
     - target: {fileID: 1538872665, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: m_LocalPosition.z

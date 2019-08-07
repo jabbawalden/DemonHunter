@@ -8,22 +8,26 @@ public class PlayerAbilities : MonoBehaviour
     [SerializeField] private float _healingGraceCost;
     [SerializeField] private float _bombPlantCost;
     [SerializeField] private float _EnergyMaximizerCost;
+    private C_Health _healthComp;
 
     public delegate void UpgradeAbilityActivate();
-    public UpgradeAbilityActivate upgradeActivate;
+    public UpgradeAbilityActivate specialAbilityActivate;
 
     private void Awake()
     {
         _playerController = GetComponent<PlayerController>();
+        _healthComp = FindObjectOfType<C_Health>();
     }
 
     private void Start()
     {
-        upgradeActivate += HealingGraceAbility;
+        specialAbilityActivate += HealingGraceAbility;
     }
 
     public void HealingGraceAbility()
     {
+        float healAmount = _healthComp.maxHealth / 2;
+        _healthComp.Heal(healAmount);
         print("Healing grace");
     }
 
@@ -40,11 +44,11 @@ public class PlayerAbilities : MonoBehaviour
     public void SwitchSelectedAbility(int index)
     {
         if (index == 1)
-            upgradeActivate = HealingGraceAbility;
+            specialAbilityActivate = HealingGraceAbility;
         else if (index == 2)
-            upgradeActivate = BombPlantAbility;
+            specialAbilityActivate = BombPlantAbility;
         else if (index == 3)
-            upgradeActivate = EnergyMaximizerAbility;
+            specialAbilityActivate = EnergyMaximizerAbility;
     }
 
 }

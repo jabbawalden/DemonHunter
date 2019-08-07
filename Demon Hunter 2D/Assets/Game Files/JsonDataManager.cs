@@ -134,6 +134,7 @@ public class JsonDataManager : MonoBehaviour
         gameData.energyUpgradesLeft = _playerUpgradesManager.EnergyUpgradesLeft;
         gameData.damageUpgradesLeft = _playerUpgradesManager.DamageUpgradesLeft;
 
+        print("speed upgrade amount is: " + gameData.speedUpgradeAmount);
     }
 
     public void SaveTutorialState()
