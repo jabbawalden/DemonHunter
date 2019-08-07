@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerUpgradesManager : MonoBehaviour
 {
@@ -43,6 +44,8 @@ public class PlayerUpgradesManager : MonoBehaviour
     public int EnergyUpgradesLeft { get { return _energyUpgradesLeft; } private set { _energyUpgradesLeft = value; } }
     public int DamageUpgradesLeft { get { return _damageUpgradesLeft; } private set { _damageUpgradesLeft = value; } }
 
+    [SerializeField] private Button speedB, healthB, energyB, damageB, healthRegenB;
+
     private void Awake() 
     {
         _playerController = FindObjectOfType<PlayerController>();
@@ -54,34 +57,38 @@ public class PlayerUpgradesManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            PlayerSpeedUpgrade(SpeedUpgradeAmount, SpeedUpgradeCost);
-        }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            PlayerHealthUpgrade(HealthUpgradeAmount, HealthUpgradeCost);
-        }
+    }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+    public void UpgradeActivation(int index)
+    {
+        switch(index)
         {
-            PlayerEnergyUpgrade(EnergyUpgradeAmount, EnergyUpgradeCost);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            PlayerHealthRegen(_healthRegenCost);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            PlayerDamageUpgrade(DamageMultiplierUpgradeCost);
+            case 1:
+                PlayerSpeedUpgrade(SpeedUpgradeAmount, SpeedUpgradeCost);
+                break;
+            case 2:
+                PlayerHealthUpgrade(HealthUpgradeAmount, HealthUpgradeCost);
+                break;
+            case 3:
+                PlayerEnergyUpgrade(EnergyUpgradeAmount, EnergyUpgradeCost);
+                break;
+            case 4:
+                PlayerDamageUpgrade(DamageMultiplierUpgradeCost);
+                break;
+            case 5:
+                PlayerHealthRegen(_healthRegenCost);
+                break;
         }
     }
 
     public void StartGameInitiate()
     {
+        SpeedUpgradesLeft = _maxSpeedUpgrade - _currentSpeedUpgrade;
+        HealthUpgradesLeft = _maxHealthUpgrade - _currentHealthUpgrade;
+        EnergyUpgradesLeft = _maxEnergyUpgrade - _currentEnergyUpgrade;
+        DamageUpgradesLeft = _maxDamageUpgrade - _currentDamageUpgrade;
+
         _uiManager.UpdateUpgradesCount(_speedUpgradesLeft, _uiManager.speedUpgradesLeft);
         _uiManager.UpdateUpgradesCount(_healthUpgradesLeft, _uiManager.healthUpgradesLeft);
         _uiManager.UpdateUpgradesCount(_energyUpgradesLeft, _uiManager.energyUpgradeLeft);
@@ -115,7 +122,7 @@ public class PlayerUpgradesManager : MonoBehaviour
 
     }
 
-    void PlayerSpeedUpgrade(float amount, int cost)
+    public void PlayerSpeedUpgrade(float amount, int cost)
     {
         if (_playerEnergyPoints.energyPoints >= cost && _currentSpeedUpgrade < _maxSpeedUpgrade)
         {
@@ -140,7 +147,7 @@ public class PlayerUpgradesManager : MonoBehaviour
 
     }
 
-    void PlayerHealthUpgrade(float amount, int cost)
+    public void PlayerHealthUpgrade(float amount, int cost)
     {
         if (_playerEnergyPoints.energyPoints >= cost && _currentHealthUpgrade < _maxHealthUpgrade)
         {
@@ -164,7 +171,7 @@ public class PlayerUpgradesManager : MonoBehaviour
         }
     }
 
-    void PlayerEnergyUpgrade(float amount, int cost)
+    public void PlayerEnergyUpgrade(float amount, int cost)
     {
         if (_playerEnergyPoints.energyPoints >= cost && _currentEnergyUpgrade < _maxEnergyUpgrade)
         {
@@ -189,23 +196,7 @@ public class PlayerUpgradesManager : MonoBehaviour
         }
     }
 
-    void PlayerHealthRegen(int cost)
-    {
-        //do from health comp
-        if (_playerEnergyPoints.energyPoints >= cost && !_playerController.playerHealthComp.canHealthRegen)
-        {
-            _playerController.playerHealthComp.canHealthRegen = true;
-            _playerController.playerHealthComp.HealthRegenCalc();
-            _playerEnergyPoints.AddRemovePoints(-cost);
-            _uiManager.healthRegenStatus.text = _uiManager.regenStatusOn;
-        }
-        else
-        {
-            print("max upgrades reached");
-        }
-    }
-
-    void PlayerDamageUpgrade(int cost)
+    public void PlayerDamageUpgrade(int cost)
     {
         if (_playerEnergyPoints.energyPoints >= cost && _currentDamageUpgrade < _maxDamageUpgrade)
         {
@@ -223,10 +214,25 @@ public class PlayerUpgradesManager : MonoBehaviour
         }
     }
 
+    public void PlayerHealthRegen(int cost)
+    {
+        //do from health comp
+        if (_playerEnergyPoints.energyPoints >= cost && !_playerController.playerHealthComp.canHealthRegen)
+        {
+            _playerController.playerHealthComp.canHealthRegen = true;
+            _playerController.playerHealthComp.HealthRegenCalc();
+            _playerEnergyPoints.AddRemovePoints(-cost);
+            _uiManager.healthRegenStatus.text = _uiManager.regenStatusOn;
+        }
+        else
+        {
+            print("max upgrades reached");
+        }
+    }
+
+
     public void HealingGraceUpgrade()
     {
-
-
 
     }
 
@@ -248,5 +254,5 @@ public class PlayerUpgradesManager : MonoBehaviour
      Energy Maximiser -> Limitless Energy for 3 seconds --- 40 second cooldown --- costs 70 energy
      */
 
-
+    
 }

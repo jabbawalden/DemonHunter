@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
     private PlayerShoot _playerShoot;
     private PlayerDash _playerDash;
     private PlayerEnergyPoints _playerEnergyPoints;
+    private PlayerUpgradesManager playerUpgradesManager;
     //private PlayerUpgradesManager _playerUpgradesManager;
     private bool _isFadingIn, _isFadingOut;
     [Space(4)]
@@ -46,6 +47,8 @@ public class UIManager : MonoBehaviour
     public string regenStatusOn;
     public string regenStatusOff;
 
+    [SerializeField] private Button speedB, healthB, energyB, damageB, healthRegenB;
+
     private void Awake()
     {
         _playerMeleeAttack = FindObjectOfType<PlayerMeleeAttack>();
@@ -54,6 +57,7 @@ public class UIManager : MonoBehaviour
         _playerHealthComponenent = GameObject.Find("PlayerController").GetComponent<C_Health>();
         _playerEnergy = FindObjectOfType<PlayerEnergy>();
         _playerEnergyPoints = FindObjectOfType<PlayerEnergyPoints>();
+        playerUpgradesManager = FindObjectOfType<PlayerUpgradesManager>();
         //_playerUpgradesManager = FindObjectOfType<PlayerUpgradesManager>();
     }
 
@@ -63,7 +67,9 @@ public class UIManager : MonoBehaviour
         upgradePanel.SetActive(false);
 
         canChangeColorHealth = false;
-        canChangeColorEnergy = false; 
+        canChangeColorEnergy = false;
+
+        AddButtonFunctionality();
     }
 
     private void Update()
@@ -76,7 +82,16 @@ public class UIManager : MonoBehaviour
 
         MoveSetColour();
     }
-    
+
+    public void AddButtonFunctionality()
+    {
+        speedB.onClick.AddListener (delegate { playerUpgradesManager.UpgradeActivation(1); });
+        healthB.onClick.AddListener (delegate { playerUpgradesManager.UpgradeActivation(2); });
+        energyB.onClick.AddListener (delegate { playerUpgradesManager.UpgradeActivation(3); });
+        damageB.onClick.AddListener(delegate { playerUpgradesManager.UpgradeActivation(4); });
+        healthRegenB.onClick.AddListener (delegate { playerUpgradesManager.UpgradeActivation(5); });
+    }
+
     private void BarColourReaction(bool energy, Image barImage)
     {
         if (!energy)

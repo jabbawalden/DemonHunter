@@ -87457,6 +87457,11 @@ PrefabInstance:
       propertyPath: playerShootEnabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6182891382143642563, guid: f0012caabe927754790617fe3618fa17,
+        type: 3}
+      propertyPath: energyPoints
+      value: 40000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0012caabe927754790617fe3618fa17, type: 3}
 --- !u!1001 &9036037233594948165

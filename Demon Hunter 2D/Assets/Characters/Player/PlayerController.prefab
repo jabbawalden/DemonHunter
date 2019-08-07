@@ -355,7 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a6670fdcac30604ba3adc04213ee84a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyPoints: 4000000
+  energyPoints: 40000
   energyLossPercent: 0.025
 --- !u!114 &2200351011396354857
 MonoBehaviour:
@@ -376,7 +376,7 @@ MonoBehaviour:
   _speedUpgradeCostSet: 100
   _healthUpgradeCostSet: 300
   _energyUpgradeCostSet: 200
-  _damageMultiplierCostSet: 300
+  _damageMultiplierUpgradeCostSet: 0
   _healthRegenCost: 2500
   _upgradeValueMultiplier: 0.2
   _upgradeCostMultiplier: 0.3
@@ -392,6 +392,11 @@ MonoBehaviour:
   _healthUpgradesLeft: 0
   _energyUpgradesLeft: 0
   _damageUpgradesLeft: 0
+  speedB: {fileID: 0}
+  healthB: {fileID: 0}
+  energyB: {fileID: 0}
+  damageB: {fileID: 0}
+  healthRegenB: {fileID: 0}
 --- !u!114 &1021226514976844720
 MonoBehaviour:
   m_ObjectHideFlags: 0
