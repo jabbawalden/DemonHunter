@@ -11,7 +11,7 @@ public class PlayerDash : MonoBehaviour
     private UIManager _uiManager;
     private PlayerController _playerController;
     private Rigidbody2D _rb;
-    [SerializeField] private PlayerCamera _playerCamera;
+    private PlayerCamera playerCamera;
 
     [SerializeField] private int[] layersToIgnore;
     [SerializeField] private float dashEnergyCostSet;
@@ -42,6 +42,7 @@ public class PlayerDash : MonoBehaviour
         _playerController = GetComponent<PlayerController>();
         _rb = GetComponent<Rigidbody2D>();
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        playerCamera = FindObjectOfType<PlayerCamera>();
 
     }
 
@@ -68,7 +69,7 @@ public class PlayerDash : MonoBehaviour
         StartCoroutine(DashBehaviour(4.5f, 0.3f));
         _uiManager.UpdateEnergySlider();
         _uiManager.DamageEnergyBar();
-        _playerCamera.CameraShake(0.15f, 0.11f);
+        playerCamera.CameraShake(0.15f, 0.11f);
 
         _gameManager.TutorialCheckDash();
     }

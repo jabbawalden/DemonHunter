@@ -355,7 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a6670fdcac30604ba3adc04213ee84a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyPoints: 40000
+  energyPoints: 0
   energyLossPercent: 0.025
 --- !u!114 &2200351011396354857
 MonoBehaviour:

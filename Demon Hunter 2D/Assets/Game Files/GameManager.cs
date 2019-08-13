@@ -14,13 +14,15 @@ public class GameManager : MonoBehaviour
     private PlayerShoot _playerShoot;
     private PlayerDash _playerDash;
     private JsonDataManager _jsonDataManager;
+    private UIManager uiManager;
     [System.NonSerialized] public bool gameIntroMove;
     [System.NonSerialized] public bool gameIntroMelee;
     [System.NonSerialized] public bool gameIntroShoot;
    /* [System.NonSerialized]*/ public bool gameIntroDash;
 
-    [System.NonSerialized] public bool playerInTown; 
+    [System.NonSerialized] public bool playerInTown;
 
+    public bool IsPause { get; private set; }
     private void Awake()
     {
         //Singleton code to be used for later reference
@@ -42,6 +44,7 @@ public class GameManager : MonoBehaviour
         _playerDash = FindObjectOfType<PlayerDash>();
         _playerShoot = FindObjectOfType<PlayerShoot>();
         _jsonDataManager = FindObjectOfType<JsonDataManager>();
+        uiManager = FindObjectOfType<UIManager>();
     }
 
     private void Start()
@@ -113,7 +116,27 @@ public class GameManager : MonoBehaviour
     public void ExitGame()
     {
         if (playerInTown)
-            _jsonDataManager.MainSaveGameExit();
+            _jsonDataManager.TownSave();
+        else
+            _jsonDataManager.MainGameExitSave();
+
+        print("Exit Game");
         Application.Quit();
+    }
+
+    public void PauseMenuActivation()
+    {
+        if (!IsPause)
+        {
+            Time.timeScale = 0;
+            IsPause = true;
+            uiManager.PausePanelActivate(true);
+        }
+        else
+        {
+            IsPause = false;
+            Time.timeScale = 1;
+            uiManager.PausePanelActivate(false);
+        }
     }
 }

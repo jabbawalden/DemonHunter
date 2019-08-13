@@ -17,14 +17,15 @@ public class UIManager : MonoBehaviour
     private bool canChangeColorHealth;
     private bool canChangeColorEnergy;
 
-    private C_Health _playerHealthComponenent;
-    private PlayerEnergy _playerEnergy;
+    private C_Health playerHealthComponenent;
+    private PlayerEnergy playerEnergy;
 
-    private PlayerMeleeAttack _playerMeleeAttack;
-    private PlayerShoot _playerShoot;
-    private PlayerDash _playerDash;
-    private PlayerEnergyPoints _playerEnergyPoints;
+    private PlayerMeleeAttack playerMeleeAttack;
+    private PlayerShoot playerShoot;
+    private PlayerDash playerDash;
+    private PlayerEnergyPoints playerEnergyPoints;
     private PlayerUpgradesManager playerUpgradesManager;
+    private GameManager gameManager;
     //private PlayerUpgradesManager _playerUpgradesManager;
     private bool _isFadingIn, _isFadingOut;
     [Space(4)]
@@ -48,23 +49,31 @@ public class UIManager : MonoBehaviour
     public string regenStatusOff;
 
     [SerializeField] private Button speedB, healthB, energyB, damageB, healthRegenB;
+    [Space(4)]
+
+
+    [Header("Pause Menu")]
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private Button quitGame;
+
 
     private void Awake()
     {
-        _playerMeleeAttack = FindObjectOfType<PlayerMeleeAttack>();
-        _playerShoot = FindObjectOfType<PlayerShoot>();
-        _playerDash = FindObjectOfType<PlayerDash>();
-        _playerHealthComponenent = GameObject.Find("PlayerController").GetComponent<C_Health>();
-        _playerEnergy = FindObjectOfType<PlayerEnergy>();
-        _playerEnergyPoints = FindObjectOfType<PlayerEnergyPoints>();
+        playerMeleeAttack = FindObjectOfType<PlayerMeleeAttack>();
+        playerShoot = FindObjectOfType<PlayerShoot>();
+        playerDash = FindObjectOfType<PlayerDash>();
+        playerHealthComponenent = GameObject.Find("PlayerController").GetComponent<C_Health>();
+        playerEnergy = FindObjectOfType<PlayerEnergy>();
+        playerEnergyPoints = FindObjectOfType<PlayerEnergyPoints>();
         playerUpgradesManager = FindObjectOfType<PlayerUpgradesManager>();
-        //_playerUpgradesManager = FindObjectOfType<PlayerUpgradesManager>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     private void Start()
     {
         npcPanel.SetActive(false);
         upgradePanel.SetActive(false);
+        pauseMenu.SetActive(false);
 
         canChangeColorHealth = false;
         canChangeColorEnergy = false;
@@ -90,6 +99,7 @@ public class UIManager : MonoBehaviour
         energyB.onClick.AddListener (delegate { playerUpgradesManager.UpgradeActivation(3); });
         damageB.onClick.AddListener(delegate { playerUpgradesManager.UpgradeActivation(4); });
         healthRegenB.onClick.AddListener (delegate { playerUpgradesManager.UpgradeActivation(5); });
+        quitGame.onClick.AddListener(gameManager.ExitGame);
     }
 
     private void BarColourReaction(bool energy, Image barImage)
@@ -112,12 +122,12 @@ public class UIManager : MonoBehaviour
     
     public void UpdateEnergyPoints()
     {
-        _pointsUI.text = _playerEnergyPoints.energyPoints.ToString();
+        _pointsUI.text = playerEnergyPoints.energyPoints.ToString();
     } 
 
     public void UpdateHealthSlider()
     {
-        _healthSlider.value = _playerHealthComponenent.GetHealthPercent();
+        _healthSlider.value = playerHealthComponenent.GetHealthPercent();
     }
 
     public void DamageHealthBar()
@@ -130,7 +140,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateEnergySlider()
     {
-        _energySlider.value = _playerEnergy.GetEnergyPercent();
+        _energySlider.value = playerEnergy.GetEnergyPercent();
     }
 
     public void DamageEnergyBar()
@@ -149,17 +159,17 @@ public class UIManager : MonoBehaviour
 
     private void MoveSetColour()
     {
-        if (_playerMeleeAttack.meleeIconLit)
+        if (playerMeleeAttack.meleeIconLit)
             _meleeUI.color = colorMoveReady;
         else
             _meleeUI.color = colorMoveRecharge;
 
-        if (_playerShoot.shootIconLit)
+        if (playerShoot.shootIconLit)
             _shootUI.color = colorMoveReady;
         else
             _shootUI.color = colorMoveRecharge;
 
-        if (_playerDash.dashIconLit)
+        if (playerDash.dashIconLit)
             _dashUI.color = colorMoveReady;
         else
             _dashUI.color = colorMoveRecharge;
@@ -198,6 +208,11 @@ public class UIManager : MonoBehaviour
             text.color = startColor;
         }
         //print("lerp complete");
+    }
+
+    public void PausePanelActivate(bool isOn)
+    {
+        pauseMenu.SetActive(isOn);
     }
 
     public void TurnOnUpgradeNPC(bool on)

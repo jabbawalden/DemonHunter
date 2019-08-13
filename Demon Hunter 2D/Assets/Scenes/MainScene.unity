@@ -59289,12 +59289,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1499682019}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1500225147 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8239132798846582141, guid: 036d3e4b7654a46499a8e4b07c447738,
-    type: 3}
-  m_PrefabInstance: {fileID: 4433074759859548114}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1502805421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -84766,11 +84760,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4433074759892976709, guid: 036d3e4b7654a46499a8e4b07c447738,
-        type: 3}
-      propertyPath: upgradePanel
-      value: 
-      objectReference: {fileID: 1500225147}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 036d3e4b7654a46499a8e4b07c447738, type: 3}
 --- !u!1001 &4478782997766732798
@@ -87393,11 +87382,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1538872665, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -316.7
+      value: -149.87
       objectReference: {fileID: 0}
     - target: {fileID: 1538872665, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -482
+      value: -702.28
       objectReference: {fileID: 0}
     - target: {fileID: 1538872665, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: m_LocalPosition.z
@@ -87444,24 +87433,6 @@ PrefabInstance:
       propertyPath: _playerCamera
       value: 
       objectReference: {fileID: 1105582906}
-    - target: {fileID: 7916383915472219977, guid: f0012caabe927754790617fe3618fa17,
-        type: 3}
-      propertyPath: playerDashEnabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1538872663, guid: f0012caabe927754790617fe3618fa17, type: 3}
-      propertyPath: playerMeleeEnabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1538872662, guid: f0012caabe927754790617fe3618fa17, type: 3}
-      propertyPath: playerShootEnabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6182891382143642563, guid: f0012caabe927754790617fe3618fa17,
-        type: 3}
-      propertyPath: energyPoints
-      value: 40000
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0012caabe927754790617fe3618fa17, type: 3}
 --- !u!1001 &9036037233594948165

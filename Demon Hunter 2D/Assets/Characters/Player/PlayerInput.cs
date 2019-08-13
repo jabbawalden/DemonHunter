@@ -14,6 +14,8 @@ public class PlayerInput : MonoBehaviour
     private PlayerMeleeAttack _playerMeleeAttack;
     private PlayerAbilities _playerAbilities;
     private NPCManager _npcManager;
+    private UIManager _uiManager;
+    private GameManager gameManager;
 
     [SerializeField] private float _h, _v;
     public float h { get { return _h; } private set { _h = value; } }
@@ -29,23 +31,29 @@ public class PlayerInput : MonoBehaviour
         _playerMeleeAttack = GetComponent<PlayerMeleeAttack>();
         _playerAbilities = GetComponent<PlayerAbilities>();
         _npcManager = FindObjectOfType<NPCManager>();
+        _uiManager = FindObjectOfType<UIManager>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (_healthComponent.IsAlive())
         {
-            if (!_playerController.isNPCInteracting)
+            if (!_playerController.isNPCInteracting && !gameManager.IsPause)
             {
                 if (_playerController.canMove)
                     PlayerMoveInput();
+
                 PlayerBasicAttacks();
                 PlayerAbilitySelect();
             }
 
+            MenuInput();
             PlayerNPCInteract();
         }
+
     }
 
     private void PlayerMoveInput()
@@ -65,16 +73,26 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse1) && _playerMeleeAttack.playerMeleeEnabled)
         {
             _playerMeleeAttack.MeleeAttack();
+            print("attack");
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && _playerShoot.playerShootEnabled)
         {
             _playerShoot.ShootAction();
+            print("attack");
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && _playerEnergy.currentEnergy >= _playerDash.dashEnergyCost && _playerDash.playerDashEnabled)
         {
             _playerDash.Dash();
+        }
+    }
+
+    private void MenuInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameManager.PauseMenuActivation();
         }
     }
 

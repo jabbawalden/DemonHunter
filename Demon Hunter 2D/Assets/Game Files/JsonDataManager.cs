@@ -48,7 +48,6 @@ public class JsonDataManager : MonoBehaviour
         {
             //read data
             ReadData();
-
             //call load data functions in each class reference
             _playerController.LoadData();
             _playerCamera.LoadData();
@@ -82,7 +81,7 @@ public class JsonDataManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             if (/*!_playerController.inCombat || */_gameManager.playerInTown)
-                MainSaveGameExit();
+                TownSave();
             else
                 Debug.Log("Cannot save outside of town area");
         }
@@ -226,10 +225,24 @@ public class JsonDataManager : MonoBehaviour
         Debug.Log("Death Save");
     }
 
-    public void MainSaveGameExit()
+    public void TownSave()
     {
         SavePlayerStats();
         SavePlayerLocationWorld();
+        SavePlayerEnergyPoints();
+        SaveTutorialState();
+        SaveNPCState();
+
+        //class info to save + true for pretty print
+        string contents = JsonUtility.ToJson(gameData, true);
+        //write contents to a file in path location
+        System.IO.File.WriteAllText(filePath, contents);
+        Debug.Log("Town Save Exit");
+    }
+
+    public void MainGameExitSave()
+    {
+        SavePlayerStats();
         SavePlayerEnergyPoints();
         SaveTutorialState();
         SaveNPCState();
