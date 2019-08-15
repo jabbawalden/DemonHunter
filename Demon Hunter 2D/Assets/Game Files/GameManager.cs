@@ -20,9 +20,17 @@ public class GameManager : MonoBehaviour
     [System.NonSerialized] public bool gameIntroShoot;
    /* [System.NonSerialized]*/ public bool gameIntroDash;
 
-    [System.NonSerialized] public bool playerInTown;
+  /*  [System.NonSerialized] */public bool playerInTown;
 
     public bool IsPause { get; private set; }
+
+    private void OnEnable()
+    {
+        GameEvents.EventGameExitMain += ExitGame;
+        GameEvents.EventLoadLastSave += LoadLastSave;
+        GameEvents.EventQuitToMenu += LoadMainMenu;
+    }
+
     private void Awake()
     {
         //Singleton code to be used for later reference
@@ -45,6 +53,7 @@ public class GameManager : MonoBehaviour
         _playerShoot = FindObjectOfType<PlayerShoot>();
         _jsonDataManager = FindObjectOfType<JsonDataManager>();
         uiManager = FindObjectOfType<UIManager>();
+
     }
 
     private void Start()
@@ -54,11 +63,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (_playerController.deathEnabled)
-            if (Input.GetKey(KeyCode.Return))
-            {
-                SceneManager.LoadScene(0);
-            }
+        //if (_playerController.deathEnabled)
+        //    if (Input.GetKey(KeyCode.Return))
+        //    {
+        //        SceneManager.LoadScene(0);
+        //    }
     }
 
     public void LoadData()
@@ -110,15 +119,15 @@ public class GameManager : MonoBehaviour
     {
         playerInTown = inTown;
         //if player is in town centre - bool checked to true
-        //if player exits the game when inTown is true, save game upon exit
     }
 
     public void ExitGame()
     {
+        //if player exits the game when inTown is true, save game upon exit
         if (playerInTown)
-            _jsonDataManager.TownSave();
+            GameEvents.ReportSaveFileExitTown();
         else
-            _jsonDataManager.MainGameExitSave();
+            GameEvents.ReportSaveFileExitNormal();
 
         print("Exit Game");
         Application.Quit();
@@ -138,5 +147,17 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1;
             uiManager.PausePanelActivate(false);
         }
+    }
+
+    public void LoadLastSave()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        print("Load last save");
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(0);
+        print("Load main menu");
     }
 }

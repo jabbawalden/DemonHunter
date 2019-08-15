@@ -22,6 +22,21 @@ public class JsonDataManager : MonoBehaviour
     private PlayerUpgradesManager _playerUpgradesManager;
     private NPCManager _npcManager;
 
+    private void OnEnable()
+    {
+        GameEvents.EventSaveCheckPoint += WriteDataFiles;
+        GameEvents.EventSaveCheckPoint += CheckPointSave;
+
+        GameEvents.EventSaveDeath += WriteDataFiles;
+        GameEvents.EventSaveDeath += DeathSave;
+
+        GameEvents.EventSaveTownExit += WriteDataFiles;
+        GameEvents.EventSaveTownExit += TownSave;
+
+        GameEvents.EventSaveNormalExit += WriteDataFiles;
+        GameEvents.EventSaveNormalExit += GameExitSave;
+    }
+
     private void Awake()
     {
         fileName = "DemonHunterSave1.Json";
@@ -81,7 +96,7 @@ public class JsonDataManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             if (/*!_playerController.inCombat || */_gameManager.playerInTown)
-                TownSave();
+                GameEvents.ReportSaveFileExitTown();
             else
                 Debug.Log("Cannot save outside of town area");
         }
@@ -162,6 +177,7 @@ public class JsonDataManager : MonoBehaviour
     {
         gameData.playerStartLocation = _playerController.transform.position;
         gameData.camStartLocation = _playerCamera.transform.position;
+        print("world location saved");
     }
 
     public void SaveGameState()
@@ -188,14 +204,10 @@ public class JsonDataManager : MonoBehaviour
         //remove later
         SaveNPCState();
 
-        //class info to save + true for pretty print
-        string contents = JsonUtility.ToJson(gameData, true);
-        //write contents to a file in path location
-        System.IO.File.WriteAllText(filePath, contents);
         Debug.Log("Start Game Save");
     }
 
-    public void MainSaveCheckPoint()
+    public void CheckPointSave()
     {
         SaveGameState();
         SavePlayerLocationCheckPoint();
@@ -205,23 +217,16 @@ public class JsonDataManager : MonoBehaviour
         //remove later
         SaveNPCState();
 
-        //class info to save + true for pretty print
-        string contents = JsonUtility.ToJson(gameData, true);
-        //write contents to a file in path location
-        System.IO.File.WriteAllText(filePath, contents);
         Debug.Log("Check Point Save");
     }
 
-    public void MainSaveDeath()
+    public void DeathSave()
     {
         SavePlayerEnergyPoints();
         SaveTutorialState();
         //remove later
         SaveNPCState();
 
-        string contents = JsonUtility.ToJson(gameData, true);
-        //write contents to a file in path location
-        System.IO.File.WriteAllText(filePath, contents);
         Debug.Log("Death Save");
     }
 
@@ -233,25 +238,24 @@ public class JsonDataManager : MonoBehaviour
         SaveTutorialState();
         SaveNPCState();
 
-        //class info to save + true for pretty print
-        string contents = JsonUtility.ToJson(gameData, true);
-        //write contents to a file in path location
-        System.IO.File.WriteAllText(filePath, contents);
         Debug.Log("Town Save Exit");
     }
 
-    public void MainGameExitSave()
+    public void GameExitSave()
     {
         SavePlayerStats();
         SavePlayerEnergyPoints();
         SaveTutorialState();
         SaveNPCState();
 
-        //class info to save + true for pretty print
+        Debug.Log("Main Game Exit Save");
+    }
+
+    public void WriteDataFiles()
+    {        //class info to save + true for pretty print
         string contents = JsonUtility.ToJson(gameData, true);
         //write contents to a file in path location
         System.IO.File.WriteAllText(filePath, contents);
-        Debug.Log("Main Save Exit");
     }
 
 }

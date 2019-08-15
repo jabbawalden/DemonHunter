@@ -33,7 +33,7 @@ public class CheckPoint : MonoBehaviour
             _playerController.startLocation = checkPointPosition;
             _playerCamera.startLocation = checkPointPosition;
             //save data to json file
-            _jsonDataManager.MainSaveCheckPoint();
+            GameEvents.ReportSaveCheckPoint();
 
             if (isTownCheckPoint)
                 _gameManager.playerInTown = true;
