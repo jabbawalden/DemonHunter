@@ -21,6 +21,7 @@ public class JsonDataManager : MonoBehaviour
     private GameManager _gameManager;
     private PlayerUpgradesManager _playerUpgradesManager;
     private NPCManager _npcManager;
+    private GameTracker gameTracker;
 
     private void OnEnable()
     {
@@ -39,8 +40,10 @@ public class JsonDataManager : MonoBehaviour
 
     private void Awake()
     {
-        fileName = "DemonHunterSave1.Json";
+        //filename = chosen file name from GameTracker class.
+        gameTracker = FindObjectOfType<GameTracker>();
 
+        fileName = gameTracker.ChosenFileName;
         filePath = Application.persistentDataPath + "/" + fileName;
 
         _playerController = FindObjectOfType<PlayerController>();

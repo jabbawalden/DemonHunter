@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-    private static GameManager instance; 
+
 
     private TutorialManager _tutorialManager;
     private PlayerController _playerController;
@@ -33,19 +33,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //Singleton code to be used for later reference
-        /*
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-        */
-
         _tutorialManager = FindObjectOfType<TutorialManager>();
         _playerController = FindObjectOfType<PlayerController>();
         _playerMeleeAttack = FindObjectOfType<PlayerMeleeAttack>();

@@ -22,8 +22,8 @@ public class UIManager : MonoBehaviour
     private PlayerEnergy playerEnergy;
 
     private PlayerMeleeAttack playerMeleeAttack;
-    private PlayerShoot playerShoot;
-    private PlayerDash playerDash;
+    //private PlayerShoot playerShoot;
+    //private PlayerDash playerDash;
     private PlayerEnergyPoints playerEnergyPoints;
     private PlayerUpgradesManager playerUpgradesManager;
     private GameManager gameManager;
@@ -71,8 +71,8 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         playerMeleeAttack = FindObjectOfType<PlayerMeleeAttack>();
-        playerShoot = FindObjectOfType<PlayerShoot>();
-        playerDash = FindObjectOfType<PlayerDash>();
+        //playerShoot = FindObjectOfType<PlayerShoot>();
+        //playerDash = FindObjectOfType<PlayerDash>();
         playerHealthComponenent = GameObject.Find("PlayerController").GetComponent<C_Health>();
         playerEnergy = FindObjectOfType<PlayerEnergy>();
         playerEnergyPoints = FindObjectOfType<PlayerEnergyPoints>();
