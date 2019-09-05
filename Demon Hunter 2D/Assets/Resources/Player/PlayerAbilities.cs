@@ -8,7 +8,7 @@ public class PlayerAbilities : MonoBehaviour
     [SerializeField] private float _healingGraceCost;
     [SerializeField] private float _bombPlantCost;
     [SerializeField] private float _EnergyMaximizerCost;
-    private C_Health _healthComp;
+    private HealthComponent _healthComp;
 
     public delegate void UpgradeAbilityActivate();
     public UpgradeAbilityActivate specialAbilityActivate;
@@ -16,7 +16,7 @@ public class PlayerAbilities : MonoBehaviour
     private void Awake()
     {
         _playerController = GetComponent<PlayerController>();
-        _healthComp = FindObjectOfType<C_Health>();
+        _healthComp = FindObjectOfType<HealthComponent>();
     }
 
     private void Start()

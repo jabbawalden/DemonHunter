@@ -43,8 +43,6 @@ public class PlayerUpgradesManager : MonoBehaviour
     public int EnergyUpgradesLeft { get { return _energyUpgradesLeft; } private set { _energyUpgradesLeft = value; } }
     public int DamageUpgradesLeft { get { return _damageUpgradesLeft; } private set { _damageUpgradesLeft = value; } }
 
-    [SerializeField] private Button speedB, healthB, energyB, damageB, healthRegenB;
-
     private void Awake() 
     {
         _playerController = FindObjectOfType<PlayerController>();

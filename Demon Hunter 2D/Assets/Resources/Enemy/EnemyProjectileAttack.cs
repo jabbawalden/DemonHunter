@@ -7,7 +7,7 @@ public class EnemyProjectileAttack : MonoBehaviour
     [Header("Scripts")]
     private EnemyController _enemyController;
     private ProjectileBehaviour projBehaviour;
-    private C_Health _healthComp;
+    private HealthComponent _healthComp;
     [Space(4)]
 
     [Header("Variables")]
@@ -27,7 +27,7 @@ public class EnemyProjectileAttack : MonoBehaviour
     private void Awake()
     {
         _enemyController = GetComponent<EnemyController>();
-        _healthComp = GetComponent<C_Health>();
+        _healthComp = GetComponent<HealthComponent>();
     }
 
     private void Start()
@@ -54,7 +54,7 @@ public class EnemyProjectileAttack : MonoBehaviour
         if (_newTime <= Time.time)
         {
             _newTime = Time.time + _fireRate;
-            GameObject projLoad = Resources.Load<GameObject>(AssetPaths.pref_projectile);
+            GameObject projLoad = Resources.Load<GameObject>(AssetPaths.pref_enemyProjectile);
             GameObject proj = Instantiate(projLoad, _shootOrigin.position, projLoad.transform.rotation);
 
             Vector2 direction = new Vector2();

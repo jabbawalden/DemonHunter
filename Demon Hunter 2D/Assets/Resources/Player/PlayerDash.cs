@@ -6,8 +6,8 @@ public class PlayerDash : MonoBehaviour
 {
     private GameManager _gameManager;
     private PlayerEnergy _playerEnergy;
-    private C_Health _playerHealthComp;
-    private C_Health _enemyHealthComp;
+    private HealthComponent _playerHealthComp;
+    private HealthComponent _enemyHealthComp;
     private UIManager _uiManager;
     private PlayerController _playerController;
     private Rigidbody2D _rb;
@@ -38,7 +38,7 @@ public class PlayerDash : MonoBehaviour
     {
         _gameManager = FindObjectOfType<GameManager>();
         _playerEnergy = GetComponent<PlayerEnergy>();
-        _playerHealthComp = GetComponent<C_Health>();
+        _playerHealthComp = GetComponent<HealthComponent>();
         _playerController = GetComponent<PlayerController>();
         _rb = GetComponent<Rigidbody2D>();
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
@@ -111,12 +111,12 @@ public class PlayerDash : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 10 && _canDashDamage && collision.GetComponentInParent<C_Health>() != null && collision.GetComponentInParent<EnemyController>() != null)
+        if (collision.gameObject.layer == 10 && _canDashDamage && collision.GetComponentInParent<HealthComponent>() != null && collision.GetComponentInParent<EnemyController>() != null)
         {
             //if damage from dash is enabled i.e. we can "see" the enemy
             if (collision.GetComponentInParent<EnemyController>().canRecieveDamage)
             {
-                _enemyHealthComp = collision.GetComponentInParent<C_Health>();
+                _enemyHealthComp = collision.GetComponentInParent<HealthComponent>();
                 _playerHealthComp.Heal(_dashHealAmount);
                 _enemyHealthComp.Damage(_dashDamage * _playerController.DamageMultiplier);
             }

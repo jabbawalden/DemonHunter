@@ -153,6 +153,7 @@ MonoBehaviour:
   enemyState: 0
   enemyMovementType: 1
   enemySpecialType: 0
+  playerHealth: {fileID: 0}
   playerRef: {fileID: 0}
   canRecieveDamage: 0
   distanceKept: 0

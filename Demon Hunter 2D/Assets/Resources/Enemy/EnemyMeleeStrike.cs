@@ -34,7 +34,7 @@ public class EnemyMeleeStrike : MonoBehaviour
     {
         if (collision.gameObject.layer == 8)
         {
-            collision.gameObject.GetComponentInParent<C_Health>().Damage(damage);
+            collision.gameObject.GetComponentInParent<HealthComponent>().Damage(damage);
             circleCollider.enabled = false;
         }
     }

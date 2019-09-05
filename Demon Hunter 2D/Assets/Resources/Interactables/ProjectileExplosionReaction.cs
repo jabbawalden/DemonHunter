@@ -43,8 +43,8 @@ public class ProjectileExplosionReaction : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 10 || collision.gameObject.layer == 8)
-            if (collision.GetComponentInParent<C_Health>())
-                collision.GetComponentInParent<C_Health>().Damage(damage);
+            if (collision.GetComponentInParent<HealthComponent>())
+                collision.GetComponentInParent<HealthComponent>().Damage(damage);
     }
 
 }

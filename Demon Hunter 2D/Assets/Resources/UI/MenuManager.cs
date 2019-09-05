@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject MainPage, LoadGamePage;
     [SerializeField] private Button startGame, quit;
     [SerializeField] private Button slot1, slot2, slot3, back;
+    [SerializeField] private TextMeshProUGUI slot1Text, slot2Text, slot3Text;
     private GameTracker gameTracker;
 
     private void Awake()
@@ -44,4 +45,19 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void ChangeText(int index)
+    {
+        switch (index)
+        {
+            case 1:
+                slot1Text.text = "Game 1";
+                break;
+            case 2:
+                slot2Text.text = "Game 2";
+                break;
+            case 3:
+                slot3Text.text = "Game 3";
+                break;
+        }
+    }
 }

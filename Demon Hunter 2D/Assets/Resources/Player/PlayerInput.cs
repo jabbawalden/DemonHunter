@@ -8,7 +8,7 @@ public class PlayerInput : MonoBehaviour
 
     private PlayerController _playerController;
     private PlayerShoot _playerShoot;
-    private C_Health _healthComponent;
+    private HealthComponent _healthComponent;
     private PlayerEnergy _playerEnergy;
     private PlayerDash _playerDash;
     private PlayerMeleeAttack _playerMeleeAttack;
@@ -25,7 +25,7 @@ public class PlayerInput : MonoBehaviour
     {
         _playerController = GetComponent<PlayerController>();
         _playerShoot = GetComponent<PlayerShoot>();
-        _healthComponent = GetComponent<C_Health>();
+        _healthComponent = GetComponent<HealthComponent>();
         _playerEnergy = GetComponent<PlayerEnergy>();
         _playerDash = GetComponent<PlayerDash>();
         _playerMeleeAttack = GetComponent<PlayerMeleeAttack>();

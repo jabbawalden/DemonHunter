@@ -37,7 +37,7 @@ public class CrystalAttackBehaviour : MonoBehaviour
     {
         if (collision.gameObject.layer == 8)
         {
-            collision.gameObject.GetComponentInParent<C_Health>().Damage(damage);
+            collision.gameObject.GetComponentInParent<HealthComponent>().Damage(damage);
             crystalExplosion.SetActive(true);
             crystalize.SetActive(false);
             circleCollider.enabled = false;

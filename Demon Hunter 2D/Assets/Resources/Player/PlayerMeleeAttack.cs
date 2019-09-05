@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerMeleeAttack : MonoBehaviour
 {
     private GameManager _gameManager; 
-    private C_Health _enemyHealthComp;
-    private C_Health _playerHealthComp;
+    private HealthComponent _enemyHealthComp;
+    private HealthComponent _playerHealthComp;
     private PlayerController _playerController;
     private PlayerEnergy _playerEnergy;
     private UIManager _uiManager;
@@ -24,7 +24,7 @@ public class PlayerMeleeAttack : MonoBehaviour
     [SerializeField] private bool _canMeleeDamage;
     private CircleCollider2D _circleCollider;
 
-    [SerializeField] private GameObject _meleeAttackObj;
+    //[SerializeField] private GameObject _meleeAttackObj;
     public bool playerMeleeEnabled;
     public bool meleeIconLit;
     //[System.NonSerialized] public bool haveAttacked;
@@ -34,7 +34,7 @@ public class PlayerMeleeAttack : MonoBehaviour
         _gameManager = FindObjectOfType<GameManager>();
         _playerController = GetComponent<PlayerController>();
         _playerEnergy = GetComponent<PlayerEnergy>();
-        _playerHealthComp = GetComponent<C_Health>();
+        _playerHealthComp = GetComponent<HealthComponent>();
         _circleCollider = GetComponent<CircleCollider2D>();
         _uiManager = FindObjectOfType<UIManager>();
     }
@@ -83,7 +83,10 @@ public class PlayerMeleeAttack : MonoBehaviour
         yield return new WaitForSeconds(_attackWindUpTime);
         //spawn melee attack collider
         //use instantiate instead of collier because 
-        GameObject obj = Instantiate(_meleeAttackObj, spawnAttackPosition, Quaternion.identity);
+
+        GameObject meleeStrike = Resources.Load<GameObject>(AssetPaths.pref_playerMeleeStrike);
+
+        GameObject obj = Instantiate(meleeStrike, spawnAttackPosition, Quaternion.identity);
 
         if (obj.GetComponent<PlayerMeleeStrike>())
         {

@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-
-
     private TutorialManager _tutorialManager;
     private PlayerController _playerController;
     private PlayerMeleeAttack _playerMeleeAttack;
@@ -105,7 +103,7 @@ public class GameManager : MonoBehaviour
     public void PlayerInTownCentre(bool inTown) 
     {
         playerInTown = inTown;
-        //if player is in town centre - bool checked to true
+        //if player is in town center - bool checked to true
     }
 
     public void ExitGame()
@@ -115,10 +113,11 @@ public class GameManager : MonoBehaviour
             GameEvents.ReportSaveFileExitTown();
         else
             GameEvents.ReportSaveFileExitNormal();
-
+        Time.timeScale = 1;
         print("Exit Game");
-        Application.Quit();
+        SceneManager.LoadScene(0);
     }
+
 
     public void PauseMenuActivation()
     {

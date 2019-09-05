@@ -13,16 +13,15 @@ public class EnemyMeleeAttack : MonoBehaviour
     [SerializeField] private float _preAttackTime;
     [SerializeField] private float attackSpawnDistance;
     private EnemyController _enemyController;
-    private C_Health _playerHealthComponent;
-    private C_Health _ourHealthComp;
+    private HealthComponent _playerHealthComponent;
+    private HealthComponent _ourHealthComp;
     private UIManager _uiManager;
-    private EnemyMeleeStrike _enemyMeleeStrike;
-    [SerializeField] private GameObject meeleStrike;
+    //[SerializeField] private GameObject meeleStrike;
     public EnemyState stateCheck;
 
     private void Awake()
     {
-        _ourHealthComp = GetComponent<C_Health>();
+        _ourHealthComp = GetComponent<HealthComponent>();
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         _enemyController = GetComponent<EnemyController>();
     }
@@ -59,7 +58,9 @@ public class EnemyMeleeAttack : MonoBehaviour
         //Instantiate attack
         Vector2 attackLoc = new Vector2 (transform.position.x + AttackDirection().x, transform.position.y + AttackDirection().y);
 
-        GameObject obj = Instantiate(meeleStrike, attackLoc, Quaternion.identity);
+        GameObject attack = Resources.Load<GameObject>(AssetPaths.pref_enemyMeleeStrike);
+
+        GameObject obj = Instantiate(attack, attackLoc, Quaternion.identity);
         obj.GetComponent<EnemyMeleeStrike>().damage = _damage;
     }
 

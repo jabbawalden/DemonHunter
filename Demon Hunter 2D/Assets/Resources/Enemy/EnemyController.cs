@@ -14,8 +14,8 @@ public class EnemyController : MonoBehaviour
     public EnemySpecialType enemySpecialType;
 
     [Header("Scripts and Setup")]
-    private C_Health _healthComponent;
-/*    [System.NonSerialized]*/ public C_Health playerHealth;
+    private HealthComponent _healthComponent;
+/*    [System.NonSerialized]*/ public HealthComponent playerHealth;
     public Transform playerRef;
     private PlayerController playerController;
     private bool deathEnabled;
@@ -65,12 +65,12 @@ public class EnemyController : MonoBehaviour
     {
         playerController = FindObjectOfType<PlayerController>();
         playerRef = GameObject.Find("PlayerMain").transform;
-        playerHealth = GameObject.Find("PlayerController").GetComponent<C_Health>();
+        playerHealth = GameObject.Find("PlayerController").GetComponent<HealthComponent>();
         opacityEnemyDead = enemyDead.GetComponent<SpriteRenderer>().color;
         deathEnabled = false;
         enemyDead.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
-        _healthComponent = GetComponent<C_Health>();
+        _healthComponent = GetComponent<HealthComponent>();
     }
 
     void Start()

@@ -8,6 +8,7 @@ public class GameTracker : MonoBehaviour
     string fileName1 = "DemonHunterSave1.Json";
     string fileName2 = "DemonHunterSave2.Json";
     string fileName3 = "DemonHunterSave3.Json";
+    private MenuManager menuManager;
 
     //to check for each file name's existence
     string path1;
@@ -36,9 +37,12 @@ public class GameTracker : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+        menuManager = FindObjectOfType<MenuManager>();
+
         path1 = Application.persistentDataPath + "/" + fileName1;
         path2 = Application.persistentDataPath + "/" + fileName2;
         path3 = Application.persistentDataPath + "/" + fileName3;
+
         CheckFileExistence();
     }
 
@@ -50,17 +54,20 @@ public class GameTracker : MonoBehaviour
     private void CheckFileExistence()
     {
         if (System.IO.File.Exists(path1))
-            print("exists");
+            if (menuManager)
+                menuManager.ChangeText(1);
         else
             print("no file found");
 
         if (System.IO.File.Exists(path2))
-            print("exists");
+            if (menuManager)
+                menuManager.ChangeText(2);
         else
             print("no file found");
 
         if (System.IO.File.Exists(path3))
-            print("exists");
+            if (menuManager)
+                menuManager.ChangeText(3);
         else
             print("no file found");
     }

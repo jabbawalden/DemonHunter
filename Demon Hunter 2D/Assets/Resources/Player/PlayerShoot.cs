@@ -6,7 +6,7 @@ public class PlayerShoot : MonoBehaviour
 {
     private GameManager _gameManager;
     private PlayerController _playerController;
-    private C_Health _healthComponent;
+    private HealthComponent _healthComponent;
     private UIManager _uiManager;
     private PlayerEnergy _playerEnergy;
 
@@ -18,7 +18,7 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private float _healthCost;
     [SerializeField] private float _energyCost;
     private float _newTime;
-    public GameObject projectile;
+    //public GameObject projectile;
     [SerializeField] private Transform _shootOrigin;
     [Space(4)]
 
@@ -32,7 +32,7 @@ public class PlayerShoot : MonoBehaviour
     {
         _gameManager = FindObjectOfType<GameManager>();
         _playerController = GetComponent<PlayerController>();
-        _healthComponent = GetComponent<C_Health>();
+        _healthComponent = GetComponent<HealthComponent>();
         _playerEnergy = GetComponent<PlayerEnergy>();
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
     }
@@ -68,7 +68,9 @@ public class PlayerShoot : MonoBehaviour
         _newTime = Time.time + _fireRate;
         StartCoroutine(ShootBehaviour());
 
-        GameObject proj = Instantiate(projectile, _shootOrigin.position, projectile.transform.rotation);
+        GameObject playerProjectile = Resources.Load<GameObject>(AssetPaths.pref_playerProjectile);
+
+        GameObject proj = Instantiate(playerProjectile, _shootOrigin.position, playerProjectile.transform.rotation);
         Vector2 direction = _playerController.AimDirection(); //normalized not actually needed
 
         proj.transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);

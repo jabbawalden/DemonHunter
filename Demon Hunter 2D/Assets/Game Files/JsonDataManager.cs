@@ -43,7 +43,15 @@ public class JsonDataManager : MonoBehaviour
         //filename = chosen file name from GameTracker class.
         gameTracker = FindObjectOfType<GameTracker>();
 
-        fileName = gameTracker.ChosenFileName;
+        if (gameTracker)
+        {
+            fileName = gameTracker.ChosenFileName;
+        }
+        else
+        {
+            fileName = "DemonHunterSave1.Json";
+        }
+
         filePath = Application.persistentDataPath + "/" + fileName;
 
         _playerController = FindObjectOfType<PlayerController>();

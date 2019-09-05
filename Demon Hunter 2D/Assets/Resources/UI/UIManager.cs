@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour
     private bool canChangeColorHealth;
     private bool canChangeColorEnergy;
 
-    private C_Health playerHealthComponenent;
+    private HealthComponent playerHealthComponenent;
     private PlayerEnergy playerEnergy;
 
     private PlayerMeleeAttack playerMeleeAttack;
@@ -73,7 +73,7 @@ public class UIManager : MonoBehaviour
         playerMeleeAttack = FindObjectOfType<PlayerMeleeAttack>();
         //playerShoot = FindObjectOfType<PlayerShoot>();
         //playerDash = FindObjectOfType<PlayerDash>();
-        playerHealthComponenent = GameObject.Find("PlayerController").GetComponent<C_Health>();
+        playerHealthComponenent = GameObject.Find("PlayerController").GetComponent<HealthComponent>();
         playerEnergy = FindObjectOfType<PlayerEnergy>();
         playerEnergyPoints = FindObjectOfType<PlayerEnergyPoints>();
         playerUpgradesManager = FindObjectOfType<PlayerUpgradesManager>();

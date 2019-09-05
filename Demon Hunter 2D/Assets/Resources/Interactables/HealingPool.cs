@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealingPool : MonoBehaviour
 {
     [SerializeField] private float _healAmount;
-    private C_Health _playerHealthComp;
+    private HealthComponent _playerHealthComp;
     private bool _canHeal;
 
     private void Start()
@@ -25,9 +25,9 @@ public class HealingPool : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponentInParent<C_Health>() && collision.gameObject.layer == 8)
+        if (collision.GetComponentInParent<HealthComponent>() && collision.gameObject.layer == 8)
         {
-            _playerHealthComp = collision.GetComponentInParent<C_Health>();
+            _playerHealthComp = collision.GetComponentInParent<HealthComponent>();
             _canHeal = true;
             StartCoroutine(Healing());
         }
@@ -36,7 +36,7 @@ public class HealingPool : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.GetComponentInParent<C_Health>() && collision.gameObject.layer == 8)
+        if (collision.GetComponentInParent<HealthComponent>() && collision.gameObject.layer == 8)
         {
             StopCoroutine(Healing());
             _canHeal = false;

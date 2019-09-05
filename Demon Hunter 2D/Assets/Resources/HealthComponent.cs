@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class C_Health : MonoBehaviour
+public class HealthComponent : MonoBehaviour
 {
     [Header("Variables")]
     public float maxHealth;

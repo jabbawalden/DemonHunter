@@ -251,26 +251,23 @@ MonoBehaviour:
   enemyState: 0
   enemyMovementType: 0
   enemySpecialType: 1
+  playerHealth: {fileID: 0}
   playerRef: {fileID: 0}
   canRecieveDamage: 0
-  originDistance: 0
-  _moveSpeed: 130
-  _distanceKeptMin: 3
-  _distanceKeptMax: 5.5
-  _distanceKept: 0
-  _AggroRange: 11
+  distanceKept: 0
+  moveSpeed: 100
+  distanceKeptMin: 9
+  distanceKeptMax: 5
+  AggroRange: 14
   newDestination: {x: 0, y: 0, z: 0}
   newDirection: {x: 0, y: 0, z: 0}
   haveDirectlyEngaged: 0
   routePosition: 0
-  _patrolRateMin: 2
-  _patrolRateMax: 4
-  _newPatrolTime: 0
-  _deathLerpTime: 0.03
-  _destroyObjectSeconds: 3
+  patrolRateMin: 1
+  patrolRateMax: 2
+  deathLerpTime: 0.008
+  destroyObjectSeconds: 6
   knockBack: 0
-  energyPickUp: {fileID: 2119201555398515205, guid: 3bdb3c0e477fc1b4db83915761c4136a,
-    type: 3}
   enemyAlive: {fileID: 9191249295901822546}
   enemyDead: {fileID: 8248284050901311079}
   enemyShield: {fileID: 2292396704524934309}
@@ -292,8 +289,6 @@ MonoBehaviour:
   _shootRange: 8
   _shootAnimationTime: 0.5
   _canShoot: 0
-  _projectile: {fileID: 2114494265205725720, guid: 7c38996b7a4b0af4aa4ccf84ff0875cb,
-    type: 3}
   _shootOrigin: {fileID: 7963632287536092608}
 --- !u!114 &2428038085055991861
 MonoBehaviour:
@@ -310,6 +305,11 @@ MonoBehaviour:
   maxHealth: 10
   _currentHealth: 0
   isPlayerComponent: 0
+  canHealthRegen: 0
+  healthRegenPercentSet: 0
+  _healthRegenAmount: 0
+  _healRate: 0
+  _newTime: 0
   playerCam: {fileID: 0}
 --- !u!58 &5963954458328030183
 CircleCollider2D:

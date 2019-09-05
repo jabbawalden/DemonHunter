@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProjectileBehaviour : MonoBehaviour
 {
     public float damage;
-    private C_Health _healthComponent;
+    private HealthComponent _healthComponent;
     private PlayerEnergy _playerEnergy;
     private PlayerController _playerController;
     [System.NonSerialized] public int hitCount;
@@ -16,11 +16,11 @@ public class ProjectileBehaviour : MonoBehaviour
     public Vector2 currentDirection;
     public float currentSpeed;
 
-    [SerializeField] private GameObject explosion;
+    //[SerializeField] private GameObject explosion;
     //[SerializeField] private GameObject explosion2;
     private void Awake()
     {
-        _healthComponent = GetComponent<C_Health>();
+        _healthComponent = GetComponent<HealthComponent>();
         _playerEnergy = GetComponent<PlayerEnergy>();
         if (isPlayerProj)
             _playerController = FindObjectOfType<PlayerController>();
@@ -33,8 +33,12 @@ public class ProjectileBehaviour : MonoBehaviour
             Destroy(gameObject);
     }
 
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
+        GameObject explosionRef = Resources.Load<GameObject>(AssetPaths.pref_explosion);
+
         //dealing damage code
         if (collision.GetComponentInParent<EnemyController>() && !collision.GetComponentInParent<EnemyController>().canRecieveDamage)
         {
@@ -43,11 +47,11 @@ public class ProjectileBehaviour : MonoBehaviour
             if (isPlayerProj)
                 Destroy(gameObject);
         }
-        else if (collision.gameObject.layer == targetLayer && collision.GetComponentInParent<C_Health>() != null /*&& collision.gameObject.GetComponent<EnemyController>() && collision.gameObject.GetComponent<EnemyController>().canRecieveDamage*/)
+        else if (collision.gameObject.layer == targetLayer && collision.GetComponentInParent<HealthComponent>() != null /*&& collision.gameObject.GetComponent<EnemyController>() && collision.gameObject.GetComponent<EnemyController>().canRecieveDamage*/)
         { 
             //if enemy and health component exists
             print("Hit player");
-            _healthComponent = collision.GetComponentInParent<C_Health>();
+            _healthComponent = collision.GetComponentInParent<HealthComponent>();
 
             if (_playerController && isPlayerProj)
                 _healthComponent.Damage(damage * _playerController.DamageMultiplier);
@@ -69,17 +73,17 @@ public class ProjectileBehaviour : MonoBehaviour
         {
             //if we are enemy projectile and run into playerproj layer
             //explode
-            if (explosion)
-                Instantiate(explosion, transform.position, Quaternion.identity);
+            if (explosionRef)
+                Instantiate(explosionRef, transform.position, Quaternion.identity);
 
             Destroy(gameObject);
             print("explode");
         }
         else if (gameObject.layer == 15 && collision.gameObject.layer == 15 && isPlayerProj)
         {
-            //if we are enemyProj, and the other is enemyProj and WE have playerProj true, then explode and destroy
-            if (explosion)
-                Instantiate(explosion, transform.position, Quaternion.identity);
+            //if we are enemyProj, and the other is enemyProj but WE have playerProj true, then explode and destroy
+            if (explosionRef)
+                Instantiate(explosionRef, transform.position, Quaternion.identity);
 
             Destroy(gameObject);
             print("explode");
@@ -97,7 +101,7 @@ public class ProjectileBehaviour : MonoBehaviour
 
         if (collision.gameObject.layer == 12)
         {
-            //if enemy blocker, destroy object
+            //if environment blocker, destroy object
             Destroy(gameObject);
         }
     }

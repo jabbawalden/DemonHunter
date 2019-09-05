@@ -51,8 +51,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Scripts")]
     private JsonDataManager _jsonDataManager;
-    [System.NonSerialized] public C_Health playerHealthComp;  
-    private C_Health _enemyHealthComp;
+    [System.NonSerialized] public HealthComponent playerHealthComp;  
+    private HealthComponent _enemyHealthComp;
     private PlayerEnergy _playerEnergy;
     private PlayerInput _playerInput;
     private Animator _animator;
@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
     {
         _jsonDataManager = FindObjectOfType<JsonDataManager>();
         _gameManager = FindObjectOfType<GameManager>();
-        playerHealthComp = GetComponent<C_Health>();
+        playerHealthComp = GetComponent<HealthComponent>();
         _playerEnergy = GetComponent<PlayerEnergy>();
         _playerInput = GetComponent<PlayerInput>();
         _rb = GetComponent<Rigidbody2D>();
@@ -209,7 +209,9 @@ public class PlayerController : MonoBehaviour
                 Vector2 rayDirection = obj.transform.position - transform.position;
 
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, 15);
-                Debug.DrawRay(transform.position, rayDirection * 15, Color.red, 0.1f);
+
+
+                //Debug.DrawRay(transform.position, rayDirection * 15, Color.red, 0.1f);
 
                 if (hit.collider)
                 {
@@ -218,14 +220,17 @@ public class PlayerController : MonoBehaviour
                     {
                         if (hit.collider.GetComponentInParent<EnemyController>())
                         {
+                            Debug.DrawRay(transform.position, rayDirection * 15, Color.green);
                             enemyControllerDetected = hit.collider.GetComponentInParent<EnemyController>();
                             enemyControllerDetected.canRecieveDamage = true;
+
                         }
                     }//if collider is shield
                     else if (hit.collider.gameObject.layer == 17)
                     {
                         if (hit.collider.GetComponentInParent<EnemyController>())
                         {
+                            Debug.DrawRay(transform.position, rayDirection * 15, Color.red);
                             enemyControllerDetected = hit.collider.GetComponentInParent<EnemyController>();
                             enemyControllerDetected.canRecieveDamage = false;
                         }

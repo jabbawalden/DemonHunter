@@ -7,7 +7,7 @@ public class EnemyShoot : MonoBehaviour
     [Header("Scripts")]
     private EnemyController _enemyController;
     private ProjectileBehaviour projBehaviour;
-    private C_Health _healthComp;
+    private HealthComponent _healthComp;
     [Space(4)]
 
     [Header("Variables")]
@@ -27,7 +27,7 @@ public class EnemyShoot : MonoBehaviour
     private void Awake()
     {
         _enemyController = GetComponent<EnemyController>();
-        _healthComp = GetComponent<C_Health>();
+        _healthComp = GetComponent<HealthComponent>();
     }
 
     private void Start()
@@ -42,7 +42,7 @@ public class EnemyShoot : MonoBehaviour
         
         if (_healthComp.IsAlive())
         {
-            if (_enemyController.playerRef.GetComponentInParent<C_Health>().IsAlive() && _enemyController.playerRef != null && _enemyController.TargetDistance() <= _shootRange && _canShoot)
+            if (_enemyController.playerRef.GetComponentInParent<HealthComponent>().IsAlive() && _enemyController.playerRef != null && _enemyController.TargetDistance() <= _shootRange && _canShoot)
             {
                 ShootProjectile();
             }
