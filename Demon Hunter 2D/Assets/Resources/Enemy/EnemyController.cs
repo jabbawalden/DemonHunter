@@ -83,6 +83,12 @@ public class EnemyController : MonoBehaviour
         canRecieveDamage = true;
     }
 
+    private void FixedUpdate()
+    {
+        if (_healthComponent.IsAlive())
+            EnemyMovement();
+    }
+
     void Update()
     {
         PlayerEngagedState();
@@ -90,7 +96,6 @@ public class EnemyController : MonoBehaviour
         if (_healthComponent.IsAlive())
         {
             DirectionCheck();
-            EnemyMovement();
             StateManager();
 
             if (playerRef && playerController.playerHealthComp.IsAlive())

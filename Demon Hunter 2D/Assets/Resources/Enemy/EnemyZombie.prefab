@@ -157,7 +157,7 @@ MonoBehaviour:
   playerRef: {fileID: 0}
   canRecieveDamage: 0
   distanceKept: 0
-  moveSpeed: 180
+  moveSpeed: 120
   distanceKeptMin: 0
   distanceKeptMax: 0
   AggroRange: 13
@@ -213,8 +213,6 @@ MonoBehaviour:
   _attackTime: 0.3
   _preAttackTime: 0.15
   attackSpawnDistance: 1
-  meeleStrike: {fileID: 4469334042041512779, guid: db4bcd59c42c9a94f866099a360e31ec,
-    type: 3}
   stateCheck: 0
 --- !u!58 &8186703901129291067
 CircleCollider2D:

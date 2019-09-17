@@ -192,6 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 0
+  enemyEngagedCounter: 0
   playerAlive: {fileID: 1384944239}
   playerDead: {fileID: 5366494515694450531}
   playerBodyCollision: {fileID: 1384944240}
@@ -231,10 +232,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6c6fac6910818f4c8282fcca56e5d31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerCamera: {fileID: 0}
   layersToIgnore: 
   dashEnergyCostSet: 40
-  _dashSpeed: 1400
+  _dashSpeed: 38
   _dashDamage: 5
   _dashHealAmount: 3
   playerBodyCollision: {fileID: 1384944240}
@@ -279,8 +279,6 @@ MonoBehaviour:
   _meleeDamage: 6
   _meleeSpawnRange: 0
   _canMeleeDamage: 0
-  _meleeAttackObj: {fileID: 8539551883183876278, guid: 9cdbf58f903615b40a506879ca22c17c,
-    type: 3}
   playerMeleeEnabled: 0
   meleeIconLit: 0
 --- !u!114 &1538872662
@@ -295,14 +293,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 280494a4ebcda5a41ad4d058065961f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projSpeed: 2400
+  _projSpeed: 1900
   _fireRate: 0.1
   _shootAnimationTime: 0.4
   _projDamage: 10
   _healthCost: 0
   _energyCost: 60
-  projectile: {fileID: 5817606138077904511, guid: 63a02c98749e77d43aa35d73d312a2fb,
-    type: 3}
   _shootOrigin: {fileID: 1706719609}
   playerShootEnabled: 0
   shootIconLit: 0
@@ -364,7 +360,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1538872657}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a63d3f4d6762294789bcf818ce9fa19, type: 3}
   m_Name: 
@@ -392,11 +388,6 @@ MonoBehaviour:
   _healthUpgradesLeft: 0
   _energyUpgradesLeft: 0
   _damageUpgradesLeft: 0
-  speedB: {fileID: 0}
-  healthB: {fileID: 0}
-  energyB: {fileID: 0}
-  damageB: {fileID: 0}
-  healthRegenB: {fileID: 0}
 --- !u!114 &1021226514976844720
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,6 +16,8 @@ public class PlayerInput : MonoBehaviour
     private NPCManager _npcManager;
     private UIManager _uiManager;
     private GameManager gameManager;
+    private bool shoot;
+    private bool dash;
 
     [SerializeField] private float _h, _v;
     public float h { get { return _h; } private set { _h = value; } }
@@ -55,6 +57,27 @@ public class PlayerInput : MonoBehaviour
 
     }
 
+    private void FixedUpdate()
+    {
+        if (_healthComponent.IsAlive())
+        {
+            if (!_playerController.isNPCInteracting && !gameManager.IsPause)
+            {
+                if (shoot)
+                {
+                    shoot = false;
+                    _playerShoot.ShootAction();
+                }
+
+                //if (dash)
+                //{
+                //    dash = false;
+                //    _playerDash.Dash();
+                //}
+            }
+        }
+    }
+
     private void PlayerMoveInput()
     {
         h = Input.GetAxisRaw("Horizontal");
@@ -76,7 +99,7 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && _playerShoot.playerShootEnabled)
         {
-            _playerShoot.ShootAction();
+            shoot = true;
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && _playerEnergy.currentEnergy >= _playerDash.dashEnergyCost && _playerDash.playerDashEnabled)

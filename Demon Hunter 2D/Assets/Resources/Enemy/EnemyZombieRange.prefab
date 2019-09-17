@@ -260,6 +260,7 @@ MonoBehaviour:
   enemyState: 0
   enemyMovementType: 0
   enemySpecialType: 0
+  playerHealth: {fileID: 0}
   playerRef: {fileID: 0}
   canRecieveDamage: 0
   distanceKept: 0
@@ -293,7 +294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fireRate: 1.7
   _projDamage: 10
-  _projSpeed: 400
+  _projSpeed: 325
   _shootRange: 8
   _shootAnimationTime: 0.5
   _canShoot: 0

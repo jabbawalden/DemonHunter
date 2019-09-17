@@ -97,7 +97,8 @@ public class PlayerDash : MonoBehaviour
         while (count < time)
         {
             count += speed;
-            _rb.velocity = currentAimDirection * _dashSpeed * Time.deltaTime;
+            //_rb.velocity = currentAimDirection * _dashSpeed;
+            transform.Translate(currentAimDirection * _dashSpeed * Time.deltaTime);
             yield return new WaitForSeconds(0.01f);
         }
 

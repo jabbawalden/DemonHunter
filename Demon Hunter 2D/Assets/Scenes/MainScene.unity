@@ -60954,11 +60954,6 @@ MonoBehaviour:
   _healthUpgradesLeft: 0
   _energyUpgradesLeft: 0
   _damageUpgradesLeft: 0
-  speedB: {fileID: 0}
-  healthB: {fileID: 0}
-  energyB: {fileID: 0}
-  damageB: {fileID: 0}
-  healthRegenB: {fileID: 0}
 --- !u!1001 &1530237940
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -87949,6 +87944,11 @@ PrefabInstance:
       propertyPath: _playerCamera
       value: 
       objectReference: {fileID: 1105582906}
+    - target: {fileID: 7916383915472219977, guid: f0012caabe927754790617fe3618fa17,
+        type: 3}
+      propertyPath: _dashSpeed
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 1538872663, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: playerMeleeEnabled
       value: 0
