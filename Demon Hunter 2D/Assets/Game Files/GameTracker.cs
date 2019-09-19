@@ -46,9 +46,17 @@ public class GameTracker : MonoBehaviour
         CheckFileExistence();
     }
 
-    private void Start()
+    private void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            System.IO.File.Delete(path1);
+            print(path1);
+            System.IO.File.Delete(path2);
+            print(path2);
+            System.IO.File.Delete(path3);
+            print(path3);
+        }
     }
 
     private void CheckFileExistence()
