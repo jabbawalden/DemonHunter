@@ -124,7 +124,6 @@ GameObject:
   - component: {fileID: 1538872661}
   - component: {fileID: 1538872660}
   - component: {fileID: 6182891382143642563}
-  - component: {fileID: 2200351011396354857}
   - component: {fileID: 1021226514976844720}
   - component: {fileID: 1538872659}
   - component: {fileID: 1538872658}
@@ -354,41 +353,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energyPoints: 0
   energyLossPercent: 0.025
---- !u!114 &2200351011396354857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1538872657}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a63d3f4d6762294789bcf818ce9fa19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speedUpgradeAmountSet: 17
-  _healthUpgradeAmountSet: 7
-  _energyUpgradeAmountSet: 7
-  _damageMultiplierAmountSet: 0.25
-  _speedUpgradeCostSet: 100
-  _healthUpgradeCostSet: 300
-  _energyUpgradeCostSet: 200
-  _damageMultiplierUpgradeCostSet: 0
-  _healthRegenCost: 2500
-  _upgradeValueMultiplier: 0.2
-  _upgradeCostMultiplier: 0.3
-  _currentSpeedUpgrade: 0
-  _currentHealthUpgrade: 0
-  _currentEnergyUpgrade: 0
-  _currentDamageUpgrade: 0
-  _maxSpeedUpgrade: 5
-  _maxHealthUpgrade: 8
-  _maxEnergyUpgrade: 10
-  _maxDamageUpgrade: 4
-  _speedUpgradesLeft: 0
-  _healthUpgradesLeft: 0
-  _energyUpgradesLeft: 0
-  _damageUpgradesLeft: 0
 --- !u!114 &1021226514976844720
 MonoBehaviour:
   m_ObjectHideFlags: 0

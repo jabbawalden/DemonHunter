@@ -98,19 +98,19 @@ public class JsonDataManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            System.IO.File.Delete(filePath);
-            print(filePath);
-        }
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+        //    System.IO.File.Delete(filePath);
+        //    print(filePath);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            if (/*!_playerController.inCombat || */_gameManager.playerInTown)
-                GameEvents.ReportSaveFileExitTown();
-            else
-                Debug.Log("Cannot save outside of town area");
-        }
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    if (/*!_playerController.inCombat || */_gameManager.playerInTown)
+        //        GameEvents.ReportSaveFileExitTown();
+        //    else
+        //        Debug.Log("Cannot save outside of town area");
+        //}
 
     }
 

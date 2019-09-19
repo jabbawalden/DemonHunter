@@ -96,6 +96,7 @@ public class GameTracker : MonoBehaviour
                 break;
         }
 
+        //loads main scene
         SceneManager.LoadScene(1);
     }
 
