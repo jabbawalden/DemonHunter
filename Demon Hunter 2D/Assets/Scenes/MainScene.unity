@@ -87887,10 +87887,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerController
       objectReference: {fileID: 0}
-    - target: {fileID: 1538872664, guid: f0012caabe927754790617fe3618fa17, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1538872665, guid: f0012caabe927754790617fe3618fa17, type: 3}
       propertyPath: m_LocalPosition.x
       value: -151.3
@@ -87939,34 +87935,6 @@ PrefabInstance:
       propertyPath: playerCam
       value: 
       objectReference: {fileID: 1105582906}
-    - target: {fileID: 7916383915472219977, guid: f0012caabe927754790617fe3618fa17,
-        type: 3}
-      propertyPath: _playerCamera
-      value: 
-      objectReference: {fileID: 1105582906}
-    - target: {fileID: 7916383915472219977, guid: f0012caabe927754790617fe3618fa17,
-        type: 3}
-      propertyPath: _dashSpeed
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 1538872663, guid: f0012caabe927754790617fe3618fa17, type: 3}
-      propertyPath: playerMeleeEnabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1538872662, guid: f0012caabe927754790617fe3618fa17, type: 3}
-      propertyPath: playerShootEnabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2200351011396354857, guid: f0012caabe927754790617fe3618fa17,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5685685704298500368, guid: f0012caabe927754790617fe3618fa17,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0012caabe927754790617fe3618fa17, type: 3}
 --- !u!4 &9015813691211318581 stripped

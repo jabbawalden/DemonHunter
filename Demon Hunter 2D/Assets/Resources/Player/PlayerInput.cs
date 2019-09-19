@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    //Unfinished Script
-
     private PlayerController _playerController;
     private PlayerShoot _playerShoot;
     private HealthComponent _healthComponent;
@@ -69,11 +67,11 @@ public class PlayerInput : MonoBehaviour
                     _playerShoot.ShootAction();
                 }
 
-                //if (dash)
-                //{
-                //    dash = false;
-                //    _playerDash.Dash();
-                //}
+                if (dash)
+                {
+                    dash = false;
+                    _playerDash.Dash();
+                }
             }
         }
     }
@@ -104,7 +102,7 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && _playerEnergy.currentEnergy >= _playerDash.dashEnergyCost && _playerDash.playerDashEnabled)
         {
-            _playerDash.Dash();
+            dash = true;
         }
     }
 

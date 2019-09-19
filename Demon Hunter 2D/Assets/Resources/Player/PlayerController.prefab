@@ -234,11 +234,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layersToIgnore: 
   dashEnergyCostSet: 40
-  _dashSpeed: 38
-  _dashDamage: 5
-  _dashHealAmount: 3
+  dashSpeed: 26
+  dashDamage: 5
+  dashHealAmount: 1
+  dashTime: 0.2
   playerBodyCollision: {fileID: 1384944240}
-  _circleCollider: {fileID: 1538872658}
+  circleCollider: {fileID: 0}
   playerDashCollider: {fileID: 3024541856439200148}
   playerDashEnabled: 0
   dashIconLit: 0

@@ -157,7 +157,7 @@ MonoBehaviour:
   playerRef: {fileID: 0}
   canRecieveDamage: 0
   distanceKept: 0
-  moveSpeed: 120
+  moveSpeed: 80
   distanceKeptMin: 0
   distanceKeptMax: 0
   AggroRange: 13

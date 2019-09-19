@@ -264,7 +264,7 @@ MonoBehaviour:
   playerRef: {fileID: 0}
   canRecieveDamage: 0
   distanceKept: 0
-  moveSpeed: 140
+  moveSpeed: 70
   distanceKeptMin: 8
   distanceKeptMax: 10
   AggroRange: 12
@@ -292,7 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e04367237f5205d4ca3f0443fa271928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fireRate: 1.7
+  _fireRate: 1
   _projDamage: 10
   _projSpeed: 325
   _shootRange: 8

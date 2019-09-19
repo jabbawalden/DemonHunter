@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PlayerDash : MonoBehaviour
 {
-    private GameManager _gameManager;
-    private PlayerEnergy _playerEnergy;
-    private HealthComponent _playerHealthComp;
-    private HealthComponent _enemyHealthComp;
-    private UIManager _uiManager;
-    private PlayerController _playerController;
-    private Rigidbody2D _rb;
+    private GameManager gameManager;
+    private PlayerEnergy playerEnergy;
+    private HealthComponent playerHealthComp;
+    private HealthComponent enemyHealthComp;
+    private UIManager uiManager;
+    private PlayerController playerController;
+    private Rigidbody2D rb;
     private PlayerCamera playerCamera;
 
     [SerializeField] private int[] layersToIgnore;
@@ -22,28 +22,30 @@ public class PlayerDash : MonoBehaviour
             return dashEnergyCostSet;
         }
     }
-    [SerializeField] private float _dashSpeed;
-    [SerializeField] private float _dashDamage;
-    [SerializeField] private float _dashHealAmount;
+    [SerializeField] private float dashSpeed;
+    [SerializeField] private float dashDamage;
+    [SerializeField] private float dashHealAmount;
+    [SerializeField] private float dashTime;
     [SerializeField] private BoxCollider2D playerBodyCollision;
-    [SerializeField] private CircleCollider2D _circleCollider;
+    [SerializeField] private CircleCollider2D circleCollider;
     [SerializeField] private GameObject playerDashCollider;
 
-    private bool _canDashDamage;
+    private bool canDashDamage;
     public bool playerDashEnabled;
     public bool dashIconLit;
-    
+    private bool isDashing;
+    private Vector2 currentAimDirection;
 
     private void Awake()
     {
-        _gameManager = FindObjectOfType<GameManager>();
-        _playerEnergy = GetComponent<PlayerEnergy>();
-        _playerHealthComp = GetComponent<HealthComponent>();
-        _playerController = GetComponent<PlayerController>();
-        _rb = GetComponent<Rigidbody2D>();
-        _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        circleCollider = GetComponent<CircleCollider2D>();
+        gameManager = FindObjectOfType<GameManager>();
+        playerEnergy = GetComponent<PlayerEnergy>();
+        playerHealthComp = GetComponent<HealthComponent>();
+        playerController = GetComponent<PlayerController>();
+        rb = GetComponent<Rigidbody2D>();
+        uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         playerCamera = FindObjectOfType<PlayerCamera>();
-
     }
 
     private void Start()
@@ -54,8 +56,16 @@ public class PlayerDash : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_playerHealthComp.IsAlive())
+        if (playerHealthComp.IsAlive())
             DashIconUI();
+    }
+
+    private void FixedUpdate()
+    {
+        if (isDashing)
+        {
+            rb.velocity = currentAimDirection * dashSpeed;
+        }
     }
 
     public void LoadData()
@@ -65,35 +75,34 @@ public class PlayerDash : MonoBehaviour
 
     public void Dash()
     {
-        _playerEnergy.RemoveEnergy(dashEnergyCost);
-        StartCoroutine(DashBehaviour(4.5f, 0.3f));
-        _uiManager.UpdateEnergySlider();
-        _uiManager.DamageEnergyBar();
+        playerEnergy.RemoveEnergy(dashEnergyCost);
+        StartCoroutine(DashBehaviour(dashTime));
+        uiManager.UpdateEnergySlider();
+        uiManager.DamageEnergyBar();
         playerCamera.CameraShake(0.15f, 0.11f);
 
-        _gameManager.TutorialCheckDash();
+        gameManager.TutorialCheckDash();
     }
 
     private void DashIconUI()
     {
-        if (_playerEnergy.currentEnergy >= dashEnergyCost)
+        if (playerEnergy.currentEnergy >= dashEnergyCost)
             dashIconLit = true;
         else
             dashIconLit = false;
     }
 
-    IEnumerator DashBehaviour(float time, float speed)
+    IEnumerator DashBehaviour(float time)
     {
         float count = 0;
-        Vector2 currentAimDirection = _playerController.AimDirection();
-
+        currentAimDirection = playerController.AimDirection();
         playerDashCollider.SetActive(true);
-        _playerController.canMove = false;
-        _canDashDamage = true;
-        _circleCollider.enabled = true;
-        //ensures that attacks will not detect player collider, thus invulnerable
+        playerController.canMove = false;
+        canDashDamage = true;
+        circleCollider.enabled = true;
         playerBodyCollision.enabled = false;
-
+        isDashing = true;
+        /*
         while (count < time)
         {
             count += speed;
@@ -101,10 +110,12 @@ public class PlayerDash : MonoBehaviour
             transform.Translate(currentAimDirection * _dashSpeed * Time.deltaTime);
             yield return new WaitForSeconds(0.01f);
         }
-
-        _playerController.canMove = true;
-        _canDashDamage = false;
-        _circleCollider.enabled = false;
+        */
+        yield return new WaitForSeconds(time);
+        isDashing = false;
+        playerController.canMove = true;
+        canDashDamage = false;
+        circleCollider.enabled = false;
         playerBodyCollision.enabled = true;
         yield return new WaitForSeconds(0.05f);
         playerDashCollider.SetActive(false);
@@ -112,18 +123,18 @@ public class PlayerDash : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 10 && _canDashDamage && collision.GetComponentInParent<HealthComponent>() != null && collision.GetComponentInParent<EnemyController>() != null)
+        if (collision.gameObject.layer == 10 && canDashDamage && collision.GetComponentInParent<HealthComponent>() != null && collision.GetComponentInParent<EnemyController>() != null)
         {
             //if damage from dash is enabled i.e. we can "see" the enemy
             if (collision.GetComponentInParent<EnemyController>().canRecieveDamage)
             {
-                _enemyHealthComp = collision.GetComponentInParent<HealthComponent>();
-                _playerHealthComp.Heal(_dashHealAmount);
-                _enemyHealthComp.Damage(_dashDamage * _playerController.DamageMultiplier);
+                enemyHealthComp = collision.GetComponentInParent<HealthComponent>();
+                playerHealthComp.Heal(dashHealAmount);
+                enemyHealthComp.Damage(dashDamage * playerController.DamageMultiplier);
             }
 
 
-            _uiManager.UpdateHealthSlider();
+            uiManager.UpdateHealthSlider();
             //_uiManager.DamageHealthBar();
         }
     }
