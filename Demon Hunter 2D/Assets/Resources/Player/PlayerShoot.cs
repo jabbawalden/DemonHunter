@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
-    private GameManager _gameManager;
-    private PlayerController _playerController;
-    private HealthComponent _healthComponent;
-    private UIManager _uiManager;
-    private PlayerEnergy _playerEnergy;
+    private GameManager gameManager;
+    private PlayerController playerController;
+    private HealthComponent healthComponent;
+    private UIManager uiManager;
+    private PlayerEnergy playerEnergy;
 
     [Header("Variables")]
     [SerializeField] private float _projSpeed;
@@ -30,17 +30,17 @@ public class PlayerShoot : MonoBehaviour
 
     private void Awake()
     {
-        _gameManager = FindObjectOfType<GameManager>();
-        _playerController = GetComponent<PlayerController>();
-        _healthComponent = GetComponent<HealthComponent>();
-        _playerEnergy = GetComponent<PlayerEnergy>();
-        _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        gameManager = FindObjectOfType<GameManager>();
+        playerController = GetComponent<PlayerController>();
+        healthComponent = GetComponent<HealthComponent>();
+        playerEnergy = GetComponent<PlayerEnergy>();
+        uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_playerEnergy.currentEnergy >= _energyCost)
+        if (playerEnergy.currentEnergy >= _energyCost)
             shootIconLit = true;
         else
             shootIconLit = false;
@@ -53,17 +53,17 @@ public class PlayerShoot : MonoBehaviour
 
     public void ShootAction()
     {
-        if (Time.time >= _newTime && _playerEnergy.currentEnergy >= _energyCost)
+        if (Time.time >= _newTime && playerEnergy.currentEnergy >= _energyCost)
         {
             ShootAbility();
-            _gameManager.TutorialCheckShoot();
+            gameManager.TutorialCheckShoot();
         }
     }
 
     private void ShootAbility()
     {
-        _playerController.currentMovementSpeed = _playerController.shootingMovementSpeed;
-        _playerController.StopVelocity();
+        playerController.currentMovementSpeed = playerController.shootingMovementSpeed;
+        playerController.StopVelocity();
 
         _newTime = Time.time + _fireRate;
         StartCoroutine(ShootBehaviour());
@@ -71,7 +71,7 @@ public class PlayerShoot : MonoBehaviour
         GameObject playerProjectile = Resources.Load<GameObject>(AssetPaths.pref_playerProjectile);
 
         GameObject proj = Instantiate(playerProjectile, _shootOrigin.position, playerProjectile.transform.rotation);
-        Vector2 direction = _playerController.AimDirection(); //normalized not actually needed
+        Vector2 direction = playerController.AimDirection(); //normalized not actually needed
 
         proj.transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
         proj.GetComponent<Rigidbody2D>().velocity = direction * _projSpeed * Time.deltaTime;
@@ -82,14 +82,16 @@ public class PlayerShoot : MonoBehaviour
 
         //_healthComponent.Damage(_healthCost);
         //_uiManager.UpdateHealthSlider();
-        _playerEnergy.RemoveEnergy(_energyCost);
-        _uiManager.UpdateEnergySlider();
-        _uiManager.DamageEnergyBar();
+        playerEnergy.RemoveEnergy(_energyCost);
+        uiManager.UpdateEnergySlider();
+        uiManager.DamageEnergyBar();
     }
 
     IEnumerator ShootBehaviour()
     {
+        playerController.canAttack = false;
         yield return new WaitForSeconds(_shootAnimationTime);
-        _playerController.currentMovementSpeed = _playerController.defaultMovementSpeed;
+        playerController.currentMovementSpeed = playerController.defaultMovementSpeed;
+        playerController.canAttack = true;
     }
 }

@@ -80,7 +80,6 @@ public class PlayerDash : MonoBehaviour
         uiManager.UpdateEnergySlider();
         uiManager.DamageEnergyBar();
         playerCamera.CameraShake(0.15f, 0.11f);
-
         gameManager.TutorialCheckDash();
     }
 
@@ -94,7 +93,7 @@ public class PlayerDash : MonoBehaviour
 
     IEnumerator DashBehaviour(float time)
     {
-        float count = 0;
+        //start dash animation
         currentAimDirection = playerController.AimDirection();
         playerDashCollider.SetActive(true);
         playerController.canMove = false;
@@ -102,16 +101,10 @@ public class PlayerDash : MonoBehaviour
         circleCollider.enabled = true;
         playerBodyCollision.enabled = false;
         isDashing = true;
-        /*
-        while (count < time)
-        {
-            count += speed;
-            //_rb.velocity = currentAimDirection * _dashSpeed;
-            transform.Translate(currentAimDirection * _dashSpeed * Time.deltaTime);
-            yield return new WaitForSeconds(0.01f);
-        }
-        */
+        playerController.canAttack = false;
+
         yield return new WaitForSeconds(time);
+
         isDashing = false;
         playerController.canMove = true;
         canDashDamage = false;
@@ -119,6 +112,8 @@ public class PlayerDash : MonoBehaviour
         playerBodyCollision.enabled = true;
         yield return new WaitForSeconds(0.05f);
         playerDashCollider.SetActive(false);
+        playerController.canAttack = true;
+        //return to idle or run?
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

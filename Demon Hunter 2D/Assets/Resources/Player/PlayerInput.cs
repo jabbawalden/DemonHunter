@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    private PlayerController _playerController;
-    private PlayerShoot _playerShoot;
-    private HealthComponent _healthComponent;
-    private PlayerEnergy _playerEnergy;
-    private PlayerDash _playerDash;
-    private PlayerMeleeAttack _playerMeleeAttack;
-    private PlayerAbilities _playerAbilities;
-    private NPCManager _npcManager;
-    private UIManager _uiManager;
+    private PlayerController playerController;
+    private PlayerShoot playerShoot;
+    private HealthComponent healthComponent;
+    private PlayerEnergy playerEnergy;
+    private PlayerDash playerDash;
+    private PlayerMeleeAttack playerMeleeAttack;
+    private PlayerAbilities playerAbilities;
+    private NPCManager npcManager;
+    private UIManager uiManager;
     private GameManager gameManager;
     private bool shoot;
     private bool dash;
@@ -23,30 +23,34 @@ public class PlayerInput : MonoBehaviour
 
     private void Awake()
     {
-        _playerController = GetComponent<PlayerController>();
-        _playerShoot = GetComponent<PlayerShoot>();
-        _healthComponent = GetComponent<HealthComponent>();
-        _playerEnergy = GetComponent<PlayerEnergy>();
-        _playerDash = GetComponent<PlayerDash>();
-        _playerMeleeAttack = GetComponent<PlayerMeleeAttack>();
-        _playerAbilities = GetComponent<PlayerAbilities>();
-        _npcManager = FindObjectOfType<NPCManager>();
-        _uiManager = FindObjectOfType<UIManager>();
+        playerController = GetComponent<PlayerController>();
+        playerShoot = GetComponent<PlayerShoot>();
+        healthComponent = GetComponent<HealthComponent>();
+        playerEnergy = GetComponent<PlayerEnergy>();
+        playerDash = GetComponent<PlayerDash>();
+        playerMeleeAttack = GetComponent<PlayerMeleeAttack>();
+        playerAbilities = GetComponent<PlayerAbilities>();
+        npcManager = FindObjectOfType<NPCManager>();
+        uiManager = FindObjectOfType<UIManager>();
         gameManager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_healthComponent.IsAlive())
+        if (healthComponent.IsAlive())
         {
-            if (!_playerController.isNPCInteracting && !gameManager.IsPause)
+            if (!playerController.isNPCInteracting && !gameManager.IsPause)
             {
-                if (_playerController.canMove)
+                if (playerController.canMove)
                     PlayerMoveInput();
 
-                PlayerBasicAttacks();
-                PlayerAbilitySelect();
+                if (playerController.canAttack)
+                {
+                    PlayerBasicAttacks();
+                    PlayerAbilitySelect();
+                }
+
             }
 
             MenuInput();
@@ -57,20 +61,20 @@ public class PlayerInput : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_healthComponent.IsAlive())
+        if (healthComponent.IsAlive())
         {
-            if (!_playerController.isNPCInteracting && !gameManager.IsPause)
+            if (!playerController.isNPCInteracting && !gameManager.IsPause)
             {
                 if (shoot)
                 {
                     shoot = false;
-                    _playerShoot.ShootAction();
+                    playerShoot.ShootAction();
                 }
 
                 if (dash)
                 {
                     dash = false;
-                    _playerDash.Dash();
+                    playerDash.Dash();
                 }
             }
         }
@@ -90,17 +94,17 @@ public class PlayerInput : MonoBehaviour
 
     private void PlayerBasicAttacks()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1) && _playerMeleeAttack.playerMeleeEnabled)
+        if (Input.GetKeyDown(KeyCode.Mouse1) && playerMeleeAttack.playerMeleeEnabled)
         {
-            _playerMeleeAttack.MeleeAttack();
+            playerMeleeAttack.MeleeAttack();
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && _playerShoot.playerShootEnabled)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && playerShoot.playerShootEnabled)
         {
             shoot = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && _playerEnergy.currentEnergy >= _playerDash.dashEnergyCost && _playerDash.playerDashEnabled)
+        if (Input.GetKeyDown(KeyCode.Space) && playerEnergy.currentEnergy >= playerDash.dashEnergyCost && playerDash.playerDashEnabled)
         {
             dash = true;
         }
@@ -117,50 +121,50 @@ public class PlayerInput : MonoBehaviour
     private void PlayerAbilitySelect()
     {
         if (Input.GetKeyDown(KeyCode.Alpha8))
-            _playerAbilities.SwitchSelectedAbility(1);
+            playerAbilities.SwitchSelectedAbility(1);
 
         if (Input.GetKeyDown(KeyCode.Alpha9))
-            _playerAbilities.SwitchSelectedAbility(2);
+            playerAbilities.SwitchSelectedAbility(2);
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
-            _playerAbilities.SwitchSelectedAbility(3);
+            playerAbilities.SwitchSelectedAbility(3);
 
         if (Input.GetKeyDown(KeyCode.Q))
-            _playerAbilities.specialAbilityActivate();
+            playerAbilities.specialAbilityActivate();
     }
     
     private void PlayerNPCInteract()
     {
-        _playerController.StopVelocity();
+        playerController.StopVelocity();
 
         //check bools then set npcmanager values
-        if (Input.GetKeyDown(KeyCode.E) && !_playerController.isNPCInteracting && _playerController.npcSet)
+        if (Input.GetKeyDown(KeyCode.E) && !playerController.isNPCInteracting && playerController.npcSet)
         {
-            _playerController.selectedNPC(true);
-            _npcManager.SetSpeechCounters();
-            _npcManager.ActivateSpeech();
+            playerController.selectedNPC(true);
+            npcManager.SetSpeechCounters();
+            npcManager.ActivateSpeech();
             StopInput();
         }
-        else if (Input.GetKeyDown(KeyCode.E) && _playerController.isNPCInteracting && _playerController.npcSet)
+        else if (Input.GetKeyDown(KeyCode.Escape) && playerController.isNPCInteracting && playerController.npcSet)
         {
-            _playerController.selectedNPC(false);
+            playerController.selectedNPC(false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && _playerController.isNPCInteracting) 
+        if (Input.GetKeyDown(KeyCode.E) && playerController.isNPCInteracting) 
         {
-            if (_npcManager.currentConvCheck)
+            if (npcManager.currentConvCheck)
             {
                 //if true, use 1 liner dialogue instead
-                print(_npcManager.currentConvCheck);
-                _playerController.selectedNPC(false);
+                print(npcManager.currentConvCheck);
+                playerController.selectedNPC(false);
             }
-            else if (_npcManager.mainTalkCount <= _npcManager.maxTalkCount)
+            else if (npcManager.mainTalkCount <= npcManager.maxTalkCount)
             {
-                _npcManager.ActivateSpeech();
+                npcManager.ActivateSpeech();
             }
-            else if(_npcManager.mainTalkCount > _npcManager.maxTalkCount)
+            else if(npcManager.mainTalkCount > npcManager.maxTalkCount)
             {
-                _playerController.selectedNPC(false);
+                playerController.selectedNPC(false);
 
             }
         }

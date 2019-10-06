@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerMeleeAttack : MonoBehaviour
 {
-    private GameManager _gameManager; 
-    private HealthComponent _enemyHealthComp;
-    private HealthComponent _playerHealthComp;
-    private PlayerController _playerController;
-    private PlayerEnergy _playerEnergy;
-    private UIManager _uiManager;
+    private GameManager gameManager; 
+    private HealthComponent enemyHealthComp;
+    private HealthComponent playerHealthComp;
+    private PlayerController playerController;
+    private PlayerEnergy playerEnergy;
+    private UIManager uiManager;
 
     [Header("Variables")]
     [SerializeField] private float _recoveryAttackTime;
@@ -22,7 +22,7 @@ public class PlayerMeleeAttack : MonoBehaviour
     [SerializeField] private float _meleeDamage;
     [SerializeField] private float _meleeSpawnRange; 
     [SerializeField] private bool _canMeleeDamage;
-    private CircleCollider2D _circleCollider;
+    private CircleCollider2D circleCollider;
 
     //[SerializeField] private GameObject _meleeAttackObj;
     public bool playerMeleeEnabled;
@@ -31,12 +31,12 @@ public class PlayerMeleeAttack : MonoBehaviour
 
     private void Awake()
     {
-        _gameManager = FindObjectOfType<GameManager>();
-        _playerController = GetComponent<PlayerController>();
-        _playerEnergy = GetComponent<PlayerEnergy>();
-        _playerHealthComp = GetComponent<HealthComponent>();
-        _circleCollider = GetComponent<CircleCollider2D>();
-        _uiManager = FindObjectOfType<UIManager>();
+        gameManager = FindObjectOfType<GameManager>();
+        playerController = GetComponent<PlayerController>();
+        playerEnergy = GetComponent<PlayerEnergy>();
+        playerHealthComp = GetComponent<HealthComponent>();
+        circleCollider = GetComponent<CircleCollider2D>();
+        uiManager = FindObjectOfType<UIManager>();
     }
 
     void Start()
@@ -47,7 +47,7 @@ public class PlayerMeleeAttack : MonoBehaviour
     void Update()
     {
 
-        if (_playerEnergy.currentEnergy >= _energyCost)
+        if (playerEnergy.currentEnergy >= _energyCost)
             meleeIconLit = true;
         else
             meleeIconLit = false;
@@ -60,25 +60,26 @@ public class PlayerMeleeAttack : MonoBehaviour
 
     public void MeleeAttack()
     {
-        _gameManager.TutorialCheckMelee();
+        gameManager.TutorialCheckMelee();
 
-        if (_newTime <= Time.time && _playerEnergy.currentEnergy >= _energyCost)
+        if (_newTime <= Time.time && playerEnergy.currentEnergy >= _energyCost)
         {
             _canMeleeDamage = true;
             //_playerController.canMove = false;
             //_playerController.StopVelocity();
             _newTime = Time.time + _attackRate;
             StartCoroutine(MeleeBehaviour());
-            _playerEnergy.RemoveEnergy(_energyCost);
-            _uiManager.UpdateEnergySlider();
-            _uiManager.DamageEnergyBar();
+            playerEnergy.RemoveEnergy(_energyCost);
+            uiManager.UpdateEnergySlider();
+            uiManager.DamageEnergyBar();
         }
     }
 
     IEnumerator MeleeBehaviour()
     {
-        Vector2 spawnAttackPosition = new Vector2(transform.position.x, transform.position.y) + _playerController.AimDirection();
-        _playerController.currentMovementSpeed = _playerController.meleeMovementSpeed;
+        Vector2 spawnAttackPosition = new Vector2(transform.position.x, transform.position.y) + playerController.AimDirection();
+        playerController.currentMovementSpeed = playerController.meleeMovementSpeed;
+        playerController.canAttack = false;
 
         yield return new WaitForSeconds(_attackWindUpTime);
         //spawn melee attack collider
@@ -97,7 +98,8 @@ public class PlayerMeleeAttack : MonoBehaviour
         yield return new WaitForSeconds(_recoveryAttackTime);
         //_playerController.canMove = true;
         _canMeleeDamage = false;
-        _playerController.currentMovementSpeed = _playerController.defaultMovementSpeed;
+        playerController.currentMovementSpeed = playerController.defaultMovementSpeed;
+        playerController.canAttack = true;
     }
 
 }

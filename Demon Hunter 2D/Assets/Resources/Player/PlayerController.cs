@@ -10,13 +10,29 @@ public enum PlayerState
     shooting
 }
 
+public enum PlayerMoveDirection
+{
+    up,
+    down,
+    left,
+    right
+}
+
+public enum PlayerAttackDirection
+{
+    up,
+    down,
+    left,
+    right
+}
+
 public class PlayerController : MonoBehaviour
 {
     
     [Header("Player Main Setup")]
     public PlayerState playerState;
     [System.NonSerialized] public Vector3 startLocation;
-    /*[System.NonSerialized] */public int enemyEngagedCounter;
+    public int enemyEngagedCounter;
     [System.NonSerialized] public int enemyInRangeCounter;
     private GameManager _gameManager;
     [SerializeField] private GameObject playerAlive, playerDead;
@@ -25,8 +41,11 @@ public class PlayerController : MonoBehaviour
     public Transform[] engagementPositions;
     private EnemyController enemyControllerDetected;
     [System.NonSerialized] public List<GameObject> enemiesInRange = new List<GameObject>();
-    /*[System.NonSerialized] */public bool inCombat;
+    [System.NonSerialized] public bool inCombat;
+    [System.NonSerialized] public bool canAttack;
 
+    public PlayerMoveDirection playerMoveDirection;
+    public PlayerAttackDirection playerAttackDirection;
 
 
     [Header("Values")]
@@ -94,6 +113,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        canAttack = true;
         currentMovementSpeed = defaultMovementSpeed;
         deathEnabled = false;
         playerDead.SetActive(false);
@@ -119,7 +139,6 @@ public class PlayerController : MonoBehaviour
         //    GameEvents.ReportSaveDeath();
         //    StopVelocity();
         //}
-
     }
 
     private void FixedUpdate()
@@ -259,7 +278,7 @@ public class PlayerController : MonoBehaviour
         StopVelocity();
     }
 
-    private void SetAnimationPlay(int state)
+    private void SetAnimationPlay()
     {
         /*
         if (state == 0)
